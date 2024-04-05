@@ -1,3 +1,4 @@
+import { SocketActions, SocketEvents } from "@monopoly-wallet/shared-types";
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 
@@ -7,7 +8,7 @@ const socket = io(SOCKET_URL);
 export function App() {
   const handleCreateGame = () => {
     try {
-      socket.emit('create_game', 'Avengers')
+      socket.emit(SocketActions.CREATE_GAME, 'Avengers')
     } catch (error) {
       console.log('error :>> ', error);
     }

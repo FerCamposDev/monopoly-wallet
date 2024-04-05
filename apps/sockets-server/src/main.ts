@@ -2,6 +2,7 @@ import express from 'express';
 import http from "http";
 import cors from "cors";
 import { Server } from 'socket.io';
+import { SocketActions, SocketEvents } from '@monopoly-wallet/shared-types';
 
 type Token = string;
 type Player = string;
@@ -26,7 +27,7 @@ io.on("connection", (socket) => {
       socket.emit('available_tokens', ['ASD'])
   })
 
-  socket.on('create_game', (roomName: string) => {
+  socket.on(SocketActions.CREATE_GAME, (roomName: string) => {
       try {
           // createGame(roomName);
           socket.join(roomName);
