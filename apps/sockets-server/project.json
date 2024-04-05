@@ -1,0 +1,24 @@
+{
+  "name": "sockets-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/sockets-server/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "sockets-server:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "sockets-server:build:development"
+        },
+        "production": {
+          "buildTarget": "sockets-server:build:production"
+        }
+      }
+    }
+  }
+}
