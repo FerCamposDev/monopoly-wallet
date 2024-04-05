@@ -2,10 +2,8 @@ import express from 'express';
 import http from "http";
 import cors from "cors";
 import { Server } from 'socket.io';
-import { SocketActions, SocketEvents } from '@monopoly-wallet/shared-types';
-
-type Token = string;
-type Player = string;
+import { CustomError, IPlayer, SocketActions, SocketEvents, Token } from '@monopoly-wallet/shared-types';
+import { GameRooms } from './game/GameRooms';
 
 const app = express();
 app.use(cors())
@@ -13,27 +11,36 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-      origin: "http://localhost:4200"
+    origin: "http://localhost:4200"
   }
 })
+const games = new GameRooms();
 
 io.on("connection", (socket) => {
   console.log(`User Connected ${socket.id}`)
 
-  socket.on('send_message', (data) => {
-      socket.broadcast.emit('receive_message', data)
+  /* socket.on('send_message', (data) => {
+    socket.broadcast.emit('receive_message', data)
   })
   socket.on('test', (data) => {
-      socket.emit('available_tokens', ['ASD'])
-  })
+    socket.emit('available_tokens', ['ASD'])
+  }) */
+
+  const emitError = error => {
+    if (error instanceof CustomError) {
+      return socket.emit(SocketEvents.CUSTOM_ERROR, error)
+    }
+    console.error('error :>> ', error);
+    socket.emit('error', { message: 'Something went wrong', data: error?.toString() });
+  };
 
   socket.on(SocketActions.CREATE_GAME, (roomName: string) => {
-      try {
-          // createGame(roomName);
-          socket.join(roomName);
-      } catch (error) {
-          socket.emit('custom-error', error)
-      }
+    try {
+      games.createGameRoom(roomName);
+      socket.join(roomName);
+    } catch (error) {
+      emitError(error)
+    }
   })
 
   /* socket.on('restore_game', (roomName: string, game: Game) => {
@@ -41,54 +48,53 @@ io.on("connection", (socket) => {
       socket.join(roomName);
   }) */
 
-  socket.on('join_room', (roomName: string) => {
-      socket.join(roomName);
+  socket.on(SocketActions.JOIN_ROOM, (room: string) => {
+    socket.join(room);
   })
 
-  socket.on('leave_room', (roomName: string) => {
-      try {
-          // disconnectPlayerById(roomName, socket.id);
-          socket.leave(roomName);
-      } catch (error) {
-          socket.emit('custom-error', error)
-      }
+  socket.on(SocketActions.LEAVE_ROOM, (room: string) => {
+    try {
+      games.getGame(room).disconnectPlayerById(socket.id);
+      socket.leave(room);
+    } catch (error) {
+      emitError(error)
+    }
   })
 
-  socket.on('join_game', (roomName: string, player: Player) => {
-      try {
-          // addPlayer(roomName, player);
-      } catch (error) {
-          socket.emit('custom-error', error)
-      }
+  socket.on(SocketActions.JOIN_GAME, (room: string, player: IPlayer) => {
+    try {
+      games.getGame(room).addPlayer(player)
+    } catch (error) {
+      emitError(error)
+    }
   })
 
-  socket.on('join_game_to_token', (roomName: string, token: Token) => {
-      try {
-          // connectPlayerById(roomName, socket.id, token);
-      } catch (error) {
-          socket.emit('custom-error', error)
-      }
+  socket.on(SocketActions.JOIN_GAME_TO_TOKEN, (room: string, token: Token) => {
+    try {
+      games.getGame(room).connectPlayerById(socket.id, token)
+    } catch (error) {
+      emitError(error)
+    }
   })
 
-  socket.on('leave_game', (roomName: string, player: Player) => {
-      try {
-          // removePlayerByToken(roomName, player.token);
-          socket.leave(roomName);
-      } catch (error) {
-          console.log('error :>> ', error);
-          socket.emit('custom-error', error)
-      }
+  socket.on(SocketActions.LEAVE_GAME, (room: string, player: IPlayer) => {
+    try {
+      games.getGame(room).removePlayerByToken(player.token)
+      socket.leave(room);
+    } catch (error) {
+      emitError(error)
+    }
   })
 
   socket.on('disconnect', (data) => {
-      try {
-          socket.rooms.forEach(room => {
-              // disconnectPlayerById(room, socket.id);
-          })
-          console.warn(`Disconnect: ${socket.id}`, data);
-      } catch (error) {
-          socket.emit('custom-error', error)
-      }
+    try {
+      socket.rooms.forEach(room => {
+        games.getGame(room).disconnectPlayerById(socket.id);
+      })
+      console.warn(`Disconnect: ${socket.id}`, data);
+    } catch (error) {
+      emitError(error)
+    }
   })
 })
 
@@ -99,23 +105,23 @@ io.of("/").adapter.on("create-room", (room: string) => {
 
 io.of('/').adapter.on('join-room', (room: string, id: string) => {
   if (room !== id) {
-      try {
-          console.log(`socket ${id} has joined room ${room}`);
-          // io.in(room).emit('available_tokens', getAvailableTokens(room));
-      } catch (error) {
-          io.in(room).emit('custom-error', error)
-      }
+    try {
+      console.log(`socket ${id} has joined room ${room}`);
+      io.in(room).emit(SocketEvents.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
+    } catch (error) {
+      io.in(room).emit(SocketEvents.CUSTOM_ERROR, error)
+    }
   }
-}) 
+})
 
 io.of('/').adapter.on('leave-room', (room: string, id) => {
   if (room !== id) {
-      try {
-          console.log(`socket ${id} has leave room ${room}`);
-          // io.in(room).emit('available_tokens', getAvailableTokens(room));
-      } catch (error) {
-          io.in(room).emit('custom-error', error)
-      }
+    try {
+      console.log(`socket ${id} has leave room ${room}`);
+      io.in(room).emit(SocketEvents.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
+    } catch (error) {
+      io.in(room).emit(SocketEvents.CUSTOM_ERROR, error)
+    }
   }
 })
 // ROOMS END
