@@ -2,16 +2,16 @@
 import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, Grid, Stack } from "@mui/material";
 import { useState } from "react";
-import UserScreen from "../screens/User";
-import BankScreen from "../screens/Bank";
-import { MOCK_PLAYER } from "../commons/mocks/player";
+import UserScreen from "../../components/game-screens/User";
+import BankScreen from "../../components/game-screens/Bank";
+import { MOCK_PLAYER } from "../../../commons/mocks/player";
 
 enum Screen {
   User,
   Bank
 }
 
-export function App() {
+export function GamePage() {
   const [value, setValue] = useState<Screen>(Screen.User);
 
   const screenMap = {
@@ -37,4 +37,4 @@ export function App() {
   );
 }
 
-export default App;
+export default GamePage;
