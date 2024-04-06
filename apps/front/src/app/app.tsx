@@ -1,51 +1,39 @@
-import { SocketActions, SocketEvents } from "@monopoly-wallet/shared-types";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
 
-const SOCKET_URL = 'http://localhost:3333';
-const socket = io(SOCKET_URL);
+import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from "@mui/icons-material";
+import { BottomNavigation, BottomNavigationAction, Grid, Stack } from "@mui/material";
+import { useState } from "react";
+import UserScreen from "../screens/User";
+import BankScreen from "../screens/Bank";
+import { MOCK_PLAYER } from "../commons/mocks/player";
+
+enum Screen {
+  User,
+  Bank
+}
 
 export function App() {
-  const handleCreateGame = () => {
-    try {
-      socket.emit(SocketActions.CREATE_GAME, 'Avengers')
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
-  }
+  const [value, setValue] = useState<Screen>(Screen.User);
 
-  useEffect(()=>{
-    try {
-      socket.onAny((args) => {
-        console.log('Socket name: >> ', args);
-      })
-      socket.on("available_tokens", (data) => {
-        console.log('tokens :>> ', data);
-      });
-
-      socket.on('error', (data) => {
-        console.log('Error data :>> ', data);
-      })
-
-      socket.on('custom-error', (data) => {
-        console.log('Error data :>> ', data);
-      })
-
-      socket.on("connect_error", (err) => {
-        console.log(err.message);
-      });
-    } catch (error) {
-      console.log(error)
-    }
-    
-  },[])
+  const screenMap = {
+    [Screen.User]: <UserScreen player={MOCK_PLAYER} />,
+    [Screen.Bank]: <BankScreen />,
+  };
 
   return (
-    <div>
-      <button onClick={handleCreateGame}>
-        Create Game
-      </button>
-    </div>
+    <Stack height="100vh">
+      <Grid container height="100%">
+        {screenMap[value]}
+      </Grid>
+
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(_e, newValue) => { setValue(newValue) }}
+      >
+        <BottomNavigationAction label="User" icon={<AccountBalanceWalletOutlined />} />
+        <BottomNavigationAction label="Bank" icon={<AccountBalanceOutlined />} />
+      </BottomNavigation>
+    </Stack>
   );
 }
 

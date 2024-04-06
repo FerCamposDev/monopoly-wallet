@@ -3,7 +3,7 @@ import { GameErrors } from "./game-errors.enum";
 export class CustomError {
   public code: GameErrors;
   public message?: string;
-  public data?: any;
+  public data?: unknown;
   
   constructor(values: CustomError) {
     this.code = values.code;
