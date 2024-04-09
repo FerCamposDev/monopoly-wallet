@@ -12,9 +12,10 @@ const imageUrlByType: Record<GameType, string> = {
 
 type Props = {
   type: GameType;
+  action: (room: string) => void;
 }
 
-const GameModal: FC<Props> = ({ type }) => {
+const GameModal: FC<Props> = ({ type, action }) => {
   const { open, handleClose, handleOpen } = useToggle();
 
   return (
@@ -30,8 +31,9 @@ const GameModal: FC<Props> = ({ type }) => {
           onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
-            const roomName = formData.get('room-name')?.toString();
+            const roomName = formData.get('room-name')?.toString() || 'FIXME:';
             console.log(roomName);
+            action(roomName);
             handleClose();
           },
         }}

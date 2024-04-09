@@ -1,4 +1,4 @@
-export enum SocketEvents {
+export enum SocketEvent {
   CUSTOM_ERROR = 'custom-error',
   AVAILABLE_TOKENS = 'available-tokens',
   WALLET_UPDATED = 'wallet-updated',
@@ -8,7 +8,7 @@ export enum SocketEvents {
   LOG = 'log'
 }
 
-export enum SocketActions {
+export enum SocketAction {
   CREATE_GAME = 'create_game',
   JOIN_ROOM = 'join_room',
   LEAVE_ROOM = 'leave_room',

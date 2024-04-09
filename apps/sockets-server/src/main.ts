@@ -2,8 +2,9 @@ import express from 'express';
 import http from "http";
 import cors from "cors";
 import { Server } from 'socket.io';
-import { CustomError, IPlayer, SocketActionInterfaces, SocketActions, SocketEvents, Token } from '@monopoly-wallet/shared-types';
-import { GameRooms } from './game/GameRooms';
+import { SocketAction, SocketEvent } from '@monopoly-wallet/shared-types';
+import { GameController } from './controllers/game';
+import { games } from './model/games';
 
 const app = express();
 app.use(cors())
@@ -14,10 +15,10 @@ const io = new Server(server, {
     origin: "http://localhost:4200"
   }
 })
-const games = new GameRooms();
 
 io.on("connection", (socket) => {
   console.log(`User Connected ${socket.id}`)
+  const controller = new GameController(socket);
 
   /* socket.on('send_message', (data) => {
     socket.broadcast.emit('receive_message', data)
@@ -26,77 +27,23 @@ io.on("connection", (socket) => {
     socket.emit('available_tokens', ['ASD'])
   }) */
 
-  const emitError = error => {
-    if (error instanceof CustomError) {
-      return socket.emit(SocketEvents.CUSTOM_ERROR, error)
-    }
-    console.error('error :>> ', error);
-    socket.emit('error', { message: 'Something went wrong', data: error?.toString() });
-  };
-
-  const action: SocketActionInterfaces[SocketActions.JOIN_GAME_TO_TOKEN] = (roomName: string) => {
-    try {
-      games.createGameRoom(roomName);
-      socket.join(roomName);
-    } catch (error) {
-      emitError(error)
-    }
-  };
-  socket.on(SocketActions.CREATE_GAME, action)
-
   /* socket.on('restore_game', (roomName: string, game: Game) => {
       restoreGame(roomName, game);
       socket.join(roomName);
   }) */
+  socket.on(SocketAction.CREATE_GAME, controller.createGame);
 
-  socket.on(SocketActions.JOIN_ROOM, (room: string) => {
-    socket.join(room);
-  })
+  socket.on(SocketAction.JOIN_ROOM, controller.joinRoom);
 
-  socket.on(SocketActions.LEAVE_ROOM, (room: string) => {
-    try {
-      games.getGame(room).disconnectPlayerById(socket.id);
-      socket.leave(room);
-    } catch (error) {
-      emitError(error)
-    }
-  })
+  socket.on(SocketAction.LEAVE_ROOM, controller.leaveRoom);
 
-  socket.on(SocketActions.JOIN_GAME, (room: string, player: IPlayer) => {
-    try {
-      games.getGame(room).addPlayer(player)
-    } catch (error) {
-      emitError(error)
-    }
-  })
+  socket.on(SocketAction.JOIN_GAME, controller.joinGame);
 
-  socket.on(SocketActions.JOIN_GAME_TO_TOKEN, (room: string, token: Token) => {
-    try {
-      games.getGame(room).connectPlayerById(socket.id, token)
-    } catch (error) {
-      emitError(error)
-    }
-  })
+  socket.on(SocketAction.JOIN_GAME_TO_TOKEN, controller.joinGameToToken);
 
-  socket.on(SocketActions.LEAVE_GAME, (room: string, player: IPlayer) => {
-    try {
-      games.getGame(room).removePlayerByToken(player.token)
-      socket.leave(room);
-    } catch (error) {
-      emitError(error)
-    }
-  })
+  socket.on(SocketAction.LEAVE_GAME, controller.leaveGame);
 
-  socket.on('disconnect', (data) => {
-    try {
-      socket.rooms.forEach(room => {
-        games.getGame(room).disconnectPlayerById(socket.id);
-      })
-      console.warn(`Disconnect: ${socket.id}`, data);
-    } catch (error) {
-      emitError(error)
-    }
-  })
+  socket.on('disconnect', controller.disconnect);
 })
 
 // ROOMS
@@ -108,9 +55,9 @@ io.of('/').adapter.on('join-room', (room: string, id: string) => {
   if (room !== id) {
     try {
       console.log(`socket ${id} has joined room ${room}`);
-      io.in(room).emit(SocketEvents.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
+      io.in(room).emit(SocketEvent.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
     } catch (error) {
-      io.in(room).emit(SocketEvents.CUSTOM_ERROR, error)
+      io.in(room).emit(SocketEvent.CUSTOM_ERROR, error)
     }
   }
 })
@@ -119,9 +66,9 @@ io.of('/').adapter.on('leave-room', (room: string, id) => {
   if (room !== id) {
     try {
       console.log(`socket ${id} has leave room ${room}`);
-      io.in(room).emit(SocketEvents.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
+      io.in(room).emit(SocketEvent.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
     } catch (error) {
-      io.in(room).emit(SocketEvents.CUSTOM_ERROR, error)
+      io.in(room).emit(SocketEvent.CUSTOM_ERROR, error)
     }
   }
 })

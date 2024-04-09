@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Token } from "../game";
-import { SocketActions } from "./sockets.enums";
+import { IPlayer, Token } from "../game";
 
-export interface SocketActionInterfaces {
-  [SocketActions.CREATE_GAME]: (name: string) => void,
-  [SocketActions.JOIN_ROOM]: (name: string) => void,
-  [SocketActions.LEAVE_ROOM]: undefined,
-  [SocketActions.JOIN_GAME]: undefined,
-  [SocketActions.JOIN_GAME_TO_TOKEN]: (name: string, token: Token) => void,
-  [SocketActions.LEAVE_GAME]: undefined
+export interface ISocketActions {
+  createGame: (room: string) => void;
+
+  joinRoom: (room: string) => void;
+
+  leaveRoom: (room: string) => void;
+
+  joinGame: (room: string, player: IPlayer) => void;
+
+  joinGameToToken: (room: string, token: Token) => void;
+
+  leaveGame: (room: string, player: IPlayer) => void;
 }
