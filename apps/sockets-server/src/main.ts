@@ -2,7 +2,7 @@ import express from 'express';
 import http from "http";
 import cors from "cors";
 import { Server } from 'socket.io';
-import { CustomError, IPlayer, SocketActions, SocketEvents, Token } from '@monopoly-wallet/shared-types';
+import { CustomError, IPlayer, SocketActionInterfaces, SocketActions, SocketEvents, Token } from '@monopoly-wallet/shared-types';
 import { GameRooms } from './game/GameRooms';
 
 const app = express();
@@ -34,14 +34,15 @@ io.on("connection", (socket) => {
     socket.emit('error', { message: 'Something went wrong', data: error?.toString() });
   };
 
-  socket.on(SocketActions.CREATE_GAME, (roomName: string) => {
+  const action: SocketActionInterfaces[SocketActions.JOIN_GAME_TO_TOKEN] = (roomName: string) => {
     try {
       games.createGameRoom(roomName);
       socket.join(roomName);
     } catch (error) {
       emitError(error)
     }
-  })
+  };
+  socket.on(SocketActions.CREATE_GAME, action)
 
   /* socket.on('restore_game', (roomName: string, game: Game) => {
       restoreGame(roomName, game);

@@ -1,6 +1,13 @@
+import { Stack } from "@mui/material"
+import GameModal from "../components/GameModal";
+
 const HomePage = () => {
+
   return (
-    <div>HomePage</div>
+    <Stack justifyContent="space-evenly">
+      <GameModal type="Join" />
+      <GameModal type="Host" />
+    </Stack>
   )
 }
 
