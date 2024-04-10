@@ -1,29 +1,31 @@
-import { io } from "socket.io-client";
+import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
 import { FC, PropsWithChildren, useEffect, useMemo } from "react";
-import { SocketEvent } from "@monopoly-wallet/shared-types";
+import { CustomError, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
+import toast from "react-hot-toast";
 
-const SOCKET_URL = 'http://localhost:3333';
+type Props = PropsWithChildren<{
+  socket: Socket;
+}>;
 
-const SocketProvider: FC<PropsWithChildren> = ({ children }) => {
-  const socket = io(SOCKET_URL);
+const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
 
   useEffect(()=>{
-    // TODO: launch with toasts
     try {
       socket.onAny((args) => {
         console.log('Socket name: >> ', args);
       })
 
-      socket.on(SocketEvent.AVAILABLE_TOKENS, (data) => {
+      socket.on(SocketEvent.GAME_UPDATED, (data) => {
         console.log('tokens :>> ', data);
       });
 
-      socket.on(SocketEvent.CUSTOM_ERROR, (data) => {
+      socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
         console.log('Error data :>> ', data);
+        toast.error(data.code);
       })
   
       socket.on('error', (data) => {
@@ -42,8 +44,8 @@ const SocketProvider: FC<PropsWithChildren> = ({ children }) => {
 
 
   const value = useMemo((): SocketContextTypes => ({
-    socket,
     actions,
+    socket
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }), []);
 

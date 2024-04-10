@@ -11,6 +11,8 @@ import TransferPage from './app/pages/game/transfer';
 import PurchasePage from './app/pages/game/purchase';
 import { Routes } from './commons/enums/routes.enum';
 import SocketProvider from './app/context/sockets/SocketProvider';
+import { Toaster } from 'react-hot-toast';
+import { io } from 'socket.io-client';
 
 const router = createBrowserRouter([
   {
@@ -36,10 +38,14 @@ const router = createBrowserRouter([
   }
 ])
 
+const SOCKET_URL = 'http://localhost:3333';
+const socket = io(SOCKET_URL);
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <SocketProvider>
+    <SocketProvider socket={socket}>
       <CssBaseline />
+      <Toaster />
       <RouterProvider router={router} />
     </SocketProvider>
   </StrictMode>

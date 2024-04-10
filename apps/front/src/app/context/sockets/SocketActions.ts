@@ -1,6 +1,5 @@
-import { IPlayer, ISocketActions, SocketAction, Token } from "@monopoly-wallet/shared-types";
+import { IGame, IPlayer, ISocketActions, PaymentReason, SocketAction, Token } from "@monopoly-wallet/shared-types";
 import { Socket } from "socket.io-client";
-
 
 export class SocketActions implements ISocketActions {
   private socket: Socket | null;
@@ -9,7 +8,7 @@ export class SocketActions implements ISocketActions {
     this.socket = socket;
   }
 
-  createGame(room: string) {
+  createGame = (room: string) => {
     try {
       this.socket?.emit(SocketAction.CREATE_GAME, room)
     } catch (error) {
@@ -17,7 +16,15 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  joinRoom(room: string) {
+  restoreGame = (room: string, game: IGame) => {
+    try {
+      this.socket?.emit(SocketAction.RESTORE_GAME, game);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
+  joinRoom = (room: string) => {
     try {
       this.socket?.emit(SocketAction.JOIN_ROOM, room)
     } catch (error) {
@@ -25,7 +32,7 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveRoom(room: string) {
+  leaveRoom = (room: string) => {
     try {
       this.socket?.emit(SocketAction.LEAVE_ROOM, room)
     } catch (error) {
@@ -33,7 +40,7 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  joinGame(room: string, player: IPlayer) {
+  joinGame = (room: string, player: IPlayer) => {
     try {
       this.socket?.emit(SocketAction.JOIN_GAME, room, player)
     } catch (error) {
@@ -41,7 +48,7 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  joinGameToToken(room: string, token: Token) {
+  joinGameToToken = (room: string, token: Token) => {
     try {
       this.socket?.emit(SocketAction.JOIN_GAME_TO_TOKEN, room, token)
     } catch (error) {
@@ -49,7 +56,7 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveGame(room: string, player: IPlayer) {
+  leaveGame = (room: string, player: IPlayer) => {
     try {
       this.socket?.emit(SocketAction.LEAVE_GAME, room, player)
     } catch (error) {
@@ -57,4 +64,27 @@ export class SocketActions implements ISocketActions {
     }
   }
 
+  paymentP2P = (game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) => {
+    try {
+      this.socket?.emit(SocketAction.PAYMENT_P2P, game, from, to, amount, reason);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
+  paymentToBank = (game: IGame, from: IPlayer, amount: number, reason: PaymentReason) => {
+    try {
+      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, game, from, amount, reason);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
+
+  paymentToPlayer = (game: IGame, to: IPlayer, amount: number, reason: PaymentReason) => {
+    try {
+      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, game, to, amount, reason);
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  }
 }

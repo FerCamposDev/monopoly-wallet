@@ -23,7 +23,7 @@ export class GameController implements ISocketActions {
     );
   };
 
-  createGame(room: string) {
+  createGame = (room: string) => {
     try {
       games.createGameRoom(room);
       this.socket.join(room);
@@ -32,7 +32,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinRoom(room: string) {
+  joinRoom = (room: string) => {
     try {
       this.socket.join(room);
     } catch (error) {
@@ -40,7 +40,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveRoom(room: string) {
+  leaveRoom = (room: string) => {
     try {
       games.getGame(room).disconnectPlayerById(this.socket.id);
       this.socket.leave(room);
@@ -49,7 +49,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinGame(room: string, player: IPlayer) {
+  joinGame = (room: string, player: IPlayer) => {
     try {
       games.getGame(room).addPlayer(player)
     } catch (error) {
@@ -57,7 +57,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinGameToToken(room: string, token: Token) {
+  joinGameToToken = (room: string, token: Token) => {
     try {
       games.getGame(room).connectPlayerById(this.socket.id, token)
     } catch (error) {
@@ -65,7 +65,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveGame(room: string, player: IPlayer) {
+  leaveGame = (room: string, player: IPlayer) => {
     try {
       games.getGame(room).removePlayerByToken(player.token)
       this.socket.leave(room);
@@ -74,7 +74,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  restoreGame(room: string, game: Game) {
+  restoreGame = (room: string, game: Game) => {
     try {
       games.restoreGame(room, game);
       this.socket.join(room);
@@ -83,7 +83,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentP2P(game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) {
+  paymentP2P = (game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) => {
     try {
       if (this.socket.id !== from.socketId) {
         throw new CustomError({
@@ -98,7 +98,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentToPlayer(game: IGame, to: IPlayer, amount: number, reason: PaymentReason) {
+  paymentToPlayer = (game: IGame, to: IPlayer, amount: number, reason: PaymentReason) => {
     try {
       if (this.socket.id !== to.socketId) {
         throw new CustomError({
@@ -113,7 +113,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentToBank(game: IGame, from: IPlayer, amount: number, reason: PaymentReason) {
+  paymentToBank = (game: IGame, from: IPlayer, amount: number, reason: PaymentReason) => {
     try {
       if (this.socket.id !== from.socketId) {
         throw new CustomError({
@@ -130,11 +130,12 @@ export class GameController implements ISocketActions {
 
   disconnect(data) {
     try {
-      this.socket.rooms.forEach(room => {
+      this.socket?.rooms.forEach(room => {
         games.getGame(room).disconnectPlayerById(this.socket.id);
       })
-      console.warn(`Disconnect: ${this.socket.id}`, data);
+      console.warn(`Disconnect: ${this.socket?.id}`, data);
     } catch (error) {
+      console.log('error :>> ', error);
       this.emitError(error)
     }
   }

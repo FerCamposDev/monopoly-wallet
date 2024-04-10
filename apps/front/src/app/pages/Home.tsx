@@ -8,7 +8,7 @@ const HomePage = () => {
 
   return (
     <Stack justifyContent="space-evenly">
-      <GameModal type="Join" action={actions.joinRoom} />
+      <GameModal type="Join" action={actions.createGame} />
       <GameModal type="Host" action={actions.leaveRoom} />
       <Button onClick={() => actions.createGame('sample')}>
         Create

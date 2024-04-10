@@ -1,7 +1,6 @@
 import { createContext } from "react";
 import { SocketContextTypes } from "./types";
-import { initialState } from "./state";
 
-const SocketContext = createContext<SocketContextTypes>(initialState)
+const SocketContext = createContext<SocketContextTypes | null>(null)
 
 export default SocketContext;
