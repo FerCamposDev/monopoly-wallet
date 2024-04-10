@@ -15,7 +15,9 @@ export interface IGame {
   removePlayerByToken(token: Token): void;
   disconnectPlayerById(playerId: string): void;
   connectPlayerById(playerId: string, token: Token): void;
-  updatePlayerBalanceByToken(token: Token, payment: number): void;
+  paymentP2P(from: IPlayer, to: IPlayer, amount: number): void;
+  paymentToBank(from: IPlayer, amount: number): void;
+  paymentToPlayer(to: IPlayer, amount: number): void;
   availableTokens: Option<Token>[];
 }
 

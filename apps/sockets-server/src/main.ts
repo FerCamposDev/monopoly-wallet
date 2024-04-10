@@ -2,9 +2,9 @@ import express from 'express';
 import http from "http";
 import cors from "cors";
 import { Server } from 'socket.io';
-import { SocketAction, SocketEvent } from '@monopoly-wallet/shared-types';
-import { GameController } from './controllers/game';
-import { games } from './model/games';
+import { SocketAction } from '@monopoly-wallet/shared-types';
+import { GameController } from './controllers/GameActions.controller';
+import { RoomController } from './controllers/RoomEvents.controller';
 
 const app = express();
 app.use(cors())
@@ -20,18 +20,9 @@ io.on("connection", (socket) => {
   console.log(`User Connected ${socket.id}`)
   const controller = new GameController(socket);
 
-  /* socket.on('send_message', (data) => {
-    socket.broadcast.emit('receive_message', data)
-  })
-  socket.on('test', (data) => {
-    socket.emit('available_tokens', ['ASD'])
-  }) */
-
-  /* socket.on('restore_game', (roomName: string, game: Game) => {
-      restoreGame(roomName, game);
-      socket.join(roomName);
-  }) */
   socket.on(SocketAction.CREATE_GAME, controller.createGame);
+  
+  socket.on(SocketAction.RESTORE_GAME, controller.restoreGame);
 
   socket.on(SocketAction.JOIN_ROOM, controller.joinRoom);
 
@@ -43,35 +34,21 @@ io.on("connection", (socket) => {
 
   socket.on(SocketAction.LEAVE_GAME, controller.leaveGame);
 
+  // payments
+  socket.on(SocketAction.PAYMENT_P2P, controller.paymentP2P);
+
+  socket.on(SocketAction.PAYMENT_TO_BANK, controller.paymentToBank);
+
+  socket.on(SocketAction.PAYMENT_TO_PLAYER, controller.paymentToPlayer);
+
   socket.on('disconnect', controller.disconnect);
 })
 
 // ROOMS
-io.of("/").adapter.on("create-room", (room: string) => {
-  console.log(`room ${room} was created`);
-});
-
-io.of('/').adapter.on('join-room', (room: string, id: string) => {
-  if (room !== id) {
-    try {
-      console.log(`socket ${id} has joined room ${room}`);
-      io.in(room).emit(SocketEvent.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
-    } catch (error) {
-      io.in(room).emit(SocketEvent.CUSTOM_ERROR, error)
-    }
-  }
-})
-
-io.of('/').adapter.on('leave-room', (room: string, id) => {
-  if (room !== id) {
-    try {
-      console.log(`socket ${id} has leave room ${room}`);
-      io.in(room).emit(SocketEvent.AVAILABLE_TOKENS, games.getGame(room).availableTokens);
-    } catch (error) {
-      io.in(room).emit(SocketEvent.CUSTOM_ERROR, error)
-    }
-  }
-})
+const roomController = new RoomController(io);
+io.of("/").adapter.on("create-room", roomController.create);
+io.of('/').adapter.on('join-room', roomController.join)
+io.of('/').adapter.on('leave-room', roomController.leave);
 // ROOMS END
 
 /* app.get('/api', (req, res) => {

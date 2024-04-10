@@ -45,7 +45,7 @@ export class Game implements IGame {
     }
   }
 
-  updatePlayerBalanceByToken(token: Token, payment: number) {
+  private updatePlayerBalanceByToken(token: Token, payment: number) {
     const index = this.players.findIndex(p => p.token === token);
     if (index !== -1) {
       const currentBalance = this.players[index].balance;
@@ -57,6 +57,34 @@ export class Game implements IGame {
   
       this.players[index].balance = newBalance;
     }
+  }
+
+  paymentP2P(from: IPlayer, to: IPlayer, amount: number) {
+    if (this.players.includes(from)) {
+      throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
+    }
+    if (this.players.includes(to)) {
+      throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
+    }
+
+    this.updatePlayerBalanceByToken(from.token, amount * -1);
+    this.updatePlayerBalanceByToken(to.token, amount);
+  }
+
+  paymentToBank(from: IPlayer, amount: number) {
+    if (this.players.includes(from)) {
+      throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
+    }
+
+    this.updatePlayerBalanceByToken(from.token, amount * -1);
+  }
+
+  paymentToPlayer(to: IPlayer, amount: number) {
+    if (this.players.includes(to)) {
+      throw new CustomError({ code: GameErrors.UnknownPlayer, data: to });
+    }
+
+    this.updatePlayerBalanceByToken(to.token, amount);
   }
 
   get availableTokens() {
