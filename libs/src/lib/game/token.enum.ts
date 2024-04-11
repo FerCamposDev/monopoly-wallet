@@ -1,7 +1,12 @@
 export enum Token {
   Battleship = 'Battleship',
   Boot = 'Boot',
+  Cannon = 'Cannon',
   Cat = 'Cat',
+  Duck = 'Duck',
+  Horse = 'Horse',
+  Iron = 'Iron',
+  Penguin = 'Penguin',
   RaceCar = 'Race Car',
   ScottieDog = 'Scottie Dog',
   Thimble = 'Thimble',
