@@ -13,12 +13,17 @@ import { Routes } from './commons/enums/routes.enum';
 import SocketProvider from './app/context/sockets/SocketProvider';
 import { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
+import GameProvider from './app/context/game/GameProvider';
 
 const router = createBrowserRouter([
   {
     path: Routes.Home,
     element: <HomePage />,
     errorElement: <NotFoundPage />
+  },
+  {
+    path: Routes.RoomByName,
+    element: <span>Room by id</span>,
   },
   {
     path: Routes.Game,
@@ -43,10 +48,12 @@ const socket = io(SOCKET_URL);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <SocketProvider socket={socket}>
-      <CssBaseline />
-      <Toaster />
-      <RouterProvider router={router} />
-    </SocketProvider>
+    <GameProvider>
+      <SocketProvider socket={socket}>
+        <CssBaseline />
+        <Toaster />
+        <RouterProvider router={router} />
+      </SocketProvider>
+    </GameProvider>
   </StrictMode>
 );

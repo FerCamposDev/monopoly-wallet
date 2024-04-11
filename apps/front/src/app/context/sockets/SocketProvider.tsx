@@ -1,10 +1,11 @@
 import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
-import { FC, PropsWithChildren, useEffect, useMemo } from "react";
-import { CustomError, SocketEvent } from "@monopoly-wallet/shared-types";
+import { FC, PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import { CustomError, IGameProps, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
 import toast from "react-hot-toast";
+import GameContext from "../game/GameContext";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -12,6 +13,7 @@ type Props = PropsWithChildren<{
 
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
+  const { setGame } = useContext(GameContext);
 
   useEffect(()=>{
     try {
@@ -19,8 +21,8 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         console.log('Socket name: >> ', args);
       })
 
-      socket.on(SocketEvent.GAME_UPDATED, (data) => {
-        console.log('tokens :>> ', data);
+      socket.on(SocketEvent.GAME_UPDATED, (data: IGameProps) => {
+        setGame(data);
       });
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
@@ -47,7 +49,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
     actions,
     socket
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), []);
+  }), [socket]);
 
   return (
     <SocketContext.Provider value={value}>

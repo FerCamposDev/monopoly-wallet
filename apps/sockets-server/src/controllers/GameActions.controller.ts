@@ -128,7 +128,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  disconnect(data) {
+  disconnect = (data) => {
     try {
       this.socket?.rooms.forEach(room => {
         games.getGame(room).disconnectPlayerById(this.socket.id);

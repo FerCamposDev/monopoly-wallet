@@ -1,15 +1,15 @@
-import { CustomError, GameErrors, IGame, IPlayer, TOKEN_OPTIONS, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, IPlayer, Token } from "@monopoly-wallet/shared-types";
 
 export class Game implements IGame {
   public room: string;
   public players: IPlayer[];
   
-  constructor(roomName: string) {
+  constructor(roomName: string){
     this.room = roomName;
     this.players = [];
   }
 
-  addPlayer(player: IPlayer) {
+  addPlayer = (player: IPlayer) => {
     if (this.players.some(p => p.token === player.token)) {
       throw new CustomError({ code: GameErrors.TokenAlreadyInGame });
     }
@@ -17,7 +17,7 @@ export class Game implements IGame {
     this.players.push(player);
   }
 
-  removePlayerByToken(token: Token) {
+  removePlayerByToken = (token: Token) => {
     const index = this.players.findIndex(p => p.token === token);
 
     if (index !== -1) {
@@ -25,7 +25,7 @@ export class Game implements IGame {
     }
   }
 
-  disconnectPlayerById(playerId: string) {
+  disconnectPlayerById = (playerId: string) => {
     const index = this.players.findIndex(p => p.socketId === playerId);
 
     if (index !== -1) {
@@ -33,7 +33,7 @@ export class Game implements IGame {
     }
   }
 
-  connectPlayerById(playerId: string, token: Token) {
+  connectPlayerById = (playerId: string, token: Token) => {
     const index = this.players.findIndex(p => p.token === token);
   
     if (this.players[index].socketId) {
@@ -45,7 +45,7 @@ export class Game implements IGame {
     }
   }
 
-  private updatePlayerBalanceByToken(token: Token, payment: number) {
+  private updatePlayerBalanceByToken = (token: Token, payment: number) => {
     const index = this.players.findIndex(p => p.token === token);
     if (index !== -1) {
       const currentBalance = this.players[index].balance;
@@ -59,7 +59,7 @@ export class Game implements IGame {
     }
   }
 
-  paymentP2P(from: IPlayer, to: IPlayer, amount: number) {
+  paymentP2P = (from: IPlayer, to: IPlayer, amount: number) => {
     if (this.players.includes(from)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
     }
@@ -71,7 +71,7 @@ export class Game implements IGame {
     this.updatePlayerBalanceByToken(to.token, amount);
   }
 
-  paymentToBank(from: IPlayer, amount: number) {
+  paymentToBank = (from: IPlayer, amount: number) => {
     if (this.players.includes(from)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
     }
@@ -79,19 +79,11 @@ export class Game implements IGame {
     this.updatePlayerBalanceByToken(from.token, amount * -1);
   }
 
-  paymentToPlayer(to: IPlayer, amount: number) {
+  paymentToPlayer = (to: IPlayer, amount: number) => {
     if (this.players.includes(to)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: to });
     }
 
     this.updatePlayerBalanceByToken(to.token, amount);
-  }
-
-  get availableTokens() {
-    const usedTokens = this.players
-      .filter(p => Boolean(p.socketId))
-      .map(p => p.token);
-
-    return TOKEN_OPTIONS.filter(opt => !usedTokens.includes(opt.value))
   }
 }

@@ -1,4 +1,3 @@
-import { Option } from "../ui";
 import { Token } from "./token.enum";
 
 export interface IPlayer {
@@ -8,9 +7,12 @@ export interface IPlayer {
   balance: number;
 }
 
-export interface IGame {
+export interface IGameProps {
   room: string;
   players: IPlayer[];
+}
+
+export interface IGameMethods {
   addPlayer(player: IPlayer): void;
   removePlayerByToken(token: Token): void;
   disconnectPlayerById(playerId: string): void;
@@ -18,8 +20,9 @@ export interface IGame {
   paymentP2P(from: IPlayer, to: IPlayer, amount: number): void;
   paymentToBank(from: IPlayer, amount: number): void;
   paymentToPlayer(to: IPlayer, amount: number): void;
-  availableTokens: Option<Token>[];
 }
+
+export interface IGame extends IGameProps, IGameMethods {}
 
 export interface IGamesByRoom {
   [room: string]: IGame
