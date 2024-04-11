@@ -14,6 +14,7 @@ import SocketProvider from './app/context/sockets/SocketProvider';
 import { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
 import GameProvider from './app/context/game/GameProvider';
+import LobbyPage from './app/pages/Lobby';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.RoomByName,
-    element: <span>Room by id</span>,
+    element: <LobbyPage />,
   },
   {
     path: Routes.Game,

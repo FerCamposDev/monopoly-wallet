@@ -21,6 +21,7 @@ export class GameEventsController {
   gameUpdated = (game: IGame) => {
     try {
       this.socket.in(game.room).emit(SocketEvent.GAME_UPDATED, game);
+      this.socket.emit(SocketEvent.GAME_UPDATED, game);
     } catch (error) {
       this.emitError(error)
     }

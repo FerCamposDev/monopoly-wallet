@@ -1,5 +1,10 @@
 import { Token } from "./token.enum";
 
+export interface INewPlayer {
+  name: string;
+  token: Token;
+}
+
 export interface IPlayer {
   socketId: string;
   name: string;
@@ -13,7 +18,7 @@ export interface IGameProps {
 }
 
 export interface IGameMethods {
-  addPlayer(player: IPlayer): void;
+  addPlayer(player: INewPlayer, socketId: string): void;
   removePlayerByToken(token: Token): void;
   disconnectPlayerById(playerId: string): void;
   connectPlayerById(playerId: string, token: Token): void;
@@ -22,7 +27,7 @@ export interface IGameMethods {
   paymentToPlayer(to: IPlayer, amount: number): void;
 }
 
-export interface IGame extends IGameProps, IGameMethods {}
+export interface IGame extends IGameProps, IGameMethods { }
 
 export interface IGamesByRoom {
   [room: string]: IGame

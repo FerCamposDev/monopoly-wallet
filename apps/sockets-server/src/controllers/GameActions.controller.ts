@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { games } from "../model/games";
-import { CustomError, GameErrors, IGame, IPlayer, ISocketActions, PaymentReason, SocketEvent, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketEvent, Token } from "@monopoly-wallet/shared-types";
 import { GameEventsController } from "./GameEvents.controller";
 import { Game } from "../game/Game.class";
 
@@ -42,16 +42,20 @@ export class GameController implements ISocketActions {
 
   leaveRoom = (room: string) => {
     try {
-      games.getGame(room).disconnectPlayerById(this.socket.id);
+      const game = games.getGame(room);
+      game.disconnectPlayerById(this.socket.id);
       this.socket.leave(room);
+      this.events.gameUpdated(games.getGame(room));
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  joinGame = (room: string, player: IPlayer) => {
+  joinGame = (room: string, player: INewPlayer) => {
     try {
-      games.getGame(room).addPlayer(player)
+      const game = games.getGame(room);
+      game.addPlayer(player, this.socket.id);
+      this.events.gameUpdated(game);
     } catch (error) {
       this.emitError(error)
     }
@@ -59,7 +63,9 @@ export class GameController implements ISocketActions {
 
   joinGameToToken = (room: string, token: Token) => {
     try {
-      games.getGame(room).connectPlayerById(this.socket.id, token)
+      const game = games.getGame(room);
+      game.connectPlayerById(this.socket.id, token)
+      this.events.gameUpdated(games.getGame(room));
     } catch (error) {
       this.emitError(error)
     }
@@ -67,8 +73,10 @@ export class GameController implements ISocketActions {
 
   leaveGame = (room: string, player: IPlayer) => {
     try {
-      games.getGame(room).removePlayerByToken(player.token)
+      const game = games.getGame(room);
+      game.removePlayerByToken(player.token)
       this.socket.leave(room);
+      this.events.gameUpdated(games.getGame(room));
     } catch (error) {
       this.emitError(error)
     }
@@ -131,7 +139,9 @@ export class GameController implements ISocketActions {
   disconnect = (data) => {
     try {
       this.socket?.rooms.forEach(room => {
-        games.getGame(room).disconnectPlayerById(this.socket.id);
+        const game = games.getGame(room);
+        game.disconnectPlayerById(this.socket.id);
+        this.events.gameUpdated(game);
       })
       console.warn(`Disconnect: ${this.socket?.id}`, data);
     } catch (error) {

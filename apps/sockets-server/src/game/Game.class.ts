@@ -1,4 +1,4 @@
-import { CustomError, GameErrors, IGame, IPlayer, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, Token } from "@monopoly-wallet/shared-types";
 
 export class Game implements IGame {
   public room: string;
@@ -9,9 +9,15 @@ export class Game implements IGame {
     this.players = [];
   }
 
-  addPlayer = (player: IPlayer) => {
-    if (this.players.some(p => p.token === player.token)) {
+  addPlayer = (newPlayer: INewPlayer, socketId: string) => {
+    if (this.players.some(p => p.token === newPlayer.token)) {
       throw new CustomError({ code: GameErrors.TokenAlreadyInGame });
+    }
+
+    const player: IPlayer = {
+      ...newPlayer,
+      socketId,
+      balance: 1600,
     }
   
     this.players.push(player);
