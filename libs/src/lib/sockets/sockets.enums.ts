@@ -4,8 +4,8 @@ export enum SocketEvent {
   // AVAILABLE_TOKENS = 'available-tokens',
   // WALLET_UPDATED = 'wallet-updated',
   GAME_UPDATED = 'game-updated',
-  /* NEW_PLAYER = 'new-player',
-  PLAYER_LEFT_ROOM = 'player-left-room', */
+  PLAYER_JOINED = 'player-joined',
+  // PLAYER_LEFT_ROOM = 'player-left-room',
 }
 
 export enum SocketAction {

@@ -5,6 +5,7 @@ import { useGame } from "../context/game/useGame";
 import { useGameSockets } from "../context/sockets/useGameSockets";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "../../commons/enums/routes.enum";
+import { getTokenImagePath } from "../../commons/helpers/images";
 
 const LobbyPage = () => {
   const { availableTokens, game } = useGame();
@@ -70,11 +71,11 @@ const LobbyPage = () => {
                 }
                 disablePadding
               >
-                <ListItemButton onClick={() => console.log(`/images/tokens/${opt.value}.png`)}>
+                <ListItemButton>
                   <ListItemAvatar>
                     <Avatar
                       alt="token option"
-                      src={`/assets/images/tokens/${opt.value}.png`}
+                      src={getTokenImagePath(opt.value)}
                     />
                   </ListItemAvatar>
                   <ListItemText primary={opt.label} />

@@ -56,6 +56,7 @@ export class GameController implements ISocketActions {
       const game = games.getGame(room);
       game.addPlayer(player, this.socket.id);
       this.events.gameUpdated(game);
+      this.events.playerJoined(game);
     } catch (error) {
       this.emitError(error)
     }
@@ -66,6 +67,7 @@ export class GameController implements ISocketActions {
       const game = games.getGame(room);
       game.connectPlayerById(this.socket.id, token)
       this.events.gameUpdated(games.getGame(room));
+      this.events.playerJoined(game);
     } catch (error) {
       this.emitError(error)
     }

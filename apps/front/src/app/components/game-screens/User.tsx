@@ -5,6 +5,7 @@ import { FC } from "react";
 import IconButtonText from "../shared/IconButtonText";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "../../../commons/enums/routes.enum";
+import { getTokenImagePath } from "../../..//commons/helpers/images";
 
 type Props = {
   player: IPlayer;
@@ -18,7 +19,7 @@ const UserScreen: FC<Props> = ({ player }) => {
       <Stack width="100%" gap={4}>
         <Grid container alignItems="center" gap={2}>
           <Avatar
-            src="https://thumb.spokesman.com/5yUS3g90Y9DUE6F5KpuwTELL4hc=/2500x0/media.spokesman.com/photos/2013/01/11/monopoly_token_car.png"
+            src={getTokenImagePath(player.token)}
             alt="token"
           />
           <Typography variant="h6">

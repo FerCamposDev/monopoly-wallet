@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { IGameProps, Option, TOKEN_OPTIONS, Token } from "@monopoly-wallet/shared-types";
+import { IGameProps, IPlayer, Option, TOKEN_OPTIONS, Token } from "@monopoly-wallet/shared-types";
 import { GameContextTypes } from "./types";
 import GameContext from "./GameContext";
 
@@ -7,6 +7,7 @@ type Props = PropsWithChildren;
 
 const GameProvider: FC<Props> = ({ children }) => {
   const [game, setGame] = useState<IGameProps | null>(null);
+  const [player, setPlayer] = useState<IPlayer | null>(null);
   const [availableTokens, setAvailableTokens] = useState<Option<Token>[]>(TOKEN_OPTIONS);
 
   useEffect(() => {
@@ -23,9 +24,11 @@ const GameProvider: FC<Props> = ({ children }) => {
   const value = useMemo((): GameContextTypes => ({
     game,
     setGame,
+    player,
+    setPlayer,
     availableTokens
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [game, availableTokens]);
+  }), [game, availableTokens, player]);
 
   return (
     <GameContext.Provider value={value}>

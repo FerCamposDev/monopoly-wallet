@@ -4,7 +4,8 @@ import { BottomNavigation, BottomNavigationAction, Grid, Stack } from "@mui/mate
 import { useState } from "react";
 import UserScreen from "../../components/game-screens/User";
 import BankScreen from "../../components/game-screens/Bank";
-import { MOCK_PLAYER } from "../../../commons/mocks/player";
+import { useGame } from "../../context/game/useGame";
+import withAuth from "../../hocs/withAuth";
 
 enum Screen {
   User,
@@ -13,9 +14,12 @@ enum Screen {
 
 export function GamePage() {
   const [value, setValue] = useState<Screen>(Screen.User);
+  const { player, game } = useGame();
+
+  if (!player || !game) return null;
 
   const screenMap = {
-    [Screen.User]: <UserScreen player={MOCK_PLAYER} />,
+    [Screen.User]: <UserScreen player={player} />,
     [Screen.Bank]: <BankScreen />,
   };
 
@@ -37,4 +41,4 @@ export function GamePage() {
   );
 }
 
-export default GamePage;
+export default withAuth(GamePage);

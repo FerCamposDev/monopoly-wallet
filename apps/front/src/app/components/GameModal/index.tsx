@@ -31,8 +31,7 @@ const GameModal: FC<Props> = ({ type, action }) => {
           onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
-            const roomName = formData.get('room-name')?.toString() || 'FIXME:';
-            console.log(roomName);
+            const roomName = formData.get('room-name')?.toString() || '';
             action(roomName);
             handleClose();
           },

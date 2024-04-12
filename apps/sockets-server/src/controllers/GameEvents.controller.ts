@@ -27,6 +27,15 @@ export class GameEventsController {
     }
   }
 
+  playerJoined = (game: IGame) => {
+    try {
+      const player = game.players.find(p => p.socketId === this.socket.id);
+      this.socket.emit(SocketEvent.PLAYER_JOINED, player);
+    } catch (error) {
+      this.emitError(error)
+    }
+  }
+
   log = (game: IGame, log) => {
     try {
       this.socket.in(game.room).emit(SocketEvent.LOG, log);
@@ -37,9 +46,9 @@ export class GameEventsController {
 }
 
 /* enum events {
-  LOG = 'log',
-  WALLET_UPDATED = 'wallet-updated',
-  GAME_UPDATED = 'game-updated',
-  NEW_PLAYER = 'new-player',
-  PLAYER_LEFT_ROOM = 'player-left-room',
+  GAME_UPDATED,
+  PLAYER_JOINED,
+  LOG,
+  WALLET_UPDATED,
+  PLAYER_LEFT_ROOM,
 } */
