@@ -39,8 +39,8 @@ export class Game implements IGame {
     }
   }
 
-  connectPlayerById = (playerId: string, token: Token) => {
-    const index = this.players.findIndex(p => p.token === token);
+  connectPlayerById = (playerId: string, player: INewPlayer) => {
+    const index = this.players.findIndex(p => p.token === player.token);
   
     if (this.players[index].socketId) {
       throw new CustomError({ code: GameErrors.TokenAlreadyInGame });
@@ -48,6 +48,7 @@ export class Game implements IGame {
   
     if (index !== -1) {
       this.players[index].socketId = playerId;
+      this.players[index].name = player.name;
     }
   }
 

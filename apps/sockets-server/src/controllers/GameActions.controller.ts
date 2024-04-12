@@ -1,12 +1,13 @@
 import { Socket } from "socket.io";
 import { games } from "../model/games";
-import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketEvent, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketEvent } from "@monopoly-wallet/shared-types";
 import { GameEventsController } from "./GameEvents.controller";
 import { Game } from "../game/Game.class";
 
 export class GameController implements ISocketActions {
   private socket: Socket;
   private events: GameEventsController;
+  private socketRooms: string[] = [];
 
   constructor(socket: Socket) {
     this.socket = socket;
@@ -27,6 +28,7 @@ export class GameController implements ISocketActions {
     try {
       games.createGameRoom(room);
       this.socket.join(room);
+      this.socketRooms.push(room);
     } catch (error) {
       this.emitError(error)
     }
@@ -35,6 +37,7 @@ export class GameController implements ISocketActions {
   joinRoom = (room: string) => {
     try {
       this.socket.join(room);
+      this.socketRooms.push(room);
     } catch (error) {
       this.emitError(error)
     }
@@ -45,7 +48,7 @@ export class GameController implements ISocketActions {
       const game = games.getGame(room);
       game.disconnectPlayerById(this.socket.id);
       this.socket.leave(room);
-      this.events.gameUpdated(games.getGame(room));
+      this.events.gameUpdated(game);
     } catch (error) {
       this.emitError(error)
     }
@@ -62,11 +65,11 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinGameToToken = (room: string, token: Token) => {
+  joinGameToToken = (room: string, player: INewPlayer) => {
     try {
       const game = games.getGame(room);
-      game.connectPlayerById(this.socket.id, token)
-      this.events.gameUpdated(games.getGame(room));
+      game.connectPlayerById(this.socket.id, player)
+      this.events.gameUpdated(game);
       this.events.playerJoined(game);
     } catch (error) {
       this.emitError(error)
@@ -79,7 +82,7 @@ export class GameController implements ISocketActions {
       const player = game.players.find(p => p.socketId === this.socket.id);
       game.removePlayerByToken(player.token);
       this.socket.leave(room);
-      this.events.gameUpdated(games.getGame(room));
+      this.events.gameUpdated(game);
       this.events.playerLeave();
     } catch (error) {
       this.emitError(error)
@@ -90,6 +93,7 @@ export class GameController implements ISocketActions {
     try {
       games.restoreGame(room, game);
       this.socket.join(room);
+      this.socketRooms.push(room);
     } catch (error) {
       this.emitError(error)
     }
@@ -140,14 +144,14 @@ export class GameController implements ISocketActions {
     }
   }
 
-  disconnect = (data) => {
+  disconnect = (reason) => {
     try {
-      this.socket?.rooms.forEach(room => {
+      this.socketRooms.forEach(room => {
         const game = games.getGame(room);
         game.disconnectPlayerById(this.socket.id);
         this.events.gameUpdated(game);
       })
-      console.warn(`Disconnect: ${this.socket?.id}`, data);
+      console.warn(`Disconnect: ${this.socket?.id}`, reason);
     } catch (error) {
       console.log('error :>> ', error);
       this.emitError(error)

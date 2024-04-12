@@ -1,4 +1,4 @@
-import { IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketAction, Token } from "@monopoly-wallet/shared-types";
+import { IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketAction } from "@monopoly-wallet/shared-types";
 import { Socket } from "socket.io-client";
 
 export class SocketActions implements ISocketActions {
@@ -48,9 +48,9 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  joinGameToToken = (room: string, token: Token) => {
+  joinGameToToken = (room: string, newPlayer: INewPlayer) => {
     try {
-      this.socket?.emit(SocketAction.JOIN_GAME_TO_TOKEN, room, token)
+      this.socket?.emit(SocketAction.JOIN_GAME_TO_TOKEN, room, newPlayer)
     } catch (error) {
       console.log('error :>> ', error);
     }

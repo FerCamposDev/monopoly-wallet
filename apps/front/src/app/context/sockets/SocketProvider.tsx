@@ -17,9 +17,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
 
   useEffect(()=>{
     try {
-      socket.onAny((args) => {
-        console.log('Socket name: >> ', args);
-      })
+      socket.onAny((e) => console.log('Event received: >> ', e));
 
       socket.on(SocketEvent.GAME_UPDATED, (data: IGameProps) => {
         setGame(data);
@@ -40,6 +38,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
   
       socket.on('error', (data) => {
         console.log('Error data :>> ', data);
+        toast.error(data.message);
       })
   
       socket.on("connect_error", (err) => {

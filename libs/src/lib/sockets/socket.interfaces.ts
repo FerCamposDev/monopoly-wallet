@@ -1,4 +1,4 @@
-import { IGame, INewPlayer, IPlayer, Token } from "../game";
+import { IGame, INewPlayer, IPlayer } from "../game";
 import { PaymentReason } from "./sockets.enums";
 
 export interface IGameActions {
@@ -10,7 +10,7 @@ export interface IGameActions {
 
   joinGame: (room: string, player: INewPlayer) => void;
 
-  joinGameToToken: (room: string, token: Token) => void;
+  joinGameToToken: (room: string, player: INewPlayer) => void;
 
   leaveGame: (room: string) => void;
 

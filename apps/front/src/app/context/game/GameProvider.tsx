@@ -1,25 +1,39 @@
 import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { IGameProps, IPlayer, Option, TOKEN_OPTIONS, Token } from "@monopoly-wallet/shared-types";
+import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types";
 import { GameContextTypes } from "./types";
 import GameContext from "./GameContext";
+import { TOKEN_OPTIONS } from "../../../commons/constants";
+import { TokenOption } from "../../../commons/interfaces";
 
 type Props = PropsWithChildren;
 
 const GameProvider: FC<Props> = ({ children }) => {
   const [game, setGame] = useState<IGameProps | null>(null);
   const [player, setPlayer] = useState<IPlayer | null>(null);
-  const [availableTokens, setAvailableTokens] = useState<Option<Token>[]>(TOKEN_OPTIONS);
+  const [availableTokens, setAvailableTokens] = useState<TokenOption[]>(TOKEN_OPTIONS);
+
+  const playerSockets = game?.players.map(p => p.socketId).toString();
 
   useEffect(() => {
-    const usedTokens = game?.players
-      .filter(p => Boolean(p.socketId))
-      .map(p => p.token);
-      
-    const tokens = TOKEN_OPTIONS.filter(opt => !usedTokens?.includes(opt.value))
-    setAvailableTokens(tokens);
+    const tokens: TokenOption[] = [];
 
+    TOKEN_OPTIONS.forEach((option) => {
+      const used = game?.players.find(p => p.token === option.value);
+      if (!used) {
+        return tokens.push(option);
+      }
+
+      if (!used.socketId) {
+        tokens.push({
+          ...option,
+          usedBy: `Used previously by: ${used.name}`,
+        });
+      }
+    });
+
+    setAvailableTokens(tokens);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game?.players.length]);
+  }, [playerSockets, game?.players]);
 
   const value = useMemo((): GameContextTypes => ({
     game,

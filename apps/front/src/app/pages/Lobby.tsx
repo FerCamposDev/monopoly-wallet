@@ -1,4 +1,4 @@
-import { Token } from "@monopoly-wallet/shared-types";
+import { INewPlayer } from "@monopoly-wallet/shared-types";
 import { Avatar, Button, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Radio, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGame } from "../context/game/useGame";
@@ -7,28 +7,37 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "../../commons/enums/routes.enum";
 import { getTokenImagePath } from "../../commons/helpers/images";
 import withAuth from "../hocs/withAuth";
+import { TokenOption } from "../../commons/interfaces";
 
 const LobbyPage = () => {
   const { availableTokens, game } = useGame();
   const { actions, socket } = useGameSockets();
   const navigate = useNavigate();
-  const [selectedToken, setSelectedToken] = useState<Token>();
+  const [selectedToken, setSelectedToken] = useState<TokenOption>();
   const [username, setUsername] = useState('');
 
-  const handleSelection = (value: Token) => {
+  const handleSelection = (value: TokenOption) => {
     setSelectedToken(value);
   };
 
   const handleEnter = () => {
     if (game?.room && selectedToken) {
       console.log('Joining', socket.id);
-
-      actions.joinGame(game?.room, {
+      const player: INewPlayer = {
         name: username,
-        token: selectedToken,
-      })
+        token: selectedToken.value,
+      }
+
+      if (selectedToken.usedBy) {
+        actions.joinGameToToken(game.room, player);
+        return;
+      }
+
+      actions.joinGame(game?.room, player)
     }
   }
+
+  const playerSockets = game?.players.map(p => p.socketId).toString();
 
   useEffect(() => {
     const isUserInGame = game?.players.some(p => p.socketId === socket.id);
@@ -36,7 +45,7 @@ const LobbyPage = () => {
       navigate(Routes.Game);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game?.players.length, socket]);
+  }, [playerSockets, socket]);
 
   return (
     <Container maxWidth="sm">
@@ -56,11 +65,11 @@ const LobbyPage = () => {
             return (
               <ListItem
                 key={opt.value}
-                onClick={() => handleSelection(opt.value)}
+                onClick={() => handleSelection(opt)}
                 secondaryAction={
                   <Radio
                     edge="end"
-                    checked={selectedToken === opt.value}
+                    checked={selectedToken?.value === opt.value}
                   />
                 }
                 disablePadding
@@ -72,7 +81,7 @@ const LobbyPage = () => {
                       src={getTokenImagePath(opt.value)}
                     />
                   </ListItemAvatar>
-                  <ListItemText primary={opt.label} />
+                  <ListItemText primary={opt.label} secondary={opt.usedBy} />
                 </ListItemButton>
               </ListItem>
             );
