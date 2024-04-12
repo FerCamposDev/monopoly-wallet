@@ -5,7 +5,7 @@ export enum SocketEvent {
   // WALLET_UPDATED = 'wallet-updated',
   GAME_UPDATED = 'game-updated',
   PLAYER_JOINED = 'player-joined',
-  // PLAYER_LEFT_ROOM = 'player-left-room',
+  PLAYER_LEAVES_GAME = 'player-leaves-game',
 }
 
 export enum SocketAction {

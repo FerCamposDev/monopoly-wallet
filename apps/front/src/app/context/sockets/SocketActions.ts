@@ -56,9 +56,9 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveGame = (room: string, player: IPlayer) => {
+  leaveGame = (room: string) => {
     try {
-      this.socket?.emit(SocketAction.LEAVE_GAME, room, player)
+      this.socket?.emit(SocketAction.LEAVE_GAME, room)
     } catch (error) {
       console.log('error :>> ', error);
     }

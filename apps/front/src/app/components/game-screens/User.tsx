@@ -3,16 +3,23 @@ import { AddBusinessOutlined, LocalAtmOutlined, LogoutOutlined, SwapHorizOutline
 import { Avatar, Card, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import IconButtonText from "../shared/IconButtonText";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../commons/enums/routes.enum";
 import { getTokenImagePath } from "../../..//commons/helpers/images";
+import { useGameSockets } from "../../context/sockets/useGameSockets";
+import { useGame } from "../../context/game/useGame";
 
 type Props = {
   player: IPlayer;
 }
 
 const UserScreen: FC<Props> = ({ player }) => {
-  const navigate = useNavigate();
+  const { actions } = useGameSockets();
+  const { game } = useGame();
+
+  if (!game) return null;
+
+  const handleLeaveGame = () => {
+    actions.leaveGame(game?.room);
+  };
 
   return (
     <Grid container height="100%" p={2}>
@@ -28,7 +35,7 @@ const UserScreen: FC<Props> = ({ player }) => {
           <IconButtonText
             text="Leave game"
             color="error"
-            onClick={() => navigate(Routes.Home)}
+            onClick={handleLeaveGame}
             sx={{ ml: 'auto' }}
           >
             <LogoutOutlined fontSize="small" />

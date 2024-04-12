@@ -73,12 +73,14 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveGame = (room: string, player: IPlayer) => {
+  leaveGame = (room: string) => {
     try {
       const game = games.getGame(room);
-      game.removePlayerByToken(player.token)
+      const player = game.players.find(p => p.socketId === this.socket.id);
+      game.removePlayerByToken(player.token);
       this.socket.leave(room);
       this.events.gameUpdated(games.getGame(room));
+      this.events.playerLeave();
     } catch (error) {
       this.emitError(error)
     }

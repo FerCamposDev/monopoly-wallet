@@ -6,6 +6,7 @@ import { useGameSockets } from "../context/sockets/useGameSockets";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "../../commons/enums/routes.enum";
 import { getTokenImagePath } from "../../commons/helpers/images";
+import withAuth from "../hocs/withAuth";
 
 const LobbyPage = () => {
   const { availableTokens, game } = useGame();
@@ -36,13 +37,6 @@ const LobbyPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [game?.players.length, socket]);
-
-  useEffect(() => {
-    if (!game?.room) {
-      navigate(Routes.Home);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [game?.room])
 
   return (
     <Container maxWidth="sm">
@@ -96,4 +90,4 @@ const LobbyPage = () => {
   )
 }
 
-export default LobbyPage
+export default withAuth(LobbyPage);

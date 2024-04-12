@@ -26,8 +26,11 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       });
 
       socket.on(SocketEvent.PLAYER_JOINED, (currentPlayer: IPlayer) => {
-        console.log('Joined', currentPlayer)
         setPlayer(currentPlayer);
+      });
+
+      socket.on(SocketEvent.PLAYER_LEAVES_GAME, () => {
+        setPlayer(null);
       });
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {

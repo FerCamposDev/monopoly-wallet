@@ -12,7 +12,7 @@ export interface IGameActions {
 
   joinGameToToken: (room: string, token: Token) => void;
 
-  leaveGame: (room: string, player: IPlayer) => void;
+  leaveGame: (room: string) => void;
 
   restoreGame: (room: string, game: IGame) => void;
 }

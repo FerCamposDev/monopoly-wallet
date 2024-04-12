@@ -36,6 +36,14 @@ export class GameEventsController {
     }
   }
 
+  playerLeave = () => {
+    try {
+      this.socket.emit(SocketEvent.PLAYER_LEAVES_GAME);
+    } catch (error) {
+      this.emitError(error)
+    }
+  }
+
   log = (game: IGame, log) => {
     try {
       this.socket.in(game.room).emit(SocketEvent.LOG, log);
