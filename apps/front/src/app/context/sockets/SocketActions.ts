@@ -18,7 +18,7 @@ export class SocketActions implements ISocketActions {
 
   restoreGame = (room: string, game: IGame) => {
     try {
-      this.socket?.emit(SocketAction.RESTORE_GAME, game);
+      this.socket?.emit(SocketAction.RESTORE_GAME, room, game);
     } catch (error) {
       console.log('error :>> ', error);
     }
@@ -32,57 +32,57 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveRoom = (room: string) => {
+  leaveRoom = () => {
     try {
-      this.socket?.emit(SocketAction.LEAVE_ROOM, room)
+      this.socket?.emit(SocketAction.LEAVE_ROOM)
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  joinGame = (room: string, player: INewPlayer) => {
+  joinGame = (player: INewPlayer) => {
     try {
-      this.socket?.emit(SocketAction.JOIN_GAME, room, player)
+      this.socket?.emit(SocketAction.JOIN_GAME, player)
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  joinGameToToken = (room: string, newPlayer: INewPlayer) => {
+  joinGameToToken = (newPlayer: INewPlayer) => {
     try {
-      this.socket?.emit(SocketAction.JOIN_GAME_TO_TOKEN, room, newPlayer)
+      this.socket?.emit(SocketAction.JOIN_GAME_TO_TOKEN, newPlayer)
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  leaveGame = (room: string) => {
+  leaveGame = () => {
     try {
-      this.socket?.emit(SocketAction.LEAVE_GAME, room)
+      this.socket?.emit(SocketAction.LEAVE_GAME)
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentP2P = (room: string, data: IP2PPayment) => {
+  paymentP2P = (data: IP2PPayment) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_P2P, room, data);
+      this.socket?.emit(SocketAction.PAYMENT_P2P, data);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToBank = (room: string, data: IPaymentToBank) => {
+  paymentToBank = (data: IPaymentToBank) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, room, data);
+      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, data);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToPlayer = (room: string, data: IPaymentFromBank) => {
+  paymentToPlayer = (data: IPaymentFromBank) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, room, data);
+      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, data);
     } catch (error) {
       console.log('error :>> ', error);
     }

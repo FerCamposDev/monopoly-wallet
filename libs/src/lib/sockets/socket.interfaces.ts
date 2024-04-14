@@ -5,23 +5,23 @@ export interface IGameActions {
 
   joinRoom: (room: string) => void;
 
-  leaveRoom: (room: string) => void;
+  leaveRoom: () => void;
 
-  joinGame: (room: string, player: INewPlayer) => void;
+  joinGame: (player: INewPlayer) => void;
 
-  joinGameToToken: (room: string, player: INewPlayer) => void;
+  joinGameToToken: (player: INewPlayer) => void;
 
-  leaveGame: (room: string) => void;
+  leaveGame: () => void;
 
   restoreGame: (room: string, game: IGame) => void;
 }
 
 export interface IPaymentActions {
-  paymentP2P: (room: string, data: IP2PPayment) => void;
+  paymentP2P: (data: IP2PPayment) => void;
   
-  paymentToBank: (room: string, data: IPaymentToBank) => void;
+  paymentToBank: (data: IPaymentToBank) => void;
 
-  paymentToPlayer: (room: string, data: IPaymentFromBank) => void;
+  paymentToPlayer: (data: IPaymentFromBank) => void;
 }
 
 export interface ISocketActions extends IGameActions, IPaymentActions{}

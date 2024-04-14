@@ -24,7 +24,9 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       });
 
       socket.on(SocketEvent.PLAYER_JOINED, (currentPlayer: IPlayer) => {
-        setPlayer(currentPlayer);
+        if (currentPlayer.socketId === socket.id) {
+          setPlayer(currentPlayer);
+        }
       });
 
       socket.on(SocketEvent.PLAYER_UPDATED, (updatedPlayer: IPlayer) => {

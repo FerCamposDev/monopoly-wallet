@@ -21,7 +21,7 @@ const UserScreen: FC<Props> = ({ player }) => {
   if (!game) return null;
 
   const handleLeaveGame = () => {
-    actions.leaveGame(game?.room);
+    actions.leaveGame();
   };
 
   return (

@@ -29,11 +29,11 @@ const LobbyPage = () => {
       }
 
       if (selectedToken.usedBy) {
-        actions.joinGameToToken(game.room, player);
+        actions.joinGameToToken(player);
         return;
       }
 
-      actions.joinGame(game?.room, player)
+      actions.joinGame(player)
     }
   }
 

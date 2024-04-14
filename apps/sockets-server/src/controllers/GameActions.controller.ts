@@ -8,7 +8,7 @@ export class GameController implements ISocketActions {
   private socket: Socket;
   private io: Server;
   private events: GameEventsController;
-  private socketRooms: string[] = [];
+  private room: string; 
 
   constructor(socket: Socket, io: Server) {
     this.socket = socket;
@@ -27,19 +27,17 @@ export class GameController implements ISocketActions {
   };
 
   private disconnectFromAllRooms = () => {
-    this.socketRooms.forEach(room => {
-      const game = games.getGame(room);
-      game.disconnectPlayerById(this.socket.id);
-      this.events.gameUpdated(game);
-    });
-    this.socketRooms = [];
+    const game = games.getGame(this.room);
+    game.disconnectPlayerById(this.socket.id);
+    this.events.gameUpdated(game);
+    this.room = '';
   }
 
   createGame = (room: string) => {
     try {
       games.createGameRoom(room);
       this.socket.join(room);
-      this.socketRooms.push(room);
+      this.room = room;
     } catch (error) {
       this.emitError(error)
     }
@@ -49,26 +47,26 @@ export class GameController implements ISocketActions {
     try {
       games.getGame(room); // to check if game exist
       this.socket.join(room);
-      this.socketRooms.push(room);
+      this.room = room;
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  leaveRoom = (room: string) => {
+  leaveRoom = () => {
     try {
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.disconnectPlayerById(this.socket.id);
-      this.socket.leave(room);
+      this.socket.leave(this.room);
       this.events.gameUpdated(game);
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  joinGame = (room: string, player: INewPlayer) => {
+  joinGame = (player: INewPlayer) => {
     try {
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.addPlayer(player, this.socket.id);
       this.events.gameUpdated(game);
       this.events.playerJoined(game);
@@ -77,9 +75,9 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinGameToToken = (room: string, player: INewPlayer) => {
+  joinGameToToken = (player: INewPlayer) => {
     try {
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.connectPlayerById(this.socket.id, player)
       this.events.gameUpdated(game);
       this.events.playerJoined(game);
@@ -88,12 +86,12 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveGame = (room: string) => {
+  leaveGame = () => {
     try {
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       const player = game.players.find(p => p.socketId === this.socket.id);
       game.removePlayerByToken(player.token);
-      this.socket.leave(room);
+      this.socket.leave(this.room);
       this.events.gameUpdated(game);
       this.events.playerLeave();
     } catch (error) {
@@ -105,13 +103,13 @@ export class GameController implements ISocketActions {
     try {
       games.restoreGame(room, game);
       this.socket.join(room);
-      this.socketRooms.push(room);
+      this.room = room;
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  paymentP2P = (room: string, data: IP2PPayment) => {
+  paymentP2P = (data: IP2PPayment) => {
     try {
       if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
@@ -119,7 +117,7 @@ export class GameController implements ISocketActions {
           message: 'You cannot send money from other user.',
         })
       }
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.paymentP2P(data);
       this.events.log(game, createPaymentP2PLog(data));
 
@@ -130,7 +128,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentToPlayer = (room: string, data: IPaymentFromBank) => {
+  paymentToPlayer = (data: IPaymentFromBank) => {
     try {
       if (this.socket.id !== data.to.socketId) {
         throw new CustomError({
@@ -138,7 +136,7 @@ export class GameController implements ISocketActions {
           message: 'You cannot send money to yourself.',
         })
       }
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.paymentToPlayer(data);
       this.events.log(game, createPaymentFromBankLog(data));
       this.events.playerUpdated(game, data.to.token);
@@ -147,7 +145,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentToBank = (room: string, data: IPaymentToBank) => {
+  paymentToBank = (data: IPaymentToBank) => {
     try {
       if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
@@ -155,7 +153,7 @@ export class GameController implements ISocketActions {
           message: 'You cannot send money from other user.',
         })
       }
-      const game = games.getGame(room);
+      const game = games.getGame(this.room);
       game.paymentToBank(data);
       this.events.log(game, createPaymentToBankLog(data));
       this.events.playerUpdated(game, data.from.token);

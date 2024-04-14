@@ -5,11 +5,16 @@ import { useState } from "react";
 import { IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import { useGame } from "../../../context/game/useGame";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { Routes } from "../../../../commons/enums/routes.enum";
 
 const TransferPage = () => {
+  const navigate = useNavigate();
   const { actions } = useGameSockets();
-  const { game, player } = useGame();
+  const { player } = useGame();
   const [to, setTo] = useState<IPlayer | null>(null);
+  
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,12 +22,14 @@ const TransferPage = () => {
 
     const amount = formData.get('amount');
 
-    actions.paymentP2P(game!.room, {
+    actions.paymentP2P({
       amount: Number(amount),
       from: player!,
       to: to!,
       reason: PaymentReason.BUILD
     });
+    toast.success('Successful transfer!');
+    navigate(Routes.Game);
   }
 
   return (
