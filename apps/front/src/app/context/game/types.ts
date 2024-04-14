@@ -1,5 +1,5 @@
 import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types"
-import { TokenOption } from "../../../commons/interfaces";
+import { TokenOption } from "../../commons/interfaces";
 import { SetStateAction } from "react"
 
 export type GameContextTypes = {

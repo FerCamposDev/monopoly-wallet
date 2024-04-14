@@ -2,8 +2,8 @@ import { FC, useEffect } from "react"
 import { JSX } from "react/jsx-runtime";
 import { useGame } from "../context/game/useGame";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../commons/enums/routes.enum";
-import { getRoomPath } from "../../commons/helpers/routes";
+import { Routes } from "../commons/enums/routes.enum";
+import { getRoomPath } from "../commons/helpers/routes";
 
 const withAuth = (Component: FC) => {
   const WithAuth = (props: JSX.IntrinsicAttributes) => {

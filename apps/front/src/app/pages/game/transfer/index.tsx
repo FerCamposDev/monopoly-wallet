@@ -7,7 +7,7 @@ import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import { useGame } from "../../../context/game/useGame";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../../commons/enums/routes.enum";
+import { Routes } from "../../../commons/enums/routes.enum";
 
 const TransferPage = () => {
   const navigate = useNavigate();

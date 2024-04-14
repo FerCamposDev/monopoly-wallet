@@ -3,11 +3,11 @@ import { AddBusinessOutlined, LocalAtmOutlined, LogoutOutlined, SwapHorizOutline
 import { Avatar, Card, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import IconButtonText from "../shared/IconButtonText";
-import { getTokenImagePath } from "../../..//commons/helpers/images";
+import { getTokenImagePath } from "../../commons/helpers/images";
 import { useGameSockets } from "../../context/sockets/useGameSockets";
 import { useGame } from "../../context/game/useGame";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../commons/enums/routes.enum";
+import { Routes } from "../../commons/enums/routes.enum";
 
 type Props = {
   player: IPlayer;

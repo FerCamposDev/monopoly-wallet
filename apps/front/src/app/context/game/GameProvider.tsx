@@ -2,8 +2,8 @@ import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types";
 import { GameContextTypes } from "./types";
 import GameContext from "./GameContext";
-import { TOKEN_OPTIONS } from "../../../commons/constants";
-import { TokenOption } from "../../../commons/interfaces";
+import { TOKEN_OPTIONS } from "../../commons/constants";
+import { TokenOption } from "../../commons/interfaces";
 
 type Props = PropsWithChildren;
 

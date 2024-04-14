@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useGame } from "../context/game/useGame";
 import { useGameSockets } from "../context/sockets/useGameSockets";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../commons/enums/routes.enum";
-import { getTokenImagePath } from "../../commons/helpers/images";
+import { Routes } from "../commons/enums/routes.enum";
+import { getTokenImagePath } from "../commons/helpers/images";
 import withAuth from "../hocs/withAuth";
-import { TokenOption } from "../../commons/interfaces";
+import { TokenOption } from "../commons/interfaces";
 
 const LobbyPage = () => {
   const { availableTokens, game } = useGame();

@@ -1,7 +1,7 @@
 import { AccountBalanceOutlined, GavelOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material"
 import { Card, Divider, Grid, List, Stack, Typography } from "@mui/material"
 import IconButtonText from "../shared/IconButtonText"
-import { FAKE_LOGS } from "../../../commons/mocks/logs"
+import { FAKE_LOGS } from "../../commons/mocks/logs"
 
 type Props = {
   //

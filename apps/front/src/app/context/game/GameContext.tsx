@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { GameContextTypes } from './types';
-import { TOKEN_OPTIONS } from "../../../commons/constants";
+import { TOKEN_OPTIONS } from "../../commons/constants";
 
 const GameContext = createContext<GameContextTypes>({
   game: null,

@@ -4,7 +4,7 @@ import { useGameSockets } from "../context/sockets/useGameSockets";
 import { useGame } from "../context/game/useGame";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRoomPath } from "../../commons/helpers/routes";
+import { getRoomPath } from "../commons/helpers/routes";
 
 const HomePage = () => {
   const { actions } = useGameSockets();
