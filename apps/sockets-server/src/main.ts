@@ -18,7 +18,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log(`User Connected ${socket.id}`)
-  const controller = new GameController(socket);
+  const controller = new GameController(socket, io);
 
   socket.on(SocketAction.CREATE_GAME, controller.createGame);
   

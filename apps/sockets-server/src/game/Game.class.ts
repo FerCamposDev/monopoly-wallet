@@ -1,4 +1,4 @@
-import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, IPlayer, Token } from "@monopoly-wallet/shared-types";
 
 export class Game implements IGame {
   public room: string;
@@ -66,19 +66,21 @@ export class Game implements IGame {
     }
   }
 
-  paymentP2P = (from: IPlayer, to: IPlayer, amount: number) => {
+  paymentP2P = (data: IP2PPayment) => {
+    const { from, to, amount } = data;
     if (this.players.includes(from)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
     }
     if (this.players.includes(to)) {
-      throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
+      throw new CustomError({ code: GameErrors.UnknownPlayer, data: to });
     }
 
     this.updatePlayerBalanceByToken(from.token, amount * -1);
     this.updatePlayerBalanceByToken(to.token, amount);
   }
 
-  paymentToBank = (from: IPlayer, amount: number) => {
+  paymentToBank = (data: IPaymentToBank) => {
+    const { from , amount } = data;
     if (this.players.includes(from)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: from });
     }
@@ -86,7 +88,8 @@ export class Game implements IGame {
     this.updatePlayerBalanceByToken(from.token, amount * -1);
   }
 
-  paymentToPlayer = (to: IPlayer, amount: number) => {
+  paymentToPlayer = (data: IPaymentFromBank) => {
+    const { to , amount } = data;
     if (this.players.includes(to)) {
       throw new CustomError({ code: GameErrors.UnknownPlayer, data: to });
     }

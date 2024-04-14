@@ -1,11 +1,10 @@
 export enum SocketEvent {
   CUSTOM_ERROR = 'custom-error',
   LOG = 'log',
-  // AVAILABLE_TOKENS = 'available-tokens',
-  // WALLET_UPDATED = 'wallet-updated',
   GAME_UPDATED = 'game-updated',
   PLAYER_JOINED = 'player-joined',
   PLAYER_LEAVES_GAME = 'player-leaves-game',
+  PLAYER_UPDATED = 'player-updated',
 }
 
 export enum SocketAction {

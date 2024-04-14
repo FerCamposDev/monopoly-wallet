@@ -1,11 +1,14 @@
-import { Socket } from "socket.io";
-import { CustomError, IGame, SocketEvent } from "@monopoly-wallet/shared-types";
+import { Server, Socket } from "socket.io";
+import { CustomError, IGame, SocketEvent, Token } from "@monopoly-wallet/shared-types";
+import { Log } from "../model/Log";
 
 export class GameEventsController {
   private socket: Socket;
+  private io: Server;
 
-  constructor(socket: Socket) {
+  constructor(socket: Socket, io: Server) {
     this.socket = socket;
+    this.io = io;
   }
 
   private emitError = error => {
@@ -20,8 +23,8 @@ export class GameEventsController {
 
   gameUpdated = (game: IGame) => {
     try {
-      this.socket.in(game.room).emit(SocketEvent.GAME_UPDATED, game);
-      this.socket.emit(SocketEvent.GAME_UPDATED, game);
+      this.io.in(game.room).emit(SocketEvent.GAME_UPDATED, game);
+      // this.socket.emit(SocketEvent.GAME_UPDATED, game);
     } catch (error) {
       this.emitError(error)
     }
@@ -30,7 +33,7 @@ export class GameEventsController {
   playerJoined = (game: IGame) => {
     try {
       const player = game.players.find(p => p.socketId === this.socket.id);
-      this.socket.emit(SocketEvent.PLAYER_JOINED, player);
+      this.io.in(game.room).emit(SocketEvent.PLAYER_JOINED, player);
     } catch (error) {
       this.emitError(error)
     }
@@ -44,19 +47,19 @@ export class GameEventsController {
     }
   }
 
-  log = (game: IGame, log) => {
+  playerUpdated = (game: IGame, token: Token) => {
+    const updated = game.players.find(p => p.token === token);
+    if (updated) {
+      this.io.to(updated.socketId).emit(SocketEvent.PLAYER_UPDATED, updated);
+    }
+  }
+
+  log = (game: IGame, log: Log) => {
     try {
-      this.socket.in(game.room).emit(SocketEvent.LOG, log);
+      this.io.in(game.room).emit(SocketEvent.LOG, log);
+      // this.socket.emit(SocketEvent.LOG, log);
     } catch (error) {
       this.emitError(error)
     }
   }
 }
-
-/* enum events {
-  GAME_UPDATED,
-  PLAYER_JOINED,
-  LOG,
-  WALLET_UPDATED,
-  PLAYER_LEFT_ROOM,
-} */

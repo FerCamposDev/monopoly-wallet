@@ -1,3 +1,4 @@
+import { PaymentReason } from "../sockets";
 import { Token } from "./token.enum";
 
 export interface INewPlayer {
@@ -22,9 +23,9 @@ export interface IGameMethods {
   removePlayerByToken(token: Token): void;
   disconnectPlayerById(playerId: string): void;
   connectPlayerById(playerId: string, player: INewPlayer): void;
-  paymentP2P(from: IPlayer, to: IPlayer, amount: number): void;
-  paymentToBank(from: IPlayer, amount: number): void;
-  paymentToPlayer(to: IPlayer, amount: number): void;
+  paymentP2P(paymentData: IP2PPayment): void;
+  paymentToBank(paymentData: IPaymentToBank): void;
+  paymentToPlayer(paymentData: IPaymentFromBank): void;
 }
 
 export interface IGame extends IGameProps, IGameMethods { }
@@ -32,3 +33,23 @@ export interface IGame extends IGameProps, IGameMethods { }
 export interface IGamesByRoom {
   [room: string]: IGame
 }
+
+interface IPaymentBase {
+  amount: number;
+  reason: PaymentReason;
+}
+
+export interface IP2PPayment extends IPaymentBase {
+  from: IPlayer;
+  to: IPlayer;
+}
+
+export interface IPaymentFromBank  extends IPaymentBase {
+  to: IPlayer;
+}
+
+export interface IPaymentToBank extends IPaymentBase {
+  from: IPlayer;
+}
+
+// export type IBankPayment = IPaymentFromBank | IPaymentToBank;

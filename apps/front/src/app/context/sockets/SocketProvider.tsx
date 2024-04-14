@@ -1,7 +1,7 @@
 import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
 import { FC, PropsWithChildren, useContext, useEffect, useMemo } from "react";
-import { CustomError, IGameProps, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
+import { CustomError, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
 import toast from "react-hot-toast";
@@ -27,9 +27,17 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         setPlayer(currentPlayer);
       });
 
+      socket.on(SocketEvent.PLAYER_UPDATED, (updatedPlayer: IPlayer) => {
+        setPlayer(updatedPlayer);
+      });
+
       socket.on(SocketEvent.PLAYER_LEAVES_GAME, () => {
         setPlayer(null);
       });
+
+      socket.on(SocketEvent.LOG, (log: ILog) => {
+        console.log('log :>> ', log);
+      })
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
         console.log('Error data :>> ', data);

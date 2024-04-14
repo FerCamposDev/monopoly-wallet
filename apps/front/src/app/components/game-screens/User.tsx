@@ -6,6 +6,8 @@ import IconButtonText from "../shared/IconButtonText";
 import { getTokenImagePath } from "../../..//commons/helpers/images";
 import { useGameSockets } from "../../context/sockets/useGameSockets";
 import { useGame } from "../../context/game/useGame";
+import { useNavigate } from "react-router-dom";
+import { Routes } from "../../../commons/enums/routes.enum";
 
 type Props = {
   player: IPlayer;
@@ -14,6 +16,7 @@ type Props = {
 const UserScreen: FC<Props> = ({ player }) => {
   const { actions } = useGameSockets();
   const { game } = useGame();
+  const navigate = useNavigate();
 
   if (!game) return null;
 
@@ -51,7 +54,7 @@ const UserScreen: FC<Props> = ({ player }) => {
             <LocalAtmOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Transfer">
+          <IconButtonText text="Transfer" onClick={() => navigate(Routes.GameTransfer)}>
             <SwapHorizOutlined />
           </IconButtonText>
 

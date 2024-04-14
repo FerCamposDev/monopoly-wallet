@@ -1,4 +1,4 @@
-import { CustomError, GameErrors, IGamesByRoom } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, IGamesByRoom } from "@monopoly-wallet/shared-types";
 import { Game } from "./Game.class";
 
 export class GameRooms {
@@ -12,7 +12,7 @@ export class GameRooms {
     this.rooms[roomName] = new Game(roomName);
   }
 
-  restoreGame(roomName: string, game: Game) {
+  restoreGame(roomName: string, game: IGame) {
     if (this.rooms[roomName]) {
       throw new CustomError({ code: GameErrors.AlreadyExist });
     }

@@ -1,4 +1,4 @@
-import { IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketAction } from "@monopoly-wallet/shared-types";
+import { IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, ISocketActions, SocketAction } from "@monopoly-wallet/shared-types";
 import { Socket } from "socket.io-client";
 
 export class SocketActions implements ISocketActions {
@@ -64,25 +64,25 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  paymentP2P = (game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentP2P = (room: string, data: IP2PPayment) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_P2P, game, from, to, amount, reason);
+      this.socket?.emit(SocketAction.PAYMENT_P2P, room, data);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToBank = (game: IGame, from: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentToBank = (room: string, data: IPaymentToBank) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, game, from, amount, reason);
+      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, room, data);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToPlayer = (game: IGame, to: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentToPlayer = (room: string, data: IPaymentFromBank) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, game, to, amount, reason);
+      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, room, data);
     } catch (error) {
       console.log('error :>> ', error);
     }

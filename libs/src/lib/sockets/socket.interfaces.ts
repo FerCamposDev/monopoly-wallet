@@ -1,5 +1,4 @@
-import { IGame, INewPlayer, IPlayer } from "../game";
-import { PaymentReason } from "./sockets.enums";
+import { IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank } from "../game";
 
 export interface IGameActions {
   createGame: (room: string) => void;
@@ -18,11 +17,11 @@ export interface IGameActions {
 }
 
 export interface IPaymentActions {
-  paymentP2P: (game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) => void;
+  paymentP2P: (room: string, data: IP2PPayment) => void;
   
-  paymentToBank: (game: IGame, from: IPlayer, amount: number, reason: PaymentReason) => void;
+  paymentToBank: (room: string, data: IPaymentToBank) => void;
 
-  paymentToPlayer: (game: IGame, to: IPlayer, amount: number, reason: PaymentReason) => void;
+  paymentToPlayer: (room: string, data: IPaymentFromBank) => void;
 }
 
 export interface ISocketActions extends IGameActions, IPaymentActions{}

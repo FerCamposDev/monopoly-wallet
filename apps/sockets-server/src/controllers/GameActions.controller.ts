@@ -1,17 +1,19 @@
-import { Socket } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { games } from "../model/games";
-import { CustomError, GameErrors, IGame, INewPlayer, IPlayer, ISocketActions, PaymentReason, SocketEvent } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, ISocketActions, SocketEvent } from "@monopoly-wallet/shared-types";
 import { GameEventsController } from "./GameEvents.controller";
-import { Game } from "../game/Game.class";
+import { createPaymentFromBankLog, createPaymentP2PLog, createPaymentToBankLog } from "../commons/helpers/logs";
 
 export class GameController implements ISocketActions {
   private socket: Socket;
+  private io: Server;
   private events: GameEventsController;
   private socketRooms: string[] = [];
 
-  constructor(socket: Socket) {
+  constructor(socket: Socket, io: Server) {
     this.socket = socket;
-    this.events = new GameEventsController(socket);
+    this.io = io;
+    this.events = new GameEventsController(socket, io);
   }
 
   private emitError = error => {
@@ -23,6 +25,15 @@ export class GameController implements ISocketActions {
       'error', { message: 'Something went wrong', data: error?.toString() }
     );
   };
+
+  private disconnectFromAllRooms = () => {
+    this.socketRooms.forEach(room => {
+      const game = games.getGame(room);
+      game.disconnectPlayerById(this.socket.id);
+      this.events.gameUpdated(game);
+    });
+    this.socketRooms = [];
+  }
 
   createGame = (room: string) => {
     try {
@@ -36,6 +47,7 @@ export class GameController implements ISocketActions {
 
   joinRoom = (room: string) => {
     try {
+      games.getGame(room); // to check if game exist
       this.socket.join(room);
       this.socketRooms.push(room);
     } catch (error) {
@@ -89,7 +101,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  restoreGame = (room: string, game: Game) => {
+  restoreGame = (room: string, game: IGame) => {
     try {
       games.restoreGame(room, game);
       this.socket.join(room);
@@ -99,46 +111,54 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentP2P = (game: IGame, from: IPlayer, to: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentP2P = (room: string, data: IP2PPayment) => {
     try {
-      if (this.socket.id !== from.socketId) {
+      if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
           code: GameErrors.ActionForbidden,
           message: 'You cannot send money from other user.',
         })
       }
-      games.getGame(game.room).paymentP2P(from, to, amount);
-      // this.events.log
+      const game = games.getGame(room);
+      game.paymentP2P(data);
+      this.events.log(game, createPaymentP2PLog(data));
+
+      this.events.playerUpdated(game, data.from.token);
+      this.events.playerUpdated(game, data.to.token);
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  paymentToPlayer = (game: IGame, to: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentToPlayer = (room: string, data: IPaymentFromBank) => {
     try {
-      if (this.socket.id !== to.socketId) {
+      if (this.socket.id !== data.to.socketId) {
         throw new CustomError({
           code: GameErrors.ActionForbidden,
           message: 'You cannot send money to yourself.',
         })
       }
-      games.getGame(game.room).paymentToPlayer(to, amount);
-      // this.events.walletUpdated
+      const game = games.getGame(room);
+      game.paymentToPlayer(data);
+      this.events.log(game, createPaymentFromBankLog(data));
+      this.events.playerUpdated(game, data.to.token);
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  paymentToBank = (game: IGame, from: IPlayer, amount: number, reason: PaymentReason) => {
+  paymentToBank = (room: string, data: IPaymentToBank) => {
     try {
-      if (this.socket.id !== from.socketId) {
+      if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
           code: GameErrors.ActionForbidden,
           message: 'You cannot send money from other user.',
         })
       }
-      games.getGame(game.room).paymentToBank(from, amount);
-      // this.events.walletUpdated
+      const game = games.getGame(room);
+      game.paymentToBank(data);
+      this.events.log(game, createPaymentToBankLog(data));
+      this.events.playerUpdated(game, data.from.token);
     } catch (error) {
       this.emitError(error)
     }
@@ -146,11 +166,7 @@ export class GameController implements ISocketActions {
 
   disconnect = (reason) => {
     try {
-      this.socketRooms.forEach(room => {
-        const game = games.getGame(room);
-        game.disconnectPlayerById(this.socket.id);
-        this.events.gameUpdated(game);
-      })
+      this.disconnectFromAllRooms();
       console.warn(`Disconnect: ${this.socket?.id}`, reason);
     } catch (error) {
       console.log('error :>> ', error);
