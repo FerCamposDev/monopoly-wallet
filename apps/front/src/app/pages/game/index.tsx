@@ -4,8 +4,8 @@ import { BottomNavigation, BottomNavigationAction, Grid, Stack } from "@mui/mate
 import { useState } from "react";
 import UserScreen from "../../components/game-screens/User";
 import BankScreen from "../../components/game-screens/Bank";
-import { useGame } from "../../context/game/useGame";
 import withAuth from "../../hocs/withAuth";
+import RoomLayout from "../../components/shared/RoomLayout";
 
 enum Screen {
   User,
@@ -14,30 +14,29 @@ enum Screen {
 
 export function GamePage() {
   const [value, setValue] = useState<Screen>(Screen.User);
-  const { player, game } = useGame();
-
-  if (!player || !game) return null;
 
   const screenMap = {
-    [Screen.User]: <UserScreen player={player} />,
+    [Screen.User]: <UserScreen />,
     [Screen.Bank]: <BankScreen />,
   };
 
   return (
-    <Stack height="100vh">
-      <Grid container height="100%">
-        {screenMap[value]}
-      </Grid>
+    <RoomLayout>
+      <Stack height="100vh">
+        <Grid container height="100%">
+          {screenMap[value]}
+        </Grid>
 
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(_e, newValue) => { setValue(newValue) }}
-      >
-        <BottomNavigationAction label="User" icon={<AccountBalanceWalletOutlined />} />
-        <BottomNavigationAction label="Bank" icon={<AccountBalanceOutlined />} />
-      </BottomNavigation>
-    </Stack>
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(_e, newValue) => { setValue(newValue) }}
+        >
+          <BottomNavigationAction label="User" icon={<AccountBalanceWalletOutlined />} />
+          <BottomNavigationAction label="Bank" icon={<AccountBalanceOutlined />} />
+        </BottomNavigation>
+      </Stack>
+    </RoomLayout>
   );
 }
 

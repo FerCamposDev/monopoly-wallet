@@ -1,19 +1,14 @@
-import { AccountBalanceOutlined, GavelOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material"
+import { GavelOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material"
 import { Card, Divider, Grid, List, Stack, Typography } from "@mui/material"
 import IconButtonText from "../shared/IconButtonText"
 import { FAKE_LOGS } from "../../commons/mocks/logs"
 
-type Props = {
-  //
-}
-
-const BankScreen = (props: Props) => {
+const BankScreen = () => {
   return (
     <Grid container height="100%" p={2}>
       <Stack width="100%" gap={4}>
-        <Grid container alignItems="center" justifyContent="flex-end" gap={2}>
-          <AccountBalanceOutlined />
-          <Typography variant="h6">
+        <Grid container alignItems="center" justifyContent="center" gap={2}>
+          <Typography variant="h4">
             Bank
           </Typography>
         </Grid>
