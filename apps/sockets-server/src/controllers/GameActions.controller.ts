@@ -53,12 +53,13 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveRoom = () => {
+  leaveRoom = (callback: VoidFunction) => {
     try {
       const game = games.getGame(this.room);
       game.disconnectPlayerById(this.socket.id);
       this.socket.leave(this.room);
       this.events.gameUpdated(game);
+      callback();
     } catch (error) {
       this.emitError(error)
     }
@@ -86,14 +87,14 @@ export class GameController implements ISocketActions {
     }
   }
 
-  leaveGame = () => {
+  leaveGame = (callback: VoidFunction) => {
     try {
       const game = games.getGame(this.room);
       const player = game.players.find(p => p.socketId === this.socket.id);
       game.removePlayerByToken(player.token);
       this.socket.leave(this.room);
       this.events.gameUpdated(game);
-      this.events.playerLeave();
+      callback();
     } catch (error) {
       this.emitError(error)
     }

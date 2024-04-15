@@ -5,13 +5,13 @@ export interface IGameActions {
 
   joinRoom: (room: string) => void;
 
-  leaveRoom: () => void;
+  leaveRoom: (callback: VoidFunction) => void;
 
   joinGame: (player: INewPlayer) => void;
 
   joinGameToToken: (player: INewPlayer) => void;
 
-  leaveGame: () => void;
+  leaveGame: (callback: VoidFunction) => void;
 
   restoreGame: (room: string, game: IGame) => void;
 }

@@ -14,6 +14,12 @@ const GameProvider: FC<Props> = ({ children }) => {
 
   const playerSockets = game?.players.map(p => p.socketId).toString();
 
+  const reset = () => {
+    setGame(null);
+    setPlayer(null);
+    setAvailableTokens(TOKEN_OPTIONS);
+  }
+
   useEffect(() => {
     const tokens: TokenOption[] = [];
 
@@ -40,7 +46,8 @@ const GameProvider: FC<Props> = ({ children }) => {
     setGame,
     player,
     setPlayer,
-    availableTokens
+    availableTokens,
+    reset,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [game, availableTokens, player]);
 

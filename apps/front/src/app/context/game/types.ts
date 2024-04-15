@@ -8,4 +8,5 @@ export type GameContextTypes = {
   player: IPlayer | null;
   setPlayer: React.Dispatch<SetStateAction<IPlayer | null>>;
   availableTokens: TokenOption[];
+  reset: VoidFunction;
 }

@@ -39,13 +39,6 @@ export class GameEventsController {
     }
   }
 
-  playerLeave = () => {
-    try {
-      this.socket.emit(SocketEvent.PLAYER_LEAVES_GAME);
-    } catch (error) {
-      this.emitError(error)
-    }
-  }
 
   playerUpdated = (game: IGame, token: Token) => {
     const updated = game.players.find(p => p.token === token);

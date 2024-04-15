@@ -32,9 +32,9 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveRoom = () => {
+  leaveRoom = (callback: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.LEAVE_ROOM)
+      this.socket?.emit(SocketAction.LEAVE_ROOM, callback);
     } catch (error) {
       console.log('error :>> ', error);
     }
@@ -56,9 +56,9 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  leaveGame = () => {
+  leaveGame = (callback: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.LEAVE_GAME)
+      this.socket?.emit(SocketAction.LEAVE_GAME, callback)
     } catch (error) {
       console.log('error :>> ', error);
     }

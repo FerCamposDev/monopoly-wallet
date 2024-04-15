@@ -1,5 +1,5 @@
 import { INewPlayer } from "@monopoly-wallet/shared-types";
-import { Avatar, Button, Container, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Radio, Stack, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Container, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Radio, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGame } from "../context/game/useGame";
 import { useGameSockets } from "../context/sockets/useGameSockets";
@@ -8,13 +8,16 @@ import { Routes } from "../commons/enums/routes.enum";
 import { getTokenImagePath } from "../commons/helpers/images";
 import withAuth from "../hocs/withAuth";
 import { TokenOption } from "../commons/interfaces";
+import { ArrowBackOutlined } from "@mui/icons-material";
 
 const LobbyPage = () => {
-  const { availableTokens, game } = useGame();
+  const { availableTokens, game, reset } = useGame();
   const { actions, socket } = useGameSockets();
   const navigate = useNavigate();
   const [selectedToken, setSelectedToken] = useState<TokenOption>();
   const [username, setUsername] = useState('');
+
+  const handleLeaveRoom = () => actions.leaveRoom(reset);
 
   const handleSelection = (value: TokenOption) => {
     setSelectedToken(value);
@@ -50,9 +53,14 @@ const LobbyPage = () => {
   return (
     <Container maxWidth="sm">
       <Stack gap={4} p={{ xs: 2, sm: 4 }}>
-        <Typography variant="h5" textAlign="center">
-          Welcome to {game?.room}
-        </Typography>
+        <Grid>
+          <IconButton onClick={handleLeaveRoom}>
+            <ArrowBackOutlined />
+          </IconButton>
+          <Typography variant="h5" textAlign="center">
+            Welcome to {game?.room}
+          </Typography>
+        </Grid>
         <TextField
           fullWidth
           autoFocus

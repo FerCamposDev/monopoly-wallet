@@ -33,10 +33,6 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         setPlayer(updatedPlayer);
       });
 
-      socket.on(SocketEvent.PLAYER_LEAVES_GAME, () => {
-        setPlayer(null);
-      });
-
       socket.on(SocketEvent.LOG, (log: ILog) => {
         console.log('log :>> ', log);
       })

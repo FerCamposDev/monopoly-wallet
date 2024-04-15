@@ -7,12 +7,12 @@ import MenuButton from '../MenuButton';
 
 const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
   const { actions } = useGameSockets();
-  const { game, player } = useGame();
+  const { game, player, reset } = useGame();
 
   if (!player) return null;
 
   const handleLeaveGame = () => {
-    actions.leaveGame();
+    actions.leaveGame(reset);
   };
 
   return (
