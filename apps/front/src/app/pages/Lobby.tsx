@@ -23,9 +23,9 @@ const LobbyPage = () => {
     setSelectedToken(value);
   };
 
-  const handleEnter = () => {
-    if (game?.room && selectedToken) {
-      console.log('Joining', socket.id);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (selectedToken) {
       const player: INewPlayer = {
         name: username,
         token: selectedToken.value,
@@ -52,57 +52,60 @@ const LobbyPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Stack maxHeight="100vh" gap={4} p={{ xs: 2, sm: 4 }}>
-        <Grid>
-          <IconButton onClick={handleLeaveRoom}>
-            <ArrowBackOutlined />
-          </IconButton>
-          <Typography variant="h5" textAlign="center">
-            Welcome to {game?.room}
-          </Typography>
-        </Grid>
-        <TextField
-          fullWidth
-          autoFocus
-          label="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-        />
-        <List dense sx={{ width: '100%', bgcolor: 'background.paper', overflowY: 'scroll' }}>
-          {availableTokens.map((opt) => {
-            return (
-              <ListItem
-                key={opt.value}
-                onClick={() => handleSelection(opt)}
-                secondaryAction={
-                  <Radio
-                    edge="end"
-                    checked={selectedToken?.value === opt.value}
-                  />
-                }
-                disablePadding
-              >
-                <ListItemButton>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="token option"
-                      src={getTokenImagePath(opt.value)}
+      <form onSubmit={handleSubmit}>
+        <Stack maxHeight="100vh" gap={4} p={{ xs: 2, sm: 4 }}>
+          <Grid>
+            <IconButton onClick={handleLeaveRoom}>
+              <ArrowBackOutlined />
+            </IconButton>
+            <Typography variant="h5" textAlign="center">
+              Welcome to {game?.room}
+            </Typography>
+          </Grid>
+          <TextField
+            fullWidth
+            required
+            label="Username"
+            name="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+          <List dense sx={{ width: '100%', bgcolor: 'background.paper', overflowY: 'scroll' }}>
+            {availableTokens.map((opt) => {
+              return (
+                <ListItem
+                  key={opt.value}
+                  onClick={() => handleSelection(opt)}
+                  secondaryAction={
+                    <Radio
+                      edge="end"
+                      checked={selectedToken?.value === opt.value}
                     />
-                  </ListItemAvatar>
-                  <ListItemText primary={opt.label} secondary={opt.usedBy} />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
-        <Button
-          variant="contained"
-          onClick={handleEnter}
-          disabled={!username || !selectedToken}
-        >
-          Enter
-        </Button>
-      </Stack>
+                  }
+                  disablePadding
+                >
+                  <ListItemButton>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt="token option"
+                        src={getTokenImagePath(opt.value)}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText primary={opt.label} secondary={opt.usedBy} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={!selectedToken}
+          >
+            Enter
+          </Button>
+        </Stack>
+      </form>
     </Container>
   )
 }
