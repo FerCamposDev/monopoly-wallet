@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
 import GamePage from './app/pages/game';
-import { CssBaseline } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NotFoundPage from './app/pages/NotFound';
 import HomePage from './app/pages/Home';
@@ -48,13 +48,13 @@ const SOCKET_URL = 'http://localhost:3333';
 const socket = io(SOCKET_URL);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <>
-    <GameProvider>
-      <SocketProvider socket={socket}>
-        <CssBaseline />
-        <Toaster />
+  <GameProvider>
+    <SocketProvider socket={socket}>
+      <CssBaseline />
+      <Toaster />
+      <Box sx={{ height: '100vh' }}>
         <RouterProvider router={router} />
-      </SocketProvider>
-    </GameProvider>
-  </>
+      </Box>
+    </SocketProvider>
+  </GameProvider>
 );

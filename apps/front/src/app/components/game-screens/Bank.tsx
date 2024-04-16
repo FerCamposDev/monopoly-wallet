@@ -5,7 +5,7 @@ import LogsList from "../shared/LogsList"
 
 const BankScreen = () => {
   return (
-    <Grid container height="100%" p={2}>
+    <Grid container height="100vh" p={2}>
       <Stack width="100%" gap={4}>
         <Grid container alignItems="center" justifyContent="center" gap={2}>
           <Typography variant="h4">

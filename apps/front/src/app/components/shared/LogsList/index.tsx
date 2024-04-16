@@ -1,6 +1,7 @@
-import { Card, Divider, Grid, List, Typography } from "@mui/material"
+import { Card, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material"
 import { FC } from "react"
 import { useGame } from "../../../context/game/useGame"
+import { VisibilityOutlined } from "@mui/icons-material"
 
 type Props = {
   onlyUser?: boolean
@@ -17,16 +18,21 @@ const LogsList: FC<Props> = ({ onlyUser }) => {
         Last transactions
       </Typography>
       <Divider />
-      <List sx={{ overflowY: 'scroll', maxHeight: '60vh' }}>
+      <List dense sx={{ overflowY: 'scroll', height: '50vh' }}>
         {finalLogs.map((log, index) => (
-          <Grid container gap={2} key={index}>
-            <Typography variant="caption">
-              {log.date.getHours()}:{log.date.getMinutes()}
-            </Typography>
-            <Typography variant="body2">
-              {log.message}
-            </Typography>
-          </Grid>
+          <ListItem key={index} disablePadding>
+            <Grid container gap={1} alignItems="center" >
+              <Typography variant="body2" fontSize={10} mt={0.5}>
+                {log.displayTime}
+              </Typography>
+              <ListItemText primary={log.message} />
+              <ListItemSecondaryAction>
+                <IconButton>
+                  <VisibilityOutlined />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </Grid>
+          </ListItem>
         ))}
       </List>
     </Card>

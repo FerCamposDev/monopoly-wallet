@@ -52,7 +52,7 @@ const LobbyPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Stack gap={4} p={{ xs: 2, sm: 4 }}>
+      <Stack maxHeight="100vh" gap={4} p={{ xs: 2, sm: 4 }}>
         <Grid>
           <IconButton onClick={handleLeaveRoom}>
             <ArrowBackOutlined />
@@ -68,7 +68,7 @@ const LobbyPage = () => {
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
-        <List dense sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        <List dense sx={{ width: '100%', bgcolor: 'background.paper', overflowY: 'scroll' }}>
           {availableTokens.map((opt) => {
             return (
               <ListItem

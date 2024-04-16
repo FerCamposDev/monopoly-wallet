@@ -1,6 +1,6 @@
 
 import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from "@mui/icons-material";
-import { BottomNavigation, BottomNavigationAction, Grid, Stack } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Stack } from "@mui/material";
 import { useState } from "react";
 import UserScreen from "../../components/game-screens/User";
 import BankScreen from "../../components/game-screens/Bank";
@@ -22,10 +22,8 @@ export function GamePage() {
 
   return (
     <RoomLayout>
-      <Stack height="100vh">
-        <Grid container height="100%">
-          {screenMap[value]}
-        </Grid>
+      <Stack maxHeight="100vh" height="100%" justifyContent="space-between">
+        {screenMap[value]}
 
         <BottomNavigation
           showLabels

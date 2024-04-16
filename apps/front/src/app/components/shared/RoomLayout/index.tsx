@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Grid, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, Grid, Stack, Toolbar, Typography } from '@mui/material'
 import { FC, PropsWithChildren } from 'react'
 import { useGame } from '../../../context/game/useGame'
 import { useGameSockets } from '../../../context/sockets/useGameSockets';
@@ -17,8 +17,8 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <AppBar position="sticky">
-        <Toolbar >
+      <AppBar position="fixed">
+        <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography variant="h6">
               {game?.room}
@@ -42,7 +42,9 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
           />
         </Toolbar>
       </AppBar>
-      {children}
+      <Stack height="100%" pt={7}>
+        {children}
+      </Stack>
     </>
   )
 }
