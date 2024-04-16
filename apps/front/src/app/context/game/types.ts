@@ -4,10 +4,10 @@ import { SetStateAction } from "react"
 import { Log } from "./Logs";
 
 export type GameContextTypes = {
-  game: IGameProps | null;
-  setGame: React.Dispatch<SetStateAction<IGameProps | null>>;
-  player: IPlayer | null;
-  setPlayer: React.Dispatch<SetStateAction<IPlayer | null>>;
+  game: IGameProps;
+  setGame: React.Dispatch<SetStateAction<IGameProps>>;
+  player: IPlayer;
+  setPlayer: React.Dispatch<SetStateAction<IPlayer>>;
   availableTokens: TokenOption[];
   reset: VoidFunction;
   logs: Log[];

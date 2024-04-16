@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types";
 import { GameContextTypes } from "./types";
-import GameContext from "./GameContext";
+import GameContext, { initialGameState } from "./GameContext";
 import { TOKEN_OPTIONS } from "../../commons/constants";
 import { TokenOption } from "../../commons/interfaces";
 import { Log } from "./Logs";
@@ -10,15 +10,15 @@ type Props = PropsWithChildren;
 
 const GameProvider: FC<Props> = ({ children }) => {
   const [logs, setLogs] = useState<Log[]>([]);
-  const [game, setGame] = useState<IGameProps | null>(null);
-  const [player, setPlayer] = useState<IPlayer | null>(null);
+  const [game, setGame] = useState<IGameProps>(initialGameState.game);
+  const [player, setPlayer] = useState<IPlayer>(initialGameState.player);
   const [availableTokens, setAvailableTokens] = useState<TokenOption[]>(TOKEN_OPTIONS);
 
   const playerSockets = game?.players.map(p => p.socketId).toString();
 
   const reset = () => {
-    setGame(null);
-    setPlayer(null);
+    setGame(initialGameState.game);
+    setPlayer(initialGameState.player);
     setAvailableTokens(TOKEN_OPTIONS);
     setLogs([]);
   }

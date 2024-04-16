@@ -1,16 +1,27 @@
 import { createContext } from "react";
 import { GameContextTypes } from './types';
 import { TOKEN_OPTIONS } from "../../commons/constants";
+import { Token } from "@monopoly-wallet/shared-types";
 
-const GameContext = createContext<GameContextTypes>({
-  game: null,
-  setGame: () => {},
-  player: null,
-  setPlayer: () => {},
+export const initialGameState: GameContextTypes = {
+  game: {
+    room: '',
+    players: []
+  },
+  setGame: () => { },
+  player: {
+    name: '',
+    balance: 0,
+    socketId: '',
+    token: '' as Token
+  },
+  setPlayer: () => { },
   availableTokens: TOKEN_OPTIONS,
-  reset: () => {},
+  reset: () => { },
   logs: [],
-  setLogs: () => {},
-})
+  setLogs: () => { },
+}
+
+const GameContext = createContext<GameContextTypes>(initialGameState)
 
 export default GameContext;

@@ -13,19 +13,20 @@ const TransferPage = () => {
   const navigate = useNavigate();
   const { actions } = useGameSockets();
   const { player } = useGame();
-  const [to, setTo] = useState<IPlayer | null>(null);
+  const [to, setTo] = useState<IPlayer>();
   
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!to) return;
     const formData = new FormData(event.currentTarget);
 
     const amount = formData.get('amount');
 
     actions.paymentP2P({
-      amount: Number(amount),
-      from: player!,
-      to: to!,
+      amount: Number(amount?.toString()),
+      from: player,
+      to,
       reason: PaymentReason.BUILD
     });
     toast.success('Successful transfer!');
