@@ -8,6 +8,9 @@ const GameContext = createContext<GameContextTypes>({
   player: null,
   setPlayer: () => {},
   availableTokens: TOKEN_OPTIONS,
+  reset: () => {},
+  logs: [],
+  setLogs: () => {},
 })
 
 export default GameContext;

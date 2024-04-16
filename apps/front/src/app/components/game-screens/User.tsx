@@ -5,6 +5,7 @@ import IconButtonText from "../shared/IconButtonText";
 import { useGame } from "../../context/game/useGame";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "../../commons/enums/routes.enum";
+import LogsList from "../shared/LogsList";
 
 const UserScreen: FC = () => {
   const { game, player } = useGame();
@@ -33,6 +34,8 @@ const UserScreen: FC = () => {
             <AddBusinessOutlined />
           </IconButtonText>
         </Grid>
+
+        <LogsList onlyUser />
       </Stack >
     </Grid >
   )

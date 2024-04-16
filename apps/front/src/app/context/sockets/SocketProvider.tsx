@@ -1,11 +1,12 @@
 import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
-import { FC, PropsWithChildren, useContext, useEffect, useMemo } from "react";
+import { FC, PropsWithChildren, useEffect, useMemo } from "react";
 import { CustomError, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
 import toast from "react-hot-toast";
-import GameContext from "../game/GameContext";
+import { Log } from "../game/Logs";
+import { useGame } from "../game/useGame";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -13,7 +14,7 @@ type Props = PropsWithChildren<{
 
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
-  const { setGame, setPlayer } = useContext(GameContext);
+  const { setGame, setPlayer, setLogs } = useGame();
 
   useEffect(()=>{
     try {
@@ -34,7 +35,8 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       });
 
       socket.on(SocketEvent.LOG, (log: ILog) => {
-        console.log('log :>> ', log);
+        const newLog = new Log(log, socket.id);
+        setLogs(prev => [...prev, newLog]);
       })
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {

@@ -1,7 +1,7 @@
 import { GavelOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material"
-import { Card, Divider, Grid, List, Stack, Typography } from "@mui/material"
+import { Grid, Stack, Typography } from "@mui/material"
 import IconButtonText from "../shared/IconButtonText"
-import { FAKE_LOGS } from "../../commons/mocks/logs"
+import LogsList from "../shared/LogsList"
 
 const BankScreen = () => {
   return (
@@ -27,24 +27,7 @@ const BankScreen = () => {
           </IconButtonText>
         </Grid>
 
-        <Card sx={{ p: 2 }}>
-          <Typography variant="subtitle1">
-            Last transactions
-          </Typography>
-          <Divider />
-          <List sx={{ overflowY: 'scroll', maxHeight: '60vh' }}>
-            {FAKE_LOGS.map((log, index) => (
-              <Grid container gap={2} key={index}>
-                <Typography variant="caption">
-                  {log.date.getHours()}:{log.date.getMinutes()}
-                </Typography>
-                <Typography variant="body2">
-                  {log.message}
-                </Typography>
-              </Grid>
-            ))}
-          </List>
-        </Card>
+        <LogsList />
       </Stack >
     </Grid >
   )

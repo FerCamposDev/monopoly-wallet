@@ -1,6 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { CustomError, IGame, SocketEvent, Token } from "@monopoly-wallet/shared-types";
-import { Log } from "../model/Log";
+import { CustomError, IGame, ILog, SocketEvent, Token } from "@monopoly-wallet/shared-types";
 
 export class GameEventsController {
   private socket: Socket;
@@ -47,7 +46,7 @@ export class GameEventsController {
     }
   }
 
-  log = (game: IGame, log: Log) => {
+  log = (game: IGame, log: ILog) => {
     try {
       this.io.in(game.room).emit(SocketEvent.LOG, log);
       // this.socket.emit(SocketEvent.LOG, log);

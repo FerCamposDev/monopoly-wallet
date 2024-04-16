@@ -48,7 +48,7 @@ const SOCKET_URL = 'http://localhost:3333';
 const socket = io(SOCKET_URL);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <StrictMode>
+  <>
     <GameProvider>
       <SocketProvider socket={socket}>
         <CssBaseline />
@@ -56,5 +56,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <RouterProvider router={router} />
       </SocketProvider>
     </GameProvider>
-  </StrictMode>
+  </>
 );

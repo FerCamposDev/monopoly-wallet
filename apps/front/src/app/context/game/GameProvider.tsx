@@ -4,10 +4,12 @@ import { GameContextTypes } from "./types";
 import GameContext from "./GameContext";
 import { TOKEN_OPTIONS } from "../../commons/constants";
 import { TokenOption } from "../../commons/interfaces";
+import { Log } from "./Logs";
 
 type Props = PropsWithChildren;
 
 const GameProvider: FC<Props> = ({ children }) => {
+  const [logs, setLogs] = useState<Log[]>([]);
   const [game, setGame] = useState<IGameProps | null>(null);
   const [player, setPlayer] = useState<IPlayer | null>(null);
   const [availableTokens, setAvailableTokens] = useState<TokenOption[]>(TOKEN_OPTIONS);
@@ -18,6 +20,7 @@ const GameProvider: FC<Props> = ({ children }) => {
     setGame(null);
     setPlayer(null);
     setAvailableTokens(TOKEN_OPTIONS);
+    setLogs([]);
   }
 
   useEffect(() => {
@@ -48,8 +51,10 @@ const GameProvider: FC<Props> = ({ children }) => {
     setPlayer,
     availableTokens,
     reset,
+    logs,
+    setLogs,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [game, availableTokens, player]);
+  }), [game, availableTokens, player, logs.length]);
 
   return (
     <GameContext.Provider value={value}>
