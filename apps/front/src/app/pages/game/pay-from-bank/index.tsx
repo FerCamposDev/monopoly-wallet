@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
-// import { sounds } from "../../../commons/helpers/sounds";
+import { sounds } from "../../../commons/helpers/sounds";
 
 const PayFromBankPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const PayFromBankPage = () => {
 
   const onSuccess = () => {
     toast.success('Successful transfer!');
-    // sounds.sent();
+    sounds.bankSent();
     navigate(Routes.Game);
   }
 

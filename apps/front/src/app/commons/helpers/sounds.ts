@@ -1,6 +1,7 @@
 import { LocalStorageKey } from "../enums/storage.enum";
 
 const sentAudio = new Audio('/assets/sounds/confirm-jingle.wav');
+const bankSentAudio = new Audio('/assets/sounds/notification-1.wav');
 const receivedAudio = new Audio('/assets/sounds/cash-register-purchase.wav');
 
 export enum MuteStatus {
@@ -22,6 +23,12 @@ const sent = () => {
   }
 }
 
+const bankSent = () => {
+  if (!isMute()) {
+    bankSentAudio.play();
+  }
+}
+
 const received = () => {
   if (!isMute()) {
     receivedAudio.play();
@@ -31,4 +38,5 @@ const received = () => {
 export const sounds = {
   sent,
   received,
+  bankSent,
 }
