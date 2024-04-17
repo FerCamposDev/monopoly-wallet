@@ -15,6 +15,7 @@ import { Toaster } from 'react-hot-toast';
 import { io } from 'socket.io-client';
 import GameProvider from './app/context/game/GameProvider';
 import LobbyPage from './app/pages/Lobby';
+import PayFromBankPage from './app/pages/game/pay-from-bank';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: Routes.GameToBank,
     element: <PayToBankPage />
+  },
+  {
+    path: Routes.GameFromBank,
+    element: <PayFromBankPage />
   }
 ])
 

@@ -132,7 +132,7 @@ export class GameController implements ISocketActions {
 
   paymentToPlayer = (data: IPaymentFromBank, callback: VoidFunction) => {
     try {
-      if (this.socket.id !== data.to.socketId) {
+      if (this.socket.id === data.to.socketId) {
         throw new CustomError({
           code: GameErrors.ActionForbidden,
           message: 'You cannot send money to yourself.',
