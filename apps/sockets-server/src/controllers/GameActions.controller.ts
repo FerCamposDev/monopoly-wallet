@@ -110,7 +110,7 @@ export class GameController implements ISocketActions {
     }
   }
 
-  paymentP2P = (data: IP2PPayment) => {
+  paymentP2P = (data: IP2PPayment, callback: VoidFunction) => {
     try {
       if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
@@ -124,12 +124,13 @@ export class GameController implements ISocketActions {
 
       this.events.playerUpdated(game, data.from.token);
       this.events.playerUpdated(game, data.to.token);
+      callback();
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  paymentToPlayer = (data: IPaymentFromBank) => {
+  paymentToPlayer = (data: IPaymentFromBank, callback: VoidFunction) => {
     try {
       if (this.socket.id !== data.to.socketId) {
         throw new CustomError({
@@ -141,12 +142,13 @@ export class GameController implements ISocketActions {
       game.paymentToPlayer(data);
       this.events.log(game, createPaymentFromBankLog(data));
       this.events.playerUpdated(game, data.to.token);
+      callback();
     } catch (error) {
       this.emitError(error)
     }
   }
 
-  paymentToBank = (data: IPaymentToBank) => {
+  paymentToBank = (data: IPaymentToBank, callback: VoidFunction) => {
     try {
       if (this.socket.id !== data.from.socketId) {
         throw new CustomError({
@@ -158,6 +160,7 @@ export class GameController implements ISocketActions {
       game.paymentToBank(data);
       this.events.log(game, createPaymentToBankLog(data));
       this.events.playerUpdated(game, data.from.token);
+      callback();
     } catch (error) {
       this.emitError(error)
     }

@@ -17,11 +17,11 @@ export interface IGameActions {
 }
 
 export interface IPaymentActions {
-  paymentP2P: (data: IP2PPayment) => void;
+  paymentP2P: (data: IP2PPayment, callback: VoidFunction) => void;
   
-  paymentToBank: (data: IPaymentToBank) => void;
+  paymentToBank: (data: IPaymentToBank, callback: VoidFunction) => void;
 
-  paymentToPlayer: (data: IPaymentFromBank) => void;
+  paymentToPlayer: (data: IPaymentFromBank, callback: VoidFunction) => void;
 }
 
 export interface ISocketActions extends IGameActions, IPaymentActions{}

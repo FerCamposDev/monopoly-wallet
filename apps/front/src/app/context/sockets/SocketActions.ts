@@ -64,25 +64,25 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  paymentP2P = (data: IP2PPayment) => {
+  paymentP2P = (data: IP2PPayment, callback: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_P2P, data);
+      this.socket?.emit(SocketAction.PAYMENT_P2P, data, callback);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToBank = (data: IPaymentToBank) => {
+  paymentToBank = (data: IPaymentToBank, callback: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, data);
+      this.socket?.emit(SocketAction.PAYMENT_TO_BANK, data, callback);
     } catch (error) {
       console.log('error :>> ', error);
     }
   }
 
-  paymentToPlayer = (data: IPaymentFromBank) => {
+  paymentToPlayer = (data: IPaymentFromBank, callback: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, data);
+      this.socket?.emit(SocketAction.PAYMENT_TO_PLAYER, data, callback);
     } catch (error) {
       console.log('error :>> ', error);
     }

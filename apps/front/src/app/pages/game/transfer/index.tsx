@@ -17,6 +17,10 @@ const TransferPage = () => {
   const { player } = useGame();
   const [to, setTo] = useState<IPlayer>();
 
+  const onSuccess = () => {
+    toast.success('Successful transfer!');
+    navigate(Routes.Game);
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,9 +35,7 @@ const TransferPage = () => {
       from: player,
       to,
       reason,
-    });
-    toast.success('Successful transfer!');
-    navigate(Routes.Game);
+    }, onSuccess);
   }
 
   return (
