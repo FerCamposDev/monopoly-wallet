@@ -26,6 +26,7 @@ const GameModal: FC<Props> = ({ type, action }) => {
       <Dialog
         open={open}
         onClose={handleClose}
+        disableRestoreFocus
         PaperProps={{
           component: 'form',
           onSubmit: (event: React.FormEvent<HTMLFormElement>) => {

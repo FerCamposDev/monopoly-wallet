@@ -1,4 +1,4 @@
-import { Button, FormControl, FormControlLabel, InputAdornment, Radio, RadioGroup, Stack, TextField } from "@mui/material"
+import { Button, FormControlLabel, InputAdornment, Radio, RadioGroup, Stack, TextField } from "@mui/material"
 import PlayerSelector from "../../../components/shared/PlayerSelector"
 import withAuth from "../../../hocs/withAuth";
 import { useState } from "react";
@@ -27,6 +27,7 @@ const TransferPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!to) return;
+    
     const formData = new FormData(event.currentTarget);
 
     const amount = formData.get('amount');
@@ -42,20 +43,26 @@ const TransferPage = () => {
 
   return (
     <PageLayout title="Transfer" backUrl={Routes.Game}>
-      <form onSubmit={handleSubmit}>
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+        }}
+        onSubmit={handleSubmit}
+      >
         <Stack gap={4}>
-          <FormControl required>
-            <RadioGroup name="reason">
-              {PAYMENT_REASONS_OPTIONS.map((reason) => (
-                <FormControlLabel
-                  key={reason.value}
-                  control={<Radio required />}
-                  value={reason.value}
-                  label={reason.label}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
+          <RadioGroup name="reason">
+            {PAYMENT_REASONS_OPTIONS.map((reason) => (
+              <FormControlLabel
+                key={reason.value}
+                control={<Radio required />}
+                value={reason.value}
+                label={reason.label}
+              />
+            ))}
+          </RadioGroup>
           <PlayerSelector onSelect={setTo} />
           <TextField
             type="number"
@@ -69,10 +76,10 @@ const TransferPage = () => {
               startAdornment: <InputAdornment position="start">$</InputAdornment>
             }}
           />
-          <Button variant="contained" type="submit">
-            Transfer
-          </Button>
         </Stack>
+        <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
+          Transfer
+        </Button>
       </form>
     </PageLayout>
   )

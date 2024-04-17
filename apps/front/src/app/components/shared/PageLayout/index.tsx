@@ -12,8 +12,8 @@ const PageLayout: FC<Props> = ({ children, title, backUrl }) => {
   const navigate = useNavigate();
 
   return (
-    <Container maxWidth="sm">
-      <Stack maxHeight="100vh" gap={4} sx={{ py: 2 }}>
+    <Container maxWidth="sm" sx={{ height: '100%' }}>
+      <Stack height="100vh" gap={4} sx={{ py: 2 }}>
         <Grid>
           <IconButton onClick={() => navigate(backUrl)}>
             <ArrowBack />
