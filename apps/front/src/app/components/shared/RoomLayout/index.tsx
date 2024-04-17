@@ -4,6 +4,7 @@ import { useGame } from '../../../context/game/useGame'
 import { useGameSockets } from '../../../context/sockets/useGameSockets';
 import { getTokenImagePath } from '../../../commons/helpers/images';
 import MenuButton from '../MenuButton';
+import MuteItem from '../MuteItem';
 
 const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
   const { actions } = useGameSockets();
@@ -33,10 +34,15 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
             </Grid>
           </Grid>
           <MenuButton
-            options={[{
-              children: 'Leave Game',
-              onClick: handleLeaveGame,
-            }]}
+            options={[
+              {
+                children: 'Leave Game',
+                onClick: handleLeaveGame,
+              },
+              {
+                children: <MuteItem />
+              },
+            ]}
           />
         </Toolbar>
       </AppBar>
