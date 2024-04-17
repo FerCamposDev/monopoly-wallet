@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, InputAdornment, Radio, RadioGroup, Stack, TextField } from "@mui/material"
+import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material"
 import withAuth from "../../../hocs/withAuth";
 import { PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGameSockets } from "../../../context/sockets/useGameSockets";
@@ -9,6 +9,7 @@ import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
+import AmountInput from "../../../components/shared/AmountInput";
 
 const PayToBankPage = () => {
   const navigate = useNavigate();
@@ -58,18 +59,7 @@ const PayToBankPage = () => {
               />
             ))}
           </RadioGroup>
-          <TextField
-            type="number"
-            name="amount"
-            fullWidth
-            required
-            inputProps={{
-              min: 1,
-            }}
-            InputProps={{
-              startAdornment: <InputAdornment position="start">$</InputAdornment>
-            }}
-          />
+          <AmountInput />
         </Stack>
         <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
           Pay

@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, InputAdornment, Radio, RadioGroup, Stack, TextField } from "@mui/material"
+import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material"
 import PlayerSelector from "../../../components/shared/PlayerSelector"
 import withAuth from "../../../hocs/withAuth";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { BANK_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
+import AmountInput from "../../../components/shared/AmountInput";
 
 const PayFromBankPage = () => {
   const navigate = useNavigate();
@@ -61,18 +62,7 @@ const PayFromBankPage = () => {
             ))}
           </RadioGroup>
           <PlayerSelector onSelect={setTo} />
-          <TextField
-            type="number"
-            name="amount"
-            fullWidth
-            required
-            inputProps={{
-              min: 1,
-            }}
-            InputProps={{
-              startAdornment: <InputAdornment position="start">$</InputAdornment>
-            }}
-          />
+          <AmountInput />
         </Stack>
         <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
           Pay
