@@ -10,15 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
+import { useSounds } from "../../../hooks/useSounds";
 
 const TransferPage = () => {
   const navigate = useNavigate();
+  const sounds = useSounds();
   const { actions } = useGameSockets();
   const { player } = useGame();
   const [to, setTo] = useState<IPlayer>();
 
   const onSuccess = () => {
     toast.success('Successful transfer!');
+    sounds.success.sent();
     navigate(Routes.Game);
   }
 

@@ -7,6 +7,7 @@ import { SocketActions } from "./SocketActions";
 import toast from "react-hot-toast";
 import { Log } from "../game/Logs";
 import { useGame } from "../game/useGame";
+import { useSounds } from "../../hooks/useSounds";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -15,6 +16,7 @@ type Props = PropsWithChildren<{
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
   const { setGame, setPlayer, setLogs } = useGame();
+  const sounds = useSounds();
 
   useEffect(()=>{
     try {
@@ -36,6 +38,9 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
 
       socket.on(SocketEvent.LOG, (log: ILog) => {
         const newLog = new Log(log, socket.id);
+        if (newLog.isIn) {
+          sounds.success.received();
+        }
         setLogs(prev => [...prev, newLog]);
       })
 
