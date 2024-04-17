@@ -30,4 +30,5 @@ export enum PaymentReason {
   LUCK_CARD = 'Luck Card',
   ARK_CARD = 'Ark Card',
   JAIL = 'Jail',
+  Start = 'Start',
 }

@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
-import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
+import { BANK_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
 
 const PayFromBankPage = () => {
@@ -51,7 +51,7 @@ const PayFromBankPage = () => {
       >
         <Stack gap={4}>
           <RadioGroup name="reason">
-            {PAYMENT_REASONS_OPTIONS.map((reason) => (
+            {BANK_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}
                 control={<Radio required />}
