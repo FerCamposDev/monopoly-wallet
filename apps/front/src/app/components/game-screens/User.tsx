@@ -30,7 +30,7 @@ const UserScreen: FC = () => {
             <SwapHorizOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Purchase">
+          <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
             <AddBusinessOutlined />
           </IconButtonText>
         </Grid>

@@ -8,7 +8,7 @@ import NotFoundPage from './app/pages/NotFound';
 import HomePage from './app/pages/Home';
 import CollectPage from './app/pages/game/collect';
 import TransferPage from './app/pages/game/transfer';
-import PurchasePage from './app/pages/game/purchase';
+import PayToBankPage from './app/pages/game/pay-to-bank';
 import { Routes } from './app/commons/enums/routes.enum';
 import SocketProvider from './app/context/sockets/SocketProvider';
 import { Toaster } from 'react-hot-toast';
@@ -39,8 +39,8 @@ const router = createBrowserRouter([
     element: <TransferPage />
   },
   {
-    path: Routes.GamePurchase,
-    element: <PurchasePage />
+    path: Routes.GameToBank,
+    element: <PayToBankPage />
   }
 ])
 

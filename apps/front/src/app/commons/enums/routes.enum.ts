@@ -4,5 +4,5 @@ export enum Routes {
   Game = '/game',
   GameCollect = '/game/collect',
   GameTransfer = '/game/transfer',
-  GamePurchase = '/game/purchase',
+  GameToBank = '/game/pay-to-bank',
 }
