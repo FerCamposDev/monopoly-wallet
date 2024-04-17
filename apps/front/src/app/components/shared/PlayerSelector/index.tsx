@@ -1,7 +1,8 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
+import { Avatar, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material"
 import { FC } from "react"
 import { useGame } from "../../../context/game/useGame"
 import { IPlayer } from "@monopoly-wallet/shared-types"
+import { getTokenImagePath } from "../../../commons/helpers/images"
 
 type Props = {
   onSelect: (player: IPlayer) => void;
@@ -23,11 +24,15 @@ const PlayerSelector: FC<Props> = ({ onSelect }) => {
         required
       >
         {players?.map(p => (
-          <MenuItem
-            key={p.token}
-            onClick={() => onSelect(p)}
-            value={p.token}>
-            {p.token}
+          <MenuItem key={p.token} onClick={() => onSelect(p)} value={p.token}>
+            <Grid container gap={2} alignItems="center">
+              <Avatar
+                alt="player-token"
+                src={getTokenImagePath(p.token)}
+                sx={{ height: 24, width: 24 }}
+              />
+              {p.token}
+            </Grid>
           </MenuItem>
         ))}
       </Select>

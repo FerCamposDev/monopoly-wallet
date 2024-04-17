@@ -21,13 +21,13 @@ export enum SocketAction {
 }
 
 export enum PaymentReason {
-  BUY_PROPERTY,
-  BUILD,
-  RENT,
-  MORTGAGE,
-  UN_MORTGAGE,
-  TRADE,
-  LUCK_CARD,
-  ARK_CARD,
-  JAIL,
+  BUY_PROPERTY = 'Buy Property',
+  BUILD = 'Build',
+  RENT = 'Rent',
+  MORTGAGE = 'Mortgage',
+  UN_MORTGAGE = 'Un-mortgage',
+  TRADE = 'Trade',
+  LUCK_CARD = 'Luck Card',
+  ARK_CARD = 'Ark Card',
+  JAIL = 'Jail',
 }

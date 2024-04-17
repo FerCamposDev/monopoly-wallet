@@ -9,8 +9,6 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
   const { actions } = useGameSockets();
   const { game, player, reset } = useGame();
 
-  if (!player) return null;
-
   const handleLeaveGame = () => {
     actions.leaveGame(reset);
   };

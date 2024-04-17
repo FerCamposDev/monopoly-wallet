@@ -48,13 +48,15 @@ const SOCKET_URL = 'http://localhost:3333';
 const socket = io(SOCKET_URL);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <GameProvider>
-    <SocketProvider socket={socket}>
-      <CssBaseline />
-      <Toaster />
-      <Box sx={{ height: '100vh' }}>
-        <RouterProvider router={router} />
-      </Box>
-    </SocketProvider>
-  </GameProvider>
+  <StrictMode>
+    <GameProvider>
+      <SocketProvider socket={socket}>
+        <CssBaseline />
+        <Toaster />
+        <Box sx={{ height: '100vh' }}>
+          <RouterProvider router={router} />
+        </Box>
+      </SocketProvider>
+    </GameProvider>
+  </StrictMode>
 );
