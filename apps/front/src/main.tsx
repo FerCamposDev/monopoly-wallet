@@ -54,8 +54,7 @@ const router = createBrowserRouter([
   }
 ])
 
-const SOCKET_URL = 'http://localhost:3333';
-const socket = io(SOCKET_URL);
+const socket = io(import.meta.env.VITE_SOCKETS_URL);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>

@@ -1,5 +1,11 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# sockets-server
+apps/sockets-server/.env
+
+# front
+apps/front/.env
+
 # compiled output
 dist
 tmp
