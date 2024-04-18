@@ -33,6 +33,10 @@ const UserScreen: FC = () => {
           <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
             <AddBusinessOutlined />
           </IconButtonText>
+
+          <IconButtonText text="Pay Collect" onClick={() => navigate(Routes.GamePayCollect)}>
+            <AddBusinessOutlined />
+          </IconButtonText>
         </Grid>
 
         <LogsList onlyUser />

@@ -16,6 +16,7 @@ import { io } from 'socket.io-client';
 import GameProvider from './app/context/game/GameProvider';
 import LobbyPage from './app/pages/Lobby';
 import PayFromBankPage from './app/pages/game/pay-from-bank';
+import PayCollectPage from './app/pages/game/pay-collect';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: Routes.GameFromBank,
     element: <PayFromBankPage />
+  },
+  {
+    path: Routes.GamePayCollect,
+    element: <PayCollectPage />
   }
 ])
 

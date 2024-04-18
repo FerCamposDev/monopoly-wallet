@@ -6,4 +6,5 @@ export enum Routes {
   GameTransfer = '/game/transfer',
   GameToBank = '/game/pay-to-bank',
   GameFromBank = '/game/pay-from-bank',
+  GamePayCollect = '/game/pay-collect',
 }
