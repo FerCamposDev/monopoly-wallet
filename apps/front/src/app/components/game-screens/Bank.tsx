@@ -1,4 +1,4 @@
-import { GavelOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material"
+import { GavelOutlined, SwapHorizOutlined } from "@mui/icons-material"
 import { Grid, Stack, Typography } from "@mui/material"
 import IconButtonText from "../shared/IconButtonText"
 import LogsList from "../shared/LogsList"
@@ -18,15 +18,11 @@ const BankScreen = () => {
         </Grid>
 
         <Grid container justifyContent="space-evenly">
-          <IconButtonText text="Collect">
-            <LocalAtmOutlined />
-          </IconButtonText>
-
           <IconButtonText text="New Payment" onClick={() => navigate(Routes.GameFromBank)}>
             <SwapHorizOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Hypothecate">
+          <IconButtonText text="Hypothecate" disabled>
             <GavelOutlined />
           </IconButtonText>
         </Grid>

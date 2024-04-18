@@ -21,6 +21,7 @@ const UserScreen: FC = () => {
             $ {player?.balance.toLocaleString()}
           </Typography>
         </Card>
+        
         <Grid container justifyContent="space-evenly">
           <IconButtonText text="Collect" onClick={() => navigate(Routes.GameCollect)}>
             <LocalAtmOutlined />
@@ -31,10 +32,6 @@ const UserScreen: FC = () => {
           </IconButtonText>
 
           <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
-            <AddBusinessOutlined />
-          </IconButtonText>
-
-          <IconButtonText text="Pay Collect" onClick={() => navigate(Routes.GamePayCollect)}>
             <AddBusinessOutlined />
           </IconButtonText>
         </Grid>

@@ -1,7 +1,7 @@
-import { Card, Divider, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material"
+import { Card, Divider, Grid, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material"
 import { FC } from "react"
 import { useGame } from "../../../context/game/useGame"
-import { VisibilityOutlined } from "@mui/icons-material"
+import LogDetailModal from "./LogDetailModal"
 
 type Props = {
   onlyUser?: boolean
@@ -27,9 +27,7 @@ const LogsList: FC<Props> = ({ onlyUser }) => {
               </Typography>
               <ListItemText primary={log.message} />
               <ListItemSecondaryAction>
-                <IconButton>
-                  <VisibilityOutlined />
-                </IconButton>
+                <LogDetailModal log={log} />
               </ListItemSecondaryAction>
             </Grid>
           </ListItem>
