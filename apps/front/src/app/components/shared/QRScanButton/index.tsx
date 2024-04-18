@@ -1,4 +1,4 @@
-import { QrCode } from "@mui/icons-material";
+import { QrCodeScannerOutlined } from "@mui/icons-material";
 import { Fab, styled } from "@mui/material";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const QRScanButton: FC = () => {
 
   return (
     <StyledFab color="primary" onClick={handleGoToScan}>
-      <QrCode fontSize="large" />
+      <QrCodeScannerOutlined fontSize="large" />
     </StyledFab>
   )
 }
