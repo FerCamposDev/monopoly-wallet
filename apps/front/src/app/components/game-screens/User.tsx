@@ -22,7 +22,7 @@ const UserScreen: FC = () => {
           </Typography>
         </Card>
         <Grid container justifyContent="space-evenly">
-          <IconButtonText text="Collect">
+          <IconButtonText text="Collect" onClick={() => navigate(Routes.GameCollect)}>
             <LocalAtmOutlined />
           </IconButtonText>
 
