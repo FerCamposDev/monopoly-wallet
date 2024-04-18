@@ -4,6 +4,7 @@ import { AppBar, Button, Dialog, IconButton, Slide, Stack, Toolbar, Typography }
 import { TransitionProps } from '@mui/material/transitions';
 import { FC, forwardRef, } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PaymentDetail from '../PaymentDetail';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -58,9 +59,7 @@ const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
           src={qrUrl}
         />
 
-        <pre>
-          {JSON.stringify(paymentData, null, 2)}
-        </pre>
+        <PaymentDetail payment={paymentData} />
 
         <Button autoFocus variant="contained" onClick={handleFinish}>
           Finish

@@ -10,6 +10,7 @@ import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import toast from "react-hot-toast";
 import { sounds } from "../../../commons/helpers/sounds";
 import { useNavigate } from "react-router-dom";
+import PaymentDetail from "../../../components/shared/PaymentDetail";
 
 const PayCollectPage = () => {
   const navigate = useNavigate();
@@ -67,9 +68,9 @@ const PayCollectPage = () => {
     <PageLayout title="Transfer Collect" backUrl={Routes.Game}>
       <Stack gap={4}>
         <video ref={videoRef} style={{ display: paymentData ? 'none' : 'flex' }}></video>
-        <pre>
-          {JSON.stringify(paymentData, null, 2)}
-        </pre>
+        
+        <PaymentDetail payment={paymentData} />
+
       </Stack>
       {paymentData && (
         <Button variant="contained" onClick={handleSend} sx={{ mt: 'auto' }}>
