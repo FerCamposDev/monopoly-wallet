@@ -1,18 +1,13 @@
 import { AppBar, Avatar, Grid, Stack, Toolbar, Typography } from '@mui/material'
 import { FC, PropsWithChildren } from 'react'
 import { useGame } from '../../../context/game/useGame'
-import { useGameSockets } from '../../../context/sockets/useGameSockets';
 import { getTokenImagePath } from '../../../commons/helpers/images';
 import MenuButton from '../MenuButton';
 import MuteItem from '../MuteItem';
+import LeaveModal from '../LeaveModal';
 
 const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
-  const { actions } = useGameSockets();
-  const { game, player, reset } = useGame();
-
-  const handleLeaveGame = () => {
-    actions.leaveGame(reset);
-  };
+  const { game, player } = useGame();
 
   return (
     <>
@@ -36,8 +31,7 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
           <MenuButton
             options={[
               {
-                children: 'Leave Game',
-                onClick: handleLeaveGame,
+                children: <LeaveModal />,
               },
               {
                 children: <MuteItem />
