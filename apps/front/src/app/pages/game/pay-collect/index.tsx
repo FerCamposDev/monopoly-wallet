@@ -64,7 +64,7 @@ const PayCollectPage = () => {
   }, []);
 
   return (
-    <PageLayout title="Pay to Bank" backUrl={Routes.Game}>
+    <PageLayout title="Transfer Collect" backUrl={Routes.Game}>
       <Stack gap={4}>
         <video ref={videoRef} style={{ display: paymentData ? 'none' : 'flex' }}></video>
         <pre>

@@ -6,6 +6,7 @@ import UserScreen from "../../components/game-screens/User";
 import BankScreen from "../../components/game-screens/Bank";
 import withAuth from "../../hocs/withAuth";
 import RoomLayout from "../../components/shared/RoomLayout";
+import QRScanButton from "../../components/shared/QRScanButton";
 
 enum Screen {
   User,
@@ -34,6 +35,7 @@ export function GamePage() {
           <BottomNavigationAction label="Bank" icon={<AccountBalanceOutlined />} />
         </BottomNavigation>
       </Stack>
+      <QRScanButton />
     </RoomLayout>
   );
 }
