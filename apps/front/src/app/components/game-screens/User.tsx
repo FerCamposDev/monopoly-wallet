@@ -36,7 +36,7 @@ const UserScreen: FC = () => {
           </IconButtonText>
         </Grid>
 
-        <LogsList onlyUser />
+        <LogsList isUserLog />
       </Stack >
     </Grid >
   )

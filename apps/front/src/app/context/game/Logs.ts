@@ -1,4 +1,4 @@
-import { ILog, IPlayer } from "@monopoly-wallet/shared-types";
+import { ILog, IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
 
 export class Log implements ILog {
   private socketId?: string;
@@ -6,6 +6,8 @@ export class Log implements ILog {
   date: Date;
   message: string;
   detail: string;
+  amount: number;
+  reason: PaymentReason;
   from?: IPlayer | undefined;
   to?: IPlayer | undefined;
 
@@ -15,6 +17,8 @@ export class Log implements ILog {
     this.date = new Date(log.date);
     this.message = log.message;
     this.detail = log.detail;
+    this.amount = log.amount;
+    this.reason = log.reason;
     this.from = log.from;
     this.to = log.to;
   }
