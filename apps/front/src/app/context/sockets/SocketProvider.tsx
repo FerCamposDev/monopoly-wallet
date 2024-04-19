@@ -1,6 +1,6 @@
 import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
-import { FC, PropsWithChildren, useEffect, useMemo } from "react";
+import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { CustomError, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
@@ -16,6 +16,7 @@ type Props = PropsWithChildren<{
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
   const { setGame, setPlayer, setLogs } = useGame();
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(()=>{
     try {
@@ -56,19 +57,23 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       socket.on("connect_error", (err) => {
         console.log(err.message);
       });
+
+      socket.on('connect', () => {
+        setIsConnected(true);
+      });
     } catch (error) {
       console.log(error)
     }
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
 
   const value = useMemo((): SocketContextTypes => ({
     actions,
-    socket
+    socket,
+    isConnected,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [socket]);
+  }), [isConnected]);
 
   return (
     <SocketContext.Provider value={value}>
