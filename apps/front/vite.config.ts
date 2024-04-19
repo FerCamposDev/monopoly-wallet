@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   root: __dirname,
@@ -17,7 +18,44 @@ export default defineConfig({
     host: 'localhost',
   },
 
-  plugins: [react(), nxViteTsPaths()],
+  plugins: [react(), nxViteTsPaths(), VitePWA({
+    registerType: 'autoUpdate',
+    manifest: {
+      "name": "Monopoly Wallet",
+      "short_name": "MonopolyWallet",
+      "icons": [
+        {
+          "src": "/assets/images/favicon/pwa-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/images/favicon/pwa-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/images/favicon/pwa-maskable-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+        {
+          "src": "/assets/images/favicon/pwa-maskable-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "maskable"
+        }
+      ],
+      "start_url": ".",
+      "display": "standalone",
+      "background_color": "#FFFFFF",
+      "theme_color": "#FFFFFF",
+      "description": "A wallet for monopoly game."
+    }
+  })],
 
   // Uncomment this if you are using workers.
   // worker: {
