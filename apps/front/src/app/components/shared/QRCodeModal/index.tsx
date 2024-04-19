@@ -5,6 +5,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { FC, forwardRef, } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PaymentDetail from '../PaymentDetail';
+import { useDevices } from '../../../hooks';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,6 +23,8 @@ type Props = {
 }
 
 const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
+  const { isMobile } = useDevices();
+
   const navigate = useNavigate();
 
   const handleFinish = () => {
@@ -30,30 +33,22 @@ const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
 
   return (
     <Dialog
-      fullScreen
+      fullScreen={isMobile}
       open={Boolean(qrUrl)}
       onClose={onClose}
       TransitionComponent={Transition}
     >
       <AppBar sx={{ position: 'relative' }}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={onClose}
-            aria-label="close"
-          >
-            <Close />
-          </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
             Scan To Pay
           </Typography>
-          <Button color="inherit" onClick={onClose}>
-            Close
-          </Button>
+          <IconButton edge="end" color="inherit" onClick={onClose}>
+            <Close />
+          </IconButton>
         </Toolbar>
       </AppBar>
-      <Stack height="100%" justifyContent="space-between" sx={{ p: 2 }}>
+      <Stack height="100%" width="100%" justifyContent="space-between" sx={{ p: 2 }}>
         <img
           alt="QR-Code"
           src={qrUrl}
@@ -61,7 +56,7 @@ const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
 
         <PaymentDetail payment={paymentData} />
 
-        <Button autoFocus variant="contained" onClick={handleFinish}>
+        <Button autoFocus variant="contained" onClick={handleFinish} sx={{ mt: 2 }}>
           Finish
         </Button>
       </Stack>

@@ -32,7 +32,6 @@ const CollectPage = () => {
       const qr = await QRCode.toDataURL(JSON.stringify(data));
       setQrCode(qr);
       setPaymentData(data);
-      console.log('qr :>> ', qr);
     } catch (error) {
       console.log('QR code error :>> ', error);
       toast.error('Failed to create qr code.');
