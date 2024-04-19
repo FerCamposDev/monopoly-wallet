@@ -6,7 +6,6 @@ import { IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { BANK_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
@@ -20,7 +19,7 @@ const PayFromBankPage = () => {
   const onSuccess = () => {
     toast.success('Successful transfer!');
     sounds.bankSent();
-    navigate(Routes.Game);
+    navigate(-1);
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +39,7 @@ const PayFromBankPage = () => {
   }
 
   return (
-    <PageLayout title="Pay From Bank" backUrl={Routes.Game}>
+    <PageLayout title="Pay From Bank">
       <form
         style={{
           display: 'flex',

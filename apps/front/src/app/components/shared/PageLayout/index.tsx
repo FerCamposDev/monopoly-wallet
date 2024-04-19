@@ -5,17 +5,16 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = PropsWithChildren<{
   title: string;
-  backUrl: string;
 }>
 
-const PageLayout: FC<Props> = ({ children, title, backUrl }) => {
+const PageLayout: FC<Props> = ({ children, title }) => {
   const navigate = useNavigate();
 
   return (
     <Container maxWidth="sm" sx={{ height: '100%' }}>
       <Stack height="100vh" gap={4} sx={{ py: 2 }}>
         <Grid>
-          <IconButton onClick={() => navigate(backUrl)}>
+          <IconButton onClick={() => navigate(-1)}>
             <ArrowBack />
           </IconButton>
           <Typography variant="h5" textAlign="center">

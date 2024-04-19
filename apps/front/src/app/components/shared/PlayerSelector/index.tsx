@@ -31,7 +31,7 @@ const PlayerSelector: FC<Props> = ({ onSelect }) => {
                 src={getTokenImagePath(p.token)}
                 sx={{ height: 24, width: 24 }}
               />
-              {p.token}
+              {p.name}
             </Grid>
           </MenuItem>
         ))}

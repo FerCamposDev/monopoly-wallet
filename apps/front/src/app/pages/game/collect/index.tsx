@@ -2,7 +2,6 @@ import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/materia
 import withAuth from "../../../hocs/withAuth";
 import { IPaymentFromBank, PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGame } from "../../../context/game/useGame";
-import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import AmountInput from "../../../components/shared/AmountInput";
@@ -44,7 +43,7 @@ const CollectPage = () => {
   }
 
   return (
-    <PageLayout title="Pay to Bank" backUrl={Routes.Game}>
+    <PageLayout title="Pay to Bank">
       <QRCodeModal qrUrl={qrCode} paymentData={paymentData} onClose={reset} />
       <form
         style={{

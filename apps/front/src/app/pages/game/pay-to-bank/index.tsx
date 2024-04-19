@@ -5,7 +5,6 @@ import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import { useGame } from "../../../context/game/useGame";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
@@ -19,7 +18,7 @@ const PayToBankPage = () => {
   const onSuccess = () => {
     toast.success('Successful payment!');
     sounds.sent();
-    navigate(Routes.Game);
+    navigate(-1);
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +37,7 @@ const PayToBankPage = () => {
   }
 
   return (
-    <PageLayout title="Pay to Bank" backUrl={Routes.Game}>
+    <PageLayout title="Pay to Bank">
       <form
         style={{
           display: 'flex',

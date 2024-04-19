@@ -33,6 +33,10 @@ const router = createBrowserRouter([
     element: <GamePage />,
   },
   {
+    path: Routes.GameTab,
+    element: <GamePage />,
+  },
+  {
     path: Routes.GameCollect,
     element: <CollectPage />
   },

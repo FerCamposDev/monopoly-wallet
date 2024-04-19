@@ -2,7 +2,6 @@ import { Button, Stack } from "@mui/material"
 import withAuth from "../../../hocs/withAuth";
 import { IP2PPayment, IPaymentFromBank } from "@monopoly-wallet/shared-types";
 import { useGame } from "../../../context/game/useGame";
-import { Routes } from "../../../commons/enums/routes.enum";
 import PageLayout from "../../../components/shared/PageLayout";
 import { useEffect, useRef, useState } from "react";
 import QrScanner from 'qr-scanner'; // if installed via package and bundling with a module bundler like webpack or rollup
@@ -23,7 +22,7 @@ const PayCollectPage = () => {
   const onSuccess = () => {
     toast.success('Successful transfer!');
     sounds.sent();
-    navigate(Routes.Game);
+    navigate(-1);
   }
 
   const handleSend = () => {
@@ -40,7 +39,6 @@ const PayCollectPage = () => {
       qrScanner = new QrScanner(
         videoRef.current,
         result => {
-          console.log('decoded qr code:', result);
           const jsonData = JSON.parse(result.data) as IPaymentFromBank;
           if (jsonData) {
             setPaymentData({
@@ -65,7 +63,7 @@ const PayCollectPage = () => {
   }, []);
 
   return (
-    <PageLayout title="Transfer Collect" backUrl={Routes.Game}>
+    <PageLayout title="Transfer Collect">
       <Stack gap={4}>
         <video ref={videoRef} style={{ display: paymentData ? 'none' : 'flex' }}></video>
         

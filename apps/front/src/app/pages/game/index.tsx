@@ -1,38 +1,46 @@
 
 import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, Stack } from "@mui/material";
-import { useState } from "react";
+import React from "react";
 import UserScreen from "../../components/game-screens/User";
 import BankScreen from "../../components/game-screens/Bank";
 import withAuth from "../../hocs/withAuth";
 import RoomLayout from "../../components/shared/RoomLayout";
 import QRScanButton from "../../components/shared/QRScanButton";
+import { useNavigate, useParams } from "react-router-dom";
+import { getTabPath } from "../../commons/helpers/routes";
 
-enum Screen {
-  User,
-  Bank
+export enum GameTab {
+  User = 'user',
+  Bank = 'bank',
 }
 
 export function GamePage() {
-  const [value, setValue] = useState<Screen>(Screen.User);
+  const { tab = GameTab.User } = useParams<{ tab: GameTab}>();
+  const navigate = useNavigate();
 
   const screenMap = {
-    [Screen.User]: <UserScreen />,
-    [Screen.Bank]: <BankScreen />,
+    [GameTab.User]: <UserScreen />,
+    [GameTab.Bank]: <BankScreen />,
   };
 
+
+  const handleChangeTab = (_e: React.SyntheticEvent, newValue: GameTab) => {
+    navigate(getTabPath(newValue));
+  }
+
   return (
-    <RoomLayout isBankTab={value === Screen.Bank}>
+    <RoomLayout isBankTab={tab === GameTab.Bank}>
       <Stack maxHeight="100vh" height="100%" justifyContent="space-between">
-        {screenMap[value]}
+        {screenMap[tab]}
 
         <BottomNavigation
           showLabels
-          value={value}
-          onChange={(_e, newValue) => { setValue(newValue) }}
+          value={tab}
+          onChange={handleChangeTab}
         >
-          <BottomNavigationAction label="User" icon={<AccountBalanceWalletOutlined />} />
-          <BottomNavigationAction label="Bank" icon={<AccountBalanceOutlined />} />
+          <BottomNavigationAction value={GameTab.User} label="User" icon={<AccountBalanceWalletOutlined />} />
+          <BottomNavigationAction value={GameTab.Bank} label="Bank" icon={<AccountBalanceOutlined />} />
         </BottomNavigation>
       </Stack>
       <QRScanButton />
