@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Grid, Stack, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, Container, Grid, Stack, Toolbar, Typography } from '@mui/material'
 import { FC, PropsWithChildren } from 'react'
 import { useGame } from '../../../context/game/useGame'
 import { getTokenImagePath } from '../../../commons/helpers/images';
@@ -30,19 +30,17 @@ const RoomLayout: FC<PropsWithChildren> = ({ children }) => {
           </Grid>
           <MenuButton
             options={[
-              {
-                children: <LeaveModal />,
-              },
-              {
-                children: <MuteItem />
-              },
+              { children: <LeaveModal /> },
+              { children: <MuteItem /> },
             ]}
           />
         </Toolbar>
       </AppBar>
-      <Stack height="100%" pt={7}>
-        {children}
-      </Stack>
+      <Container sx={{ height: '100%' }} maxWidth="sm">
+        <Stack height="100%" pt={7}>
+          {children}
+        </Stack>
+      </Container>
     </>
   )
 }
