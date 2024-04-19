@@ -22,7 +22,7 @@ export function GamePage() {
   };
 
   return (
-    <RoomLayout>
+    <RoomLayout isBankTab={value === Screen.Bank}>
       <Stack maxHeight="100vh" height="100%" justifyContent="space-between">
         {screenMap[value]}
 
