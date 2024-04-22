@@ -6,22 +6,26 @@ import { getTokenImagePath } from "../../../commons/helpers/images"
 
 type Props = {
   onSelect: (player: IPlayer) => void;
+  disabled?: boolean;
 }
 
-const PlayerSelector: FC<Props> = ({ onSelect }) => {
+const PlayerSelector: FC<Props> = ({ onSelect, disabled }) => {
   const { game, player } = useGame();
 
   const players = game?.players.filter(p => p.token !== player?.token);
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="player-select-label">Select Player</InputLabel>
+    <FormControl fullWidth disabled={disabled}>
+      <InputLabel id="player-select-label" disabled={disabled}>
+        Select Player
+      </InputLabel>
       <Select
         labelId="player-select-label"
         label="Select Player"
         name="player"
         defaultValue={''}
-        required
+        required={!disabled}
+        disabled={disabled}
       >
         {players?.map(p => (
           <MenuItem key={p.token} onClick={() => onSelect(p)} value={p.token}>

@@ -10,7 +10,6 @@ type Props = {
 
 const LogsList: FC<Props> = ({ isUserLog }) => {
   const { logs } = useGame();
-  console.log('logs :>> ', logs);
 
   const finalLogs = isUserLog ? logs.filter(l => l.isRelatedToPlayer) : logs;
 
@@ -26,12 +25,12 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
   }
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ py: 2, px: 1 }}>
       <Typography variant="subtitle1">
         Last transactions
       </Typography>
       <Divider />
-      <List dense sx={{ overflowY: 'scroll', height: '50vh' }}>
+      <List dense sx={{ overflowY: 'scroll', height: '50vh', px: 1 }}>
         {finalLogs.map((log, index) => (
           <ListItem key={index} disablePadding>
             <Grid container gap={1} alignItems="center" >

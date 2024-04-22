@@ -1,7 +1,7 @@
-import { Button, FormControlLabel, Radio, RadioGroup, Stack, Switch } from "@mui/material"
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack, Switch } from "@mui/material"
 import PlayerSelector from "../../../components/shared/PlayerSelector"
 import withAuth from "../../../hocs/withAuth";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGameSockets } from "../../../context/sockets/useGameSockets";
 import { useGame } from "../../../context/game/useGame";
@@ -66,18 +66,22 @@ const TransferPage = () => {
     }, () => onSuccess(to));
   }
 
+  const handleCheckToAll = (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setPaymentToAll(checked);
+  }
+
   const renderPaymentToAll = () => (
     <FormControlLabel
-      label="Payment to All"
-      labelPlacement="start"
+      label="To All"
+      labelPlacement="top"
       control={
-        <Switch checked={paymentToAll} onChange={(_, value) => setPaymentToAll(value)} />
+        <Switch checked={paymentToAll} onChange={handleCheckToAll} />
       }
     />
   )
 
   return (
-    <PageLayout title="Transfer" extraAction={renderPaymentToAll()}>
+    <PageLayout title="Transfer">
       <form
         style={{
           display: 'flex',
@@ -98,9 +102,12 @@ const TransferPage = () => {
               />
             ))}
           </RadioGroup>
-          {!paymentToAll && (
-            <PlayerSelector onSelect={setTo} />
-          )}
+          <Grid container justifyContent="space-between">
+            <Grid item xs={8.9}>
+              <PlayerSelector onSelect={setTo} disabled={paymentToAll} />
+            </Grid>
+            {renderPaymentToAll()}
+          </Grid>
           <AmountInput />
         </Stack>
         <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
