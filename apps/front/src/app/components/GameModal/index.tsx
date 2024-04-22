@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import ImageButton from '../shared/ImageButton';
+import ImageButton from './ImageButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import { useToggle } from '../../hooks';
 
