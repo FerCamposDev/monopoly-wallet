@@ -9,4 +9,5 @@ export interface ILog {
   reason: PaymentReason;
   from?: IPlayer;
   to?: IPlayer;
+  fail?: boolean;
 }

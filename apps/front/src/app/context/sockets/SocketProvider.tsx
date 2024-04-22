@@ -1,7 +1,7 @@
 import { Socket } from "socket.io-client";
 import SocketContext from "./SocketsContext";
 import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { CustomError, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
 import { SocketContextTypes } from "./types";
 import { SocketActions } from "./SocketActions";
 import toast from "react-hot-toast";
@@ -46,6 +46,9 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
         console.log('Error data :>> ', data);
+        if(data.code === GameErrors.InsufficientFounds) {
+          sounds.transactionError();
+        }
         toast.error(data.code);
       })
   

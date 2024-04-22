@@ -10,6 +10,7 @@ export class Log implements ILog {
   reason: PaymentReason;
   from?: IPlayer | undefined;
   to?: IPlayer | undefined;
+  fail?: boolean | undefined;
 
   constructor(log: ILog, socketId?: string) {
     this.socketId = socketId;
@@ -21,6 +22,7 @@ export class Log implements ILog {
     this.reason = log.reason;
     this.from = log.from;
     this.to = log.to;
+    this.fail = log.fail;
   }
 
   get isIn(){

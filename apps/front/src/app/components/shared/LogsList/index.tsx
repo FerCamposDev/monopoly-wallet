@@ -1,7 +1,8 @@
 import { Card, Divider, Grid, List, ListItem, ListItemText, Stack, Typography } from "@mui/material"
 import { FC } from "react"
 import { useGame } from "../../../context/game/useGame"
-import { TrendingFlatOutlined } from "@mui/icons-material"
+import { Close, TrendingFlatOutlined } from "@mui/icons-material"
+import { Log } from "../../../context/game/Logs"
 
 type Props = {
   isUserLog?: boolean
@@ -9,11 +10,16 @@ type Props = {
 
 const LogsList: FC<Props> = ({ isUserLog }) => {
   const { logs } = useGame();
+  console.log('logs :>> ', logs);
 
   const finalLogs = isUserLog ? logs.filter(l => l.isRelatedToPlayer) : logs;
 
-  const renderArrows = (isIn: boolean) => {
-    if (isIn) {
+  const renderIcon = (log: Log) => {
+    if (log.fail) return <Close color="error" />
+
+    if (!isUserLog || !log.isRelatedToPlayer) return null;
+
+    if (log.isIn) {
       return <TrendingFlatOutlined color="success" sx={{ transform: 'scaleX(-1)' }} />;
     }
     return <TrendingFlatOutlined color="error" />;
@@ -30,7 +36,7 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
           <ListItem key={index} disablePadding>
             <Grid container gap={1} alignItems="center" >
               <Stack>
-                {log.isRelatedToPlayer && isUserLog && renderArrows(log.isIn)}
+                {renderIcon(log)}
                 <Typography variant="body2" fontSize={10}>
                   {log.displayTime}
                 </Typography>

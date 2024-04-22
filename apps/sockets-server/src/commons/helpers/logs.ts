@@ -33,3 +33,16 @@ export const createPaymentFromBankLog = (payment: IPaymentFromBank): ILog => {
     reason: payment.reason,
   }
 }
+
+export const createFailTransactionP2PLog = (payment: IP2PPayment): ILog => {
+  return {
+    date: new Date(),
+    message: `${payment.from.token} send to ${payment.to.token}.`,
+    detail: `${payment.reason}, Transaction failed`,
+    from: payment.from,
+    to: payment.to,
+    amount: payment.amount,
+    reason: payment.reason,
+    fail: true,
+  }
+}

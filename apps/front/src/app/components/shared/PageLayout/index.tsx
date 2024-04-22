@@ -5,22 +5,27 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = PropsWithChildren<{
   title: string;
+  extraAction?: JSX.Element;
 }>
 
-const PageLayout: FC<Props> = ({ children, title }) => {
+const PageLayout: FC<Props> = ({ children, title, extraAction }) => {
   const navigate = useNavigate();
 
   return (
     <Container maxWidth="sm" sx={{ height: '100%' }}>
       <Stack height="100vh" gap={4} sx={{ py: 2 }}>
-        <Grid>
-          <IconButton onClick={() => navigate(-1)}>
-            <ArrowBack />
-          </IconButton>
+        <Stack>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <IconButton onClick={() => navigate(-1)}>
+              <ArrowBack />
+            </IconButton>
+            {extraAction}
+          </Grid>
           <Typography variant="h5" textAlign="center">
             {title}
           </Typography>
-        </Grid>
+        </Stack>
+
         {children}
       </Stack>
     </Container>

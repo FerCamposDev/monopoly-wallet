@@ -19,7 +19,7 @@ export default defineConfig({
   },
 
   plugins: [react(), nxViteTsPaths(), VitePWA({
-    registerType: 'autoUpdate',
+    registerType: 'prompt',
     manifest: {
       "name": "Monopoly Wallet",
       "short_name": "MonopolyWallet",
@@ -54,7 +54,7 @@ export default defineConfig({
       "background_color": "#FFFFFF",
       "theme_color": "#FFFFFF",
       "description": "A wallet for monopoly game."
-    }
+    },
   })],
 
   // Uncomment this if you are using workers.

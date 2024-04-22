@@ -2,13 +2,13 @@ import { Server, Socket } from "socket.io";
 import { games } from "../model/games";
 import { CustomError, GameErrors, IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, ISocketActions, SocketEvent } from "@monopoly-wallet/shared-types";
 import { GameEventsController } from "./GameEvents.controller";
-import { createPaymentFromBankLog, createPaymentP2PLog, createPaymentToBankLog } from "../commons/helpers/logs";
+import { createFailTransactionP2PLog, createPaymentFromBankLog, createPaymentP2PLog, createPaymentToBankLog } from "../commons/helpers/logs";
 
 export class GameController implements ISocketActions {
   private socket: Socket;
   private io: Server;
   private events: GameEventsController;
-  private room: string; 
+  private room: string;
 
   constructor(socket: Socket, io: Server) {
     this.socket = socket;
@@ -27,10 +27,12 @@ export class GameController implements ISocketActions {
   };
 
   private disconnectFromAllRooms = () => {
-    const game = games.getGame(this.room);
-    game.disconnectPlayerById(this.socket.id);
-    this.events.gameUpdated(game);
-    this.room = '';
+    if (this.room) {
+      const game = games.getGame(this.room);
+      game.disconnectPlayerById(this.socket.id);
+      this.events.gameUpdated(game);
+      this.room = '';
+    }
   }
 
   createGame = (room: string) => {
@@ -127,6 +129,12 @@ export class GameController implements ISocketActions {
       callback();
     } catch (error) {
       this.emitError(error)
+      try {
+        const game = games.getGame(this.room);
+        this.events.log(game, createFailTransactionP2PLog(data));
+      } finally {
+        this.emitError(error)
+      }
     }
   }
 
