@@ -1,6 +1,6 @@
 [build]
   publish = "dist/apps/front"
-  command = "CI= nx build front --mode production"
+  command = "nx build front --configuration production"
 
 [dev]
   publish = "dist/apps/front"
