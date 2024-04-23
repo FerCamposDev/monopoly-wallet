@@ -22,7 +22,7 @@ export default defineConfig({
     registerType: 'prompt',
     manifest: {
       "name": "Monopoly Wallet",
-      "short_name": "MonopolyWallet",
+      "short_name": "Monopoly Wallet",
       "icons": [
         {
           "src": "/assets/images/favicon/pwa-192x192.png",
