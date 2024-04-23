@@ -6,6 +6,7 @@ import MenuButton from '../MenuButton';
 import MuteItem from '../MuteItem';
 import LeaveModal from '../LeaveModal';
 import { colorByToken } from '../../../commons/mappers/tokens';
+import ToggleThemeButton from '../ToggleThemeButton';
 
 type Props = PropsWithChildren<{
   isBankTab?: boolean
@@ -37,6 +38,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
             options={[
               { children: <LeaveModal /> },
               { children: <MuteItem /> },
+              { children: <ToggleThemeButton /> },
             ]}
           />
         </Toolbar>
