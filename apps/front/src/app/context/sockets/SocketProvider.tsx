@@ -10,6 +10,7 @@ import { useGame } from "../game/useGame";
 import { sounds } from "../../commons/helpers/sounds";
 import { colorByToken } from "../../commons/mappers/tokens";
 import { useThemeActions } from "../../theme/ThemeContext";
+import { Info } from "@mui/icons-material";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -33,6 +34,11 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         if (currentPlayer.socketId === socket.id) {
           setPlayer(currentPlayer);
           setPrimaryColor(colorByToken[currentPlayer.token])
+        } else {
+          toast(`${currentPlayer.token} joined as ${currentPlayer.name}`, {
+            icon: <Info color="info" />,
+            position: 'bottom-left',
+          })
         }
       });
 
