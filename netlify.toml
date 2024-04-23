@@ -1,8 +1,0 @@
-[build]
-  publish = "/dist/apps/front"
-  command = "nx build front --configuration production"
-
-[dev]
-  publish = "/dist/apps/front"
-  command = "nx serve front"
-  
