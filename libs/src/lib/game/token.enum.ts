@@ -7,9 +7,9 @@ export enum Token {
   Horse = 'Horse',
   Iron = 'Iron',
   Penguin = 'Penguin',
-  RaceCar = 'Race Car',
-  ScottieDog = 'Scottie Dog',
+  RaceCar = 'RaceCar',
+  ScottieDog = 'ScottieDog',
   Thimble = 'Thimble',
-  TopHat = 'Top Hat',
+  TopHat = 'TopHat',
   Wheelbarrow = 'Wheelbarrow',
 }

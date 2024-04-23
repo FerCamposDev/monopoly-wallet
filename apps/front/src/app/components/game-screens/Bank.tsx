@@ -18,11 +18,11 @@ const BankScreen = () => {
         </Grid>
 
         <Grid container justifyContent="space-evenly">
-          <IconButtonText text="New Payment" onClick={() => navigate(Routes.GameFromBank)}>
+          <IconButtonText text="New Payment" color="secondary" onClick={() => navigate(Routes.GameFromBank)}>
             <SwapHorizOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Hypothecate" disabled>
+          <IconButtonText text="Hypothecate" color="secondary" disabled>
             <GavelOutlined />
           </IconButtonText>
         </Grid>

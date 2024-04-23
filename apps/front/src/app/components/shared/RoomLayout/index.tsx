@@ -5,7 +5,6 @@ import { getTokenImagePath } from '../../../commons/helpers/images';
 import MenuButton from '../MenuButton';
 import MuteItem from '../MuteItem';
 import LeaveModal from '../LeaveModal';
-import { colorByToken } from '../../../commons/mappers/tokens';
 import ToggleThemeButton from '../ToggleThemeButton';
 
 type Props = PropsWithChildren<{
@@ -17,7 +16,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
 
   return (
     <>
-      <AppBar position="fixed" sx={{ bgcolor: isBankTab ? undefined : colorByToken[player.token] }}>
+      <AppBar position="fixed" color={isBankTab ? 'secondary' : 'primary'}>
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography variant="h6">

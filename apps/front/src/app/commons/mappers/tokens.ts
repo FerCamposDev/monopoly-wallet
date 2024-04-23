@@ -1,17 +1,33 @@
 import { Token } from "@monopoly-wallet/shared-types";
+import { Color } from "@mui/material";
+import {
+  red,
+  brown,
+  teal,
+  pink,
+  yellow,
+  blueGrey,
+  blue,
+  amber,
+  lightBlue,
+  deepPurple,
+  cyan,
+  orange,
+  lime
+} from '@mui/material/colors';
 
-export const colorByToken: Record<Token, string> = {
-  [Token.Battleship]: "#FF9999",
-  [Token.Boot]: "#8D6E63",
-  [Token.Cannon]: "#808080",
-  [Token.Cat]: "#FFB6C1",
-  [Token.Duck]: "#FFD54F",
-  [Token.Horse]: "#BCAAA4",
-  [Token.Iron]: "#546E7A",
-  [Token.Penguin]: "#80CBC4",
-  [Token.RaceCar]: "#5472D3",
-  [Token.ScottieDog]: "#8D6E63",
-  [Token.Thimble]: "#90A4AE",
-  [Token.TopHat]: "#757575",
-  [Token.Wheelbarrow]: "#388E3C",
+export const colorByToken: Record<Token, Color> = {
+  [Token.Battleship]: red,
+  [Token.Boot]: brown,
+  [Token.Cannon]: teal,
+  [Token.Cat]: pink,
+  [Token.Duck]: yellow,
+  [Token.Horse]: cyan,
+  [Token.Iron]: blueGrey,
+  [Token.Penguin]: lime,
+  [Token.RaceCar]: blue,
+  [Token.ScottieDog]: amber,
+  [Token.Thimble]: deepPurple,
+  [Token.TopHat]:  lightBlue,
+  [Token.Wheelbarrow]: orange,
 }

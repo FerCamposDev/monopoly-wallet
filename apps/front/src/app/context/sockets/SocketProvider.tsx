@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import { Log } from "../game/Logs";
 import { useGame } from "../game/useGame";
 import { sounds } from "../../commons/helpers/sounds";
+import { colorByToken } from "../../commons/mappers/tokens";
+import { useThemeActions } from "../../theme/ThemeContext";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -16,6 +18,7 @@ type Props = PropsWithChildren<{
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
   const { setGame, setPlayer, setLogs } = useGame();
+  const { setPrimaryColor } = useThemeActions();
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(()=>{
@@ -29,6 +32,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       socket.on(SocketEvent.PLAYER_JOINED, (currentPlayer: IPlayer) => {
         if (currentPlayer.socketId === socket.id) {
           setPlayer(currentPlayer);
+          setPrimaryColor(colorByToken[currentPlayer.token])
         }
       });
 

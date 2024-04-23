@@ -1,31 +1,37 @@
-import { ThemeProvider, createTheme } from "@mui/material";
-import { FC, PropsWithChildren, createContext, useContext, useMemo, useState } from "react";
+import { Color, ThemeProvider, createTheme } from "@mui/material";
+import { blue, deepOrange } from "@mui/material/colors";
+import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
 
 type ThemeActions = {
   toggleThemeMode: () => void;
+  setPrimaryColor: Dispatch<SetStateAction<Color>>;
 }
 
 export const CustomThemeContext = createContext<ThemeActions>({
   toggleThemeMode: () => { },
-  // setPrimaryColor: (color: string) => {},
+  setPrimaryColor: () => { },
 });
 
 const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [mode, setMode] = useState<'light' | 'dark'>('dark');
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [primaryColor, setPrimaryColor] = useState<Color>(blue);
 
   const theme = useMemo(() =>
     createTheme({
       palette: {
         mode,
+        primary: primaryColor,
+        secondary: deepOrange,
       },
-    }), [mode],
+    }), [mode, primaryColor],
   );
 
-  const themeValues = useMemo(() => {
+  const themeValues = useMemo((): ThemeActions => {
     return {
       toggleThemeMode: () => {
         setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
       },
+      setPrimaryColor,
     };
   }, []);
 

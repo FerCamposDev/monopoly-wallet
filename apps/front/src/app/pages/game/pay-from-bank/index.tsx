@@ -63,7 +63,7 @@ const PayFromBankPage = () => {
           <PlayerSelector onSelect={setTo} />
           <AmountInput />
         </Stack>
-        <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
+        <Button variant="contained" color="secondary" type="submit" sx={{ mt: 'auto' }}>
           Pay
         </Button>
       </form>
