@@ -1,12 +1,12 @@
-import { CustomError, GameErrors, IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, IPlayer, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGame, IGameProps, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, IPlayer, Token } from "@monopoly-wallet/shared-types";
 
 export class Game implements IGame {
   public room: string;
   public players: IPlayer[];
   
-  constructor(roomName: string){
+  constructor(roomName: string, game?: IGameProps){
     this.room = roomName;
-    this.players = [];
+    this.players = game?.players || [];
   }
 
   addPlayer = (newPlayer: INewPlayer, socketId: string) => {

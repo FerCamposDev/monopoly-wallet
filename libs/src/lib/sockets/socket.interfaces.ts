@@ -1,4 +1,4 @@
-import { IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank } from "../game";
+import { IGameProps, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank } from "../game";
 
 export interface IGameActions {
   createGame: (room: string) => void;
@@ -13,7 +13,7 @@ export interface IGameActions {
 
   leaveGame: (callback: VoidFunction) => void;
 
-  restoreGame: (room: string, game: IGame) => void;
+  restoreGame: (room: string, game: IGameProps) => void;
 }
 
 export interface IPaymentActions {

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRoomPath } from "../commons/helpers/routes";
 import LoadingModal from "../components/shared/LoadingModal";
+import RestoreGameModal from "../components/shared/RestoreGameModal";
 
 const HomePage = () => {
   const { actions, isConnected } = useGameSockets();
@@ -24,6 +25,7 @@ const HomePage = () => {
       <LoadingModal open={!isConnected} message="Waiting for socket connection." />
       <GameModal type="Join" action={actions.joinRoom} />
       <GameModal type="Host" action={actions.createGame} />
+      <RestoreGameModal />
     </Stack>
   )
 }

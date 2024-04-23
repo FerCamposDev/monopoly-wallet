@@ -1,4 +1,4 @@
-import { CustomError, GameErrors, IGame, IGamesByRoom } from "@monopoly-wallet/shared-types";
+import { CustomError, GameErrors, IGameProps, IGamesByRoom } from "@monopoly-wallet/shared-types";
 import { Game } from "./Game.class";
 
 export class GameRooms {
@@ -12,13 +12,13 @@ export class GameRooms {
     this.rooms[roomName] = new Game(roomName);
   }
 
-  restoreGame(roomName: string, game: IGame) {
+  restoreGame(roomName: string, game: IGameProps) {
     if (this.rooms[roomName]) {
       throw new CustomError({ code: GameErrors.AlreadyExist });
     }
 
     game.players.forEach(p => p.socketId = ''); // clean ids
-    this.rooms[roomName] = game;
+    this.rooms[roomName] = new Game(roomName, game);
   }
 
   getGame(roomName: string) {

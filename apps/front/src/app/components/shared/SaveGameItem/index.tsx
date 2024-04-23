@@ -3,13 +3,14 @@ import toast from "react-hot-toast";
 import { useGame } from "../../../context/game/useGame";
 import { LocalStorageKey } from "../../../commons/enums/storage.enum";
 import { useToggle } from "../../../hooks";
+import { IGameToRecoverData } from "../../../commons/interfaces";
 
 const SaveGameItem = () => {
   const { game, player, logs } = useGame();
   const { open, handleClose, handleOpen } = useToggle();
 
   const saveGame = () => {
-    const gameData = { game, player, logs };
+    const gameData: IGameToRecoverData = { game, player, logs };
     localStorage.setItem(LocalStorageKey.Game, JSON.stringify(gameData));
     toast.success('Game saved!');
     handleClose();

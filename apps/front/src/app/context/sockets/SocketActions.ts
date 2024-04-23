@@ -1,4 +1,4 @@
-import { IGame, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, ISocketActions, SocketAction } from "@monopoly-wallet/shared-types";
+import { IGameProps, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank, ISocketActions, SocketAction } from "@monopoly-wallet/shared-types";
 import { Socket } from "socket.io-client";
 
 export class SocketActions implements ISocketActions {
@@ -16,7 +16,7 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  restoreGame = (room: string, game: IGame) => {
+  restoreGame = (room: string, game: IGameProps) => {
     try {
       this.socket?.emit(SocketAction.RESTORE_GAME, room, game);
     } catch (error) {
