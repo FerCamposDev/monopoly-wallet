@@ -13,8 +13,8 @@ const MuteItem = () => {
 
   return (
     <ListItem onClick={handleMute}>
-      <Grid container justifyContent="space-between" alignItems="center">
-        {isMute ? 'Off' : 'On'}
+      <Grid container gap={1} justifyContent="space-between" alignItems="center">
+        Sound {isMute ? 'Off' : 'On'}
         {isMute ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
       </Grid>
     </ListItem>

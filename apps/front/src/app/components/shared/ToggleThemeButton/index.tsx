@@ -12,7 +12,7 @@ const ToggleThemeButton = () => {
     <ListItem onClick={toggleThemeMode}>
       <Grid container gap={1} justifyContent="space-between" alignItems="center">
         {isDark ? 'Dark' : 'Light'}
-        {isDark ? <LightModeOutlined /> : <DarkModeOutlined />}
+        {isDark ? <DarkModeOutlined /> : <LightModeOutlined />}
       </Grid>
     </ListItem>
   )

@@ -6,6 +6,7 @@ import MenuButton from '../MenuButton';
 import MuteItem from '../MuteItem';
 import LeaveModal from '../LeaveModal';
 import ToggleThemeButton from '../ToggleThemeButton';
+import SaveGameItem from '../SaveGameItem';
 
 type Props = PropsWithChildren<{
   isBankTab?: boolean
@@ -35,9 +36,10 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
           </Grid>
           <MenuButton
             options={[
-              { children: <LeaveModal /> },
+              { children: <SaveGameItem /> },
               { children: <MuteItem /> },
               { children: <ToggleThemeButton /> },
+              { children: <LeaveModal /> },
             ]}
           />
         </Toolbar>

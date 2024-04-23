@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useGameSockets } from '../../../context/sockets/useGameSockets';
 import { useGame } from '../../../context/game/useGame';
 import { useToggle } from '../../../hooks';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemText } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, ListItemText, Typography } from '@mui/material';
 
 const LeaveModal: FC = () => {
   const { actions } = useGameSockets();
@@ -15,9 +15,13 @@ const LeaveModal: FC = () => {
 
   return (
     <React.Fragment>
-      <ListItemText onClick={handleOpen}>
-        Leave Game
-      </ListItemText>
+      <ListItem>
+        <ListItemText onClick={handleOpen}>
+          <Typography variant='subtitle2' color="error">
+            Leave Game
+          </Typography>
+        </ListItemText>
+      </ListItem>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           Are you sure you want to leave the Game?
