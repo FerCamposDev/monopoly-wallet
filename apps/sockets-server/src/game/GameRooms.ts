@@ -28,4 +28,8 @@ export class GameRooms {
 
     return this.rooms[roomName];
   }
+
+  destroy(roomName: string) {
+    delete this.rooms[roomName];
+  }
 }

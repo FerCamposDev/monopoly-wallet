@@ -60,6 +60,7 @@ export class GameController implements ISocketActions {
       const game = games.getGame(this.room);
       game.disconnectPlayerById(this.socket.id);
       this.socket.leave(this.room);
+      this.room = '';
       this.events.gameUpdated(game);
       callback();
     } catch (error) {
@@ -94,7 +95,11 @@ export class GameController implements ISocketActions {
       const game = games.getGame(this.room);
       const player = game.players.find(p => p.socketId === this.socket.id);
       game.removePlayerByToken(player.token);
+      if (game.players.length === 0) {
+        games.destroy(this.room);
+      }
       this.socket.leave(this.room);
+      this.room = '';
       this.events.gameUpdated(game);
       callback();
     } catch (error) {
