@@ -5,16 +5,22 @@ import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useCont
 type ThemeActions = {
   toggleThemeMode: () => void;
   setPrimaryColor: Dispatch<SetStateAction<Color>>;
+  resetPrimaryColor: () => void;
 }
 
 export const CustomThemeContext = createContext<ThemeActions>({
   toggleThemeMode: () => { },
   setPrimaryColor: () => { },
+  resetPrimaryColor: () => { },
 });
 
 const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const [primaryColor, setPrimaryColor] = useState<Color>(blue);
+
+  const resetPrimaryColor = () => {
+    setPrimaryColor(blue);
+  }
 
   const theme = useMemo(() =>
     createTheme({
@@ -32,6 +38,7 @@ const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
       },
       setPrimaryColor,
+      resetPrimaryColor,
     };
   }, []);
 

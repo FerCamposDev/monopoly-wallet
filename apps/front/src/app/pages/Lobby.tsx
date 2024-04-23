@@ -9,18 +9,24 @@ import { getTokenImagePath } from "../commons/helpers/images";
 import withAuth from "../hocs/withAuth";
 import { TokenOption } from "../commons/interfaces";
 import { ArrowBackOutlined } from "@mui/icons-material";
+import { useThemeActions } from "../theme/ThemeContext";
+import { colorByToken } from "../commons/mappers/tokens";
 
 const LobbyPage = () => {
+  const navigate = useNavigate();
+
   const { availableTokens, game, reset } = useGame();
   const { actions, socket } = useGameSockets();
-  const navigate = useNavigate();
+  const { setPrimaryColor } = useThemeActions();
+
   const [selectedToken, setSelectedToken] = useState<TokenOption>();
   const [username, setUsername] = useState('');
 
   const handleLeaveRoom = () => actions.leaveRoom(reset);
 
-  const handleSelection = (value: TokenOption) => {
-    setSelectedToken(value);
+  const handleSelection = (option: TokenOption) => {
+    setSelectedToken(option);
+    setPrimaryColor(colorByToken[option.value]);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

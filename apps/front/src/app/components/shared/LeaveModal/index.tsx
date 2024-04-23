@@ -3,14 +3,21 @@ import { useGameSockets } from '../../../context/sockets/useGameSockets';
 import { useGame } from '../../../context/game/useGame';
 import { useToggle } from '../../../hooks';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, ListItemText, Typography } from '@mui/material';
+import { useThemeActions } from '../../../theme/ThemeContext';
 
 const LeaveModal: FC = () => {
   const { actions } = useGameSockets();
+  const { resetPrimaryColor } = useThemeActions();
   const { reset } = useGame();
   const { open, handleClose, handleOpen } = useToggle();
 
+  const onSuccess = () => {
+    reset();
+    resetPrimaryColor();
+  };
+
   const handleLeaveGame = () => {
-    actions.leaveGame(reset);
+    actions.leaveGame(onSuccess);
   };
 
   return (
