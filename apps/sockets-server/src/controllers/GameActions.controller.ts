@@ -131,6 +131,7 @@ export class GameController implements ISocketActions {
 
       this.events.playerUpdated(game, data.from.token);
       this.events.playerUpdated(game, data.to.token);
+      this.events.gameUpdated(game);
       callback();
     } catch (error) {
       this.emitError(error)
@@ -155,6 +156,7 @@ export class GameController implements ISocketActions {
       game.paymentToPlayer(data);
       this.events.log(game, createPaymentFromBankLog(data));
       this.events.playerUpdated(game, data.to.token);
+      this.events.gameUpdated(game);
       callback();
     } catch (error) {
       this.emitError(error)
@@ -173,6 +175,7 @@ export class GameController implements ISocketActions {
       game.paymentToBank(data);
       this.events.log(game, createPaymentToBankLog(data));
       this.events.playerUpdated(game, data.from.token);
+      this.events.gameUpdated(game);
       callback();
     } catch (error) {
       this.emitError(error)

@@ -23,7 +23,6 @@ export class GameEventsController {
   gameUpdated = (game: IGame) => {
     try {
       this.io.in(game.room).emit(SocketEvent.GAME_UPDATED, game);
-      // this.socket.emit(SocketEvent.GAME_UPDATED, game);
     } catch (error) {
       this.emitError(error)
     }
@@ -49,7 +48,6 @@ export class GameEventsController {
   log = (game: IGame, log: ILog) => {
     try {
       this.io.in(game.room).emit(SocketEvent.LOG, log);
-      // this.socket.emit(SocketEvent.LOG, log);
     } catch (error) {
       this.emitError(error)
     }
