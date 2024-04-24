@@ -20,19 +20,19 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
       <AppBar position="fixed" color={isBankTab ? 'secondary' : 'primary'}>
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
-            <Typography variant="h6">
-              {game?.room}
-            </Typography>
-
-            <Grid item display="flex" alignItems="center" gap={2}>
-              <Typography variant="body2">
-                {player?.name}
-              </Typography>
+            <Grid item display={isBankTab ? "none" : "flex"} alignItems="center" gap={2}>
               <Avatar
                 src={getTokenImagePath(player?.token)}
                 alt="token"
               />
+              <Typography variant="body2">
+                {player?.name}
+              </Typography>
             </Grid>
+
+            <Typography variant="h6">
+              {game?.room}
+            </Typography>
           </Grid>
           <MenuButton
             options={[
