@@ -34,9 +34,17 @@ const AppVersionDetector: FC = () => {
     }
   };
 
-  const update = () => {
+  const update = async () => {
+    const newUrl =  window.location.href + "?no-cache=" + new Date().getTime();
+    await fetch(newUrl, {
+      headers: {
+          Pragma: 'no-cache',
+          Expires: '-1',
+          'Cache-Control': 'no-cache',
+      },
+  });
     localStorage.setItem(LocalStorageKey.Version, lastVersion);
-    window.location.href = window.location.href + "?no-cache=" + new Date().getTime();
+    window.location.href = newUrl;
   }
 
   useEffect(() => {
