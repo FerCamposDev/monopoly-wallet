@@ -14,4 +14,5 @@ export interface IGameToRecoverData {
   logs: Log[];
   player: IPlayer;
   game: IGameProps;
+  date?: Date;
 }

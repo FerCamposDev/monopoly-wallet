@@ -3,8 +3,9 @@ import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types";
 import { GameContextTypes } from "./types";
 import GameContext, { initialGameState } from "./GameContext";
 import { TOKEN_OPTIONS } from "../../commons/constants";
-import { TokenOption } from "../../commons/interfaces";
+import { IGameToRecoverData, TokenOption } from "../../commons/interfaces";
 import { Log } from "./Logs";
+import { LocalStorageKey } from "../../commons/enums/storage.enum";
 
 type Props = PropsWithChildren;
 
@@ -55,6 +56,20 @@ const GameProvider: FC<Props> = ({ children }) => {
     setLogs,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [game, availableTokens, player, logs.length]);
+
+  // to recover game in case of accidental disconnection
+  useEffect(() => {
+    if (game?.room && player.token) {
+      const volatileData: IGameToRecoverData = {
+        game,
+        player,
+        logs,
+        date: new Date(),
+      };
+  
+      localStorage.setItem(LocalStorageKey.VolatileGame, JSON.stringify(volatileData))
+    }
+  }, [game, player, logs]);
 
   return (
     <GameContext.Provider value={value}>

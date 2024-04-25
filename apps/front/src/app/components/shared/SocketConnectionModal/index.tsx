@@ -3,18 +3,54 @@ import { useGameSockets } from '../../../context/sockets/useGameSockets'
 import LoadingModal from '../LoadingModal';
 import { useGame } from '../../../context/game/useGame';
 import useNavigatorOnLine from '../../../hooks/useNavigatorOnLine';
+import { LocalStorageKey } from '../../../commons/enums/storage.enum';
+import { IGameToRecoverData } from '../../../commons/interfaces';
+import { Log } from '../../../context/game/Logs';
 
 const SocketConnectionModal = () => {
   const { isConnected, socket, actions } = useGameSockets();
-  const { game, player } = useGame();
+  const { setLogs, logs: contextLogs } = useGame();
   const isOnline = useNavigatorOnLine();
-  
-  useEffect(() => { 
+
+  function isLessThan30Min(date: Date): boolean {
+    const currentDate = new Date();
+    const millisecondsDiff = currentDate.getTime() - date.getTime();
+
+    if (millisecondsDiff < 0) return false;
+
+    const minutesDiff = millisecondsDiff / (1000 * 60);
+
+    return minutesDiff < 30;
+  }
+
+  const getVolatileData = (): null | IGameToRecoverData => {
+    const storageData = localStorage.getItem(LocalStorageKey.VolatileGame);
+
+    if (storageData) {
+      const { game, logs, player, date } = JSON.parse(storageData) as IGameToRecoverData;
+      if (date && isLessThan30Min(new Date(date))) {
+        const recoveredLogs = logs.map(log => new Log(log, socket.id));
+        return {
+          game,
+          logs: recoveredLogs,
+          player,
+        }
+      }
+    }
+    return null;
+  }
+
+  useEffect(() => {
     if (isOnline && isConnected && socket.id) {
-      if (game?.room && player.token) {
+      const volatileData = getVolatileData();
+      if (volatileData?.game.room && volatileData?.player.token) {
+        const { game, player, logs } = volatileData;
         if (socket.id !== player.socketId) {
           actions.joinRoom(game.room);
           actions.joinGameToToken(player);
+          if (!contextLogs.length) {
+            setLogs(logs);
+          }
         }
       }
     }
