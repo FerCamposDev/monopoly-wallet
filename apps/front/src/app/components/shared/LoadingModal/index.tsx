@@ -2,22 +2,31 @@ import { CircularProgress, Dialog, DialogContent, DialogTitle, Stack, Typography
 import { FC } from "react";
 
 type Props = {
-  message?: string;
   open: boolean;
+  title?: string;
+  message?: string;
+  detail?: string;
 }
 
-const LoadingModal: FC<Props> = ({ message, open }) => {
+const LoadingModal: FC<Props> = ({ title = 'Loading', message, open, detail }) => {
   return (
     <Dialog open={open}>
       <DialogTitle>
-        Loading
+        {title}
       </DialogTitle>
       <DialogContent>
-        <Stack alignItems="center" gap={4}>
+        <Stack width="100%" alignItems="center" gap={4}>
           <CircularProgress />
-          <Typography variant="h5">
-            {message}
-          </Typography>
+          {message && (
+            <Typography variant="h5" textAlign="center">
+              {message}
+            </Typography>
+          )}
+          {detail && (
+            <Typography variant="h6" textAlign="center">
+              {detail}
+            </Typography>
+          )}
         </Stack>
       </DialogContent>
     </Dialog>

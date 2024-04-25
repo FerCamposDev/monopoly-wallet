@@ -31,7 +31,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
             </Grid>
 
             <Typography variant="h6">
-              00:03 {game?.room}
+              {game?.room}
             </Typography>
           </Grid>
           <MenuButton

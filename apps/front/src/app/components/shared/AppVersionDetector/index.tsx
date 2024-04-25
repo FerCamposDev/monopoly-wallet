@@ -22,8 +22,6 @@ const AppVersionDetector: FC = () => {
     try {
       const meta = await fetch('/meta.json');
       const data = await meta.json();
-      console.log('storageVersion :>> ', storageVersion);
-      console.log('data?.appVersion :>> ', data?.appVersion);
       if (storageVersion && data?.appVersion) {
         setLastVersion(data?.appVersion);
         const isGreater = gt(data.appVersion, storageVersion);

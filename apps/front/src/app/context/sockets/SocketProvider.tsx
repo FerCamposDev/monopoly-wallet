@@ -74,6 +74,10 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       socket.on('connect', () => {
         setIsConnected(true);
       });
+
+      socket.on('disconnect', () => {
+        setIsConnected(false);
+      });
     } catch (error) {
       console.log(error)
     }

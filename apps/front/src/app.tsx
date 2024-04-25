@@ -16,6 +16,7 @@ import PayFromBankPage from './app/pages/game/pay-from-bank';
 import PayCollectPage from './app/pages/game/pay-collect';
 import CustomThemeProvider from './app/theme/ThemeContext';
 import AppVersionDetector from './app/components/shared/AppVersionDetector';
+import SocketConnectionModal from './app/components/shared/SocketConnectionModal';
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,7 @@ const App = () => {
           <Box sx={{ height: '100vh' }}>
             <RouterProvider router={router} />
           </Box>
+          <SocketConnectionModal />
           <AppVersionDetector />
         </SocketProvider>
       </GameProvider>
