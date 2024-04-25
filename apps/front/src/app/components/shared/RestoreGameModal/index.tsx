@@ -26,7 +26,7 @@ const RestoreGameModal: FC = () => {
     const storageData = localStorage.getItem(LocalStorageKey.Game);
     if (storageData && socket.id) {
       const { game, logs, player } = JSON.parse(storageData) as IGameToRecoverData;
-      const recoveredLogs = logs.map(log => new Log(log, socket.id));
+      const recoveredLogs = logs.map(log => new Log(log, player.token));
       setLogs(recoveredLogs);
       actions.restoreGame(game.room, game);
       actions.joinGameToToken(player);

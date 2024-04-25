@@ -29,7 +29,7 @@ const SocketConnectionModal = () => {
     if (storageData) {
       const { game, logs, player, date } = JSON.parse(storageData) as IGameToRecoverData;
       if (date && isLessThan30Min(new Date(date))) {
-        const recoveredLogs = logs.map(log => new Log(log, socket.id));
+        const recoveredLogs = logs.map(log => new Log(log, player.token));
         return {
           game,
           logs: recoveredLogs,

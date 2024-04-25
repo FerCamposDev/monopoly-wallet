@@ -18,14 +18,38 @@ type Props = PropsWithChildren<{
 
 const SocketProvider: FC<Props> = ({ children, socket }) => {
   const actions = new SocketActions(socket);
-  const { setGame, setPlayer, setLogs } = useGame();
+  const { setGame, setPlayer, setLogs, player } = useGame();
   const { setPrimaryColor } = useThemeActions();
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(()=>{
+    // Common socket listeners
     try {
-      socket.onAny((e) => console.log('Event received: >> ', e));
+      socket.on('connect', () => {
+        setIsConnected(true);
+      });
 
+      socket.on('error', (data) => {
+        console.error('Error data :>> ', data);
+        toast.error(data.message);
+      })
+  
+      socket.on("connect_error", (err) => {
+        console.error(err.message);
+      });
+
+      socket.on('disconnect', () => {
+        setIsConnected(false);
+      });
+    } catch (error) {
+      console.error(error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+  useEffect(()=>{
+    // custom socket listeners
+    try {
       socket.on(SocketEvent.GAME_UPDATED, (data: IGameProps) => {
         setGame(data);
       });
@@ -46,14 +70,6 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         setPlayer(updatedPlayer);
       });
 
-      socket.on(SocketEvent.LOG, (log: ILog) => {
-        const newLog = new Log(log, socket.id);
-        if (newLog.isIn) {
-          sounds.received();
-        }
-        setLogs(prev => [...prev, newLog]);
-      })
-
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
         console.log('Error data :>> ', data);
         if(data.code === GameErrors.InsufficientFounds) {
@@ -61,28 +77,30 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         }
         toast.error(data.code);
       })
-  
-      socket.on('error', (data) => {
-        console.log('Error data :>> ', data);
-        toast.error(data.message);
-      })
-  
-      socket.on("connect_error", (err) => {
-        console.log(err.message);
-      });
-
-      socket.on('connect', () => {
-        setIsConnected(true);
-      });
-
-      socket.on('disconnect', () => {
-        setIsConnected(false);
-      });
     } catch (error) {
       console.log(error)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+  useEffect(()=>{
+    // custom socket listeners with state
+    const handleLog = (log: ILog) => {
+      console.log('LOG player.token :>> ', player.token);
+      const newLog = new Log(log, player.token);
+      if (newLog.isIn) {
+        sounds.received();
+      }
+      setLogs(prev => [...prev, newLog]);
+    }
+
+    socket.on(SocketEvent.LOG, handleLog)
+
+    return () => {
+      socket.off(SocketEvent.LOG, handleLog)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[player.token])
 
 
   const value = useMemo((): SocketContextTypes => ({

@@ -1,7 +1,7 @@
 import { ILog, IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
 
 export class Log implements ILog {
-  private socketId?: string;
+  private token: string;
 
   date: Date;
   message: string;
@@ -12,8 +12,8 @@ export class Log implements ILog {
   to?: IPlayer | undefined;
   fail?: boolean | undefined;
 
-  constructor(log: ILog, socketId?: string) {
-    this.socketId = socketId;
+  constructor(log: ILog, token: string) {
+    this.token = token;
 
     this.date = new Date(log.date);
     this.message = log.message;
@@ -26,11 +26,11 @@ export class Log implements ILog {
   }
 
   get isIn(){
-    return this.to?.socketId === this.socketId
+    return this.to?.token === this.token
   }
 
   get isOut(){
-    return this.from?.socketId === this.socketId;
+    return this.from?.token === this.token;
   } 
 
   get isRelatedToPlayer(){
