@@ -10,7 +10,7 @@ import { useGame } from "../game/useGame";
 import { sounds } from "../../commons/helpers/sounds";
 import { colorByToken } from "../../commons/mappers/tokens";
 import { useThemeActions } from "../../theme/ThemeContext";
-import { Info } from "@mui/icons-material";
+import { AccountBalanceOutlined, Info } from "@mui/icons-material";
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -90,6 +90,12 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       const newLog = new Log(log, player.token);
       if (newLog.isIn) {
         sounds.received();
+      }
+      if (!newLog.fail) {
+        toast(`${newLog.message} $ ${newLog.amount.toLocaleString()}`, {
+          icon: newLog.isToBank ? <AccountBalanceOutlined /> : undefined,
+          position: 'bottom-left',
+        })
       }
       setLogs(prev => [...prev, newLog]);
     }

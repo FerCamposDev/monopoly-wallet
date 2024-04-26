@@ -37,6 +37,10 @@ export class Log implements ILog {
     return this.isIn || this.isOut
   }
 
+  get isToBank() {
+    return this.to === undefined;
+  }
+
   get displayTime() {
     const hour = this.date.getHours().toString().padStart(2, '0');
     const min = this.date.getMinutes().toString().padStart(2, '0');
