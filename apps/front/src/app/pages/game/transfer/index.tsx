@@ -8,7 +8,7 @@ import { useGame } from "../../../context/game/useGame";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../../../components/shared/PageLayout";
-import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
+import { P2P_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import { sounds } from "../../../commons/helpers/sounds";
 import AmountInput from "../../../components/shared/AmountInput";
 
@@ -93,7 +93,7 @@ const TransferPage = () => {
       >
         <Stack gap={4}>
           <RadioGroup name="reason">
-            {PAYMENT_REASONS_OPTIONS.map((reason) => (
+            {P2P_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}
                 control={<Radio required />}

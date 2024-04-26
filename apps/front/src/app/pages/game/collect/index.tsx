@@ -3,7 +3,7 @@ import withAuth from "../../../hocs/withAuth";
 import { IPaymentFromBank, PaymentReason } from "@monopoly-wallet/shared-types";
 import { useGame } from "../../../context/game/useGame";
 import PageLayout from "../../../components/shared/PageLayout";
-import { PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
+import { COLLECT_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
 import AmountInput from "../../../components/shared/AmountInput";
 import QRCode from 'qrcode';
 import toast from "react-hot-toast";
@@ -43,7 +43,7 @@ const CollectPage = () => {
   }
 
   return (
-    <PageLayout title="Pay to Bank">
+    <PageLayout title="Create Collect">
       <QRCodeModal qrUrl={qrCode} paymentData={paymentData} onClose={reset} />
       <form
         style={{
@@ -56,7 +56,7 @@ const CollectPage = () => {
       >
         <Stack gap={4}>
           <RadioGroup name="reason">
-            {PAYMENT_REASONS_OPTIONS.map((reason) => (
+            {COLLECT_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}
                 control={<Radio required />}
