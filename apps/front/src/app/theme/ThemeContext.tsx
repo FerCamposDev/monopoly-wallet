@@ -1,5 +1,5 @@
 import { Color, ThemeProvider, createTheme } from "@mui/material";
-import { blue, deepOrange } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
 
 type ThemeActions = {
@@ -27,7 +27,7 @@ const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
       palette: {
         mode,
         primary: primaryColor,
-        secondary: deepOrange,
+        secondary: green,
       },
     }), [mode, primaryColor],
   );
