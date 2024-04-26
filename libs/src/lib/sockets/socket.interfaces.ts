@@ -3,7 +3,7 @@ import { IGameProps, INewPlayer, IP2PPayment, IPaymentFromBank, IPaymentToBank }
 export interface IGameActions {
   createGame: (room: string) => void;
 
-  joinRoom: (room: string) => void;
+  joinRoom: (room: string, callback?: VoidFunction) => void;
 
   leaveRoom: (callback: VoidFunction) => void;
 

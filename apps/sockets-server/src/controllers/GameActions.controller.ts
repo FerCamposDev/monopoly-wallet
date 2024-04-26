@@ -45,11 +45,12 @@ export class GameController implements ISocketActions {
     }
   }
 
-  joinRoom = (room: string) => {
+  joinRoom = (room: string, callback?: VoidFunction) => {
     try {
       games.getGame(room); // to check if game exist
       this.socket.join(room);
       this.room = room;
+      callback?.();
     } catch (error) {
       this.emitError(error)
     }

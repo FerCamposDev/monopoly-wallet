@@ -24,9 +24,9 @@ export class SocketActions implements ISocketActions {
     }
   }
 
-  joinRoom = (room: string) => {
+  joinRoom = (room: string, callback?: VoidFunction) => {
     try {
-      this.socket?.emit(SocketAction.JOIN_ROOM, room)
+      this.socket?.emit(SocketAction.JOIN_ROOM, room, callback)
     } catch (error) {
       console.log('error :>> ', error);
     }

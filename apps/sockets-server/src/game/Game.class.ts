@@ -17,7 +17,7 @@ export class Game implements IGame {
     const player: IPlayer = {
       ...newPlayer,
       socketId,
-      balance: 1600,
+      balance: 1500,
     }
   
     this.players.push(player);

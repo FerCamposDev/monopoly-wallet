@@ -6,6 +6,8 @@ import useNavigatorOnLine from '../../../hooks/useNavigatorOnLine';
 import { LocalStorageKey } from '../../../commons/enums/storage.enum';
 import { IGameToRecoverData } from '../../../commons/interfaces';
 import { Log } from '../../../context/game/Logs';
+import toast from 'react-hot-toast';
+import { InfoOutlined } from '@mui/icons-material';
 
 const SocketConnectionModal = () => {
   const { isConnected, socket, actions } = useGameSockets();
@@ -46,11 +48,15 @@ const SocketConnectionModal = () => {
       if (volatileData?.game.room && volatileData?.player.token) {
         const { game, player, logs } = volatileData;
         if (socket.id !== player.socketId) {
-          actions.joinRoom(game.room);
-          actions.joinGameToToken(player);
-          if (!contextLogs.length) {
-            setLogs(logs);
-          }
+          toast(`Trying to reconnect to room: ${game.room}.`, {
+            icon: <InfoOutlined color="info" />,
+          });
+          actions.joinRoom(game.room, () => {
+            actions.joinGameToToken(player);
+            if (!contextLogs.length) {
+              setLogs(logs);
+            }
+          });
         }
       }
     }
