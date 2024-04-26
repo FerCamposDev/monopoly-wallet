@@ -38,7 +38,7 @@ export class RoomController {
     }
   }
 
-  leave = (room: string, id) => {
+  leave = (room: string, id: string) => {
     if (room !== id) {
       try {
         console.log(`socket ${id} has leave room ${room}`);

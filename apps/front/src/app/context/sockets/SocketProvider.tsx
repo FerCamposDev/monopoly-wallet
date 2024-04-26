@@ -63,7 +63,16 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
             icon: <Info color="info" />,
             position: 'bottom-left',
           })
+          sounds.userEnter();
         }
+      });
+
+      socket.on(SocketEvent.PLAYER_LEAVES_GAME, (oldPlayer: IPlayer) => {
+        toast(`${oldPlayer.token}, ${oldPlayer.name} leave the game.`, {
+          icon: <Info color="info" />,
+          position: 'bottom-left',
+        })
+        sounds.userLeave();
       });
 
       socket.on(SocketEvent.PLAYER_UPDATED, (updatedPlayer: IPlayer) => {

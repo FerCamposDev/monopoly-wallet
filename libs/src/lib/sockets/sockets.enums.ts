@@ -3,7 +3,7 @@ export enum SocketEvent {
   LOG = 'log',
   GAME_UPDATED = 'game-updated',
   PLAYER_JOINED = 'player-joined',
-  // PLAYER_LEAVES_GAME = 'player-leaves-game',
+  PLAYER_LEAVES_GAME = 'player-leaves-game',
   PLAYER_UPDATED = 'player-updated',
 }
 

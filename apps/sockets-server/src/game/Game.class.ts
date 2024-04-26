@@ -31,12 +31,14 @@ export class Game implements IGame {
     }
   }
 
-  disconnectPlayerById = (playerId: string) => {
+  disconnectPlayerById = (playerId: string): IPlayer | null => {
     const index = this.players.findIndex(p => p.socketId === playerId);
 
     if (index !== -1) {
       this.players[index].socketId = '';
+      return this.players[index];
     }
+    return null;
   }
 
   connectPlayerById = (playerId: string, player: INewPlayer) => {

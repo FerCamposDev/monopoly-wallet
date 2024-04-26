@@ -21,7 +21,7 @@ export interface IGameProps {
 export interface IGameMethods {
   addPlayer(player: INewPlayer, socketId: string): void;
   removePlayerByToken(token: Token): void;
-  disconnectPlayerById(playerId: string): void;
+  disconnectPlayerById(playerId: string): IPlayer;
   connectPlayerById(playerId: string, player: INewPlayer): void;
   paymentP2P(paymentData: IP2PPayment): void;
   paymentToBank(paymentData: IPaymentToBank): void;

@@ -29,9 +29,10 @@ export class GameController implements ISocketActions {
   private disconnectFromAllRooms = () => {
     if (this.room) {
       const game = games.getGame(this.room);
-      game.disconnectPlayerById(this.socket.id);
+      const removedPlayer = game.disconnectPlayerById(this.socket.id);
       this.events.gameUpdated(game);
       this.room = '';
+      this.events.playerLeave(game, removedPlayer);
     }
   }
 

@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { CustomError, IGame, ILog, SocketEvent, Token } from "@monopoly-wallet/shared-types";
+import { CustomError, IGame, ILog, IPlayer, SocketEvent, Token } from "@monopoly-wallet/shared-types";
 
 export class GameEventsController {
   private socket: Socket;
@@ -37,6 +37,13 @@ export class GameEventsController {
     }
   }
 
+  playerLeave = (game: IGame, player: IPlayer) => {
+    try {
+      this.io.in(game.room).emit(SocketEvent.PLAYER_LEAVES_GAME, player);
+    } catch (error) {
+      this.emitError(error)
+    }
+  }
 
   playerUpdated = (game: IGame, token: Token) => {
     const updated = game.players.find(p => p.token === token);
