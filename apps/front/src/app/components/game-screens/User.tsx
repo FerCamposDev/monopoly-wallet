@@ -1,4 +1,4 @@
-import { AddBusinessOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material";
+import { AccountBalanceOutlined, AddBusinessOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material";
 import { Card, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import IconButtonText from "../shared/IconButtonText";
@@ -33,6 +33,10 @@ const UserScreen: FC = () => {
 
           <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
             <AddBusinessOutlined />
+          </IconButtonText>
+
+          <IconButtonText text="Bank Payment" color="secondary" onClick={() => navigate(Routes.GameFromBank)}>
+            <AccountBalanceOutlined />
           </IconButtonText>
         </Grid>
 
