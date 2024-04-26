@@ -1,5 +1,5 @@
 import { Card, Divider, Grid, List, ListItem, ListItemText, Stack, Typography } from "@mui/material"
-import { FC } from "react"
+import { FC, useEffect, useRef } from "react"
 import { useGame } from "../../../context/game/useGame"
 import { Close, TrendingFlatOutlined } from "@mui/icons-material"
 import { Log } from "../../../context/game/Logs"
@@ -9,9 +9,20 @@ type Props = {
 }
 
 const LogsList: FC<Props> = ({ isUserLog }) => {
+  const listRef = useRef<HTMLUListElement>(null);
+
   const { logs } = useGame();
 
   const finalLogs = isUserLog ? logs.filter(l => l.isRelatedToPlayer) : logs;
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo({
+        top: listRef.current.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
+  }, [logs.length]);
 
   const renderIcon = (log: Log) => {
     if (log.fail) return <Close color="error" />
@@ -30,7 +41,7 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
         Last transactions
       </Typography>
       <Divider />
-      <List dense sx={{ overflowY: 'scroll', height: '50vh', px: 1 }}>
+      <List dense sx={{ overflowY: 'scroll', height: '50vh', px: 1 }} ref={listRef}>
         {finalLogs.map((log, index) => (
           <ListItem key={index} disablePadding>
             <Grid container gap={1} alignItems="center" >

@@ -86,7 +86,6 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
   useEffect(()=>{
     // custom socket listeners with state
     const handleLog = (log: ILog) => {
-      console.log('LOG player.token :>> ', player.token);
       const newLog = new Log(log, player.token);
       if (newLog.isIn) {
         sounds.received();
