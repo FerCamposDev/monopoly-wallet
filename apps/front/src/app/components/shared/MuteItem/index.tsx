@@ -7,7 +7,7 @@ const MuteItem = () => {
   const [isMute, setIsMute] = useState(isMuteFn());
   
   const handleMute = () => {
-    isMute ? setMute(MuteStatus.false) : setMute(MuteStatus.true);
+    setMute(isMute ? MuteStatus.false : MuteStatus.true);
     setIsMute(prev => !prev);
   };
 

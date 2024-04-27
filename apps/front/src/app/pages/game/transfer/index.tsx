@@ -19,8 +19,8 @@ const TransferPage = () => {
   const [to, setTo] = useState<IPlayer>();
   const [paymentToAll, setPaymentToAll] = useState(false);
 
-  const onSuccess = (to: IPlayer, isLast = true) => {
-    toast.success(`Successful transfer to ${to.token}!`);
+  const onSuccess = (toPlayer: IPlayer, isLast = true) => {
+    toast.success(`Successful transfer to ${toPlayer.token}!`);
     sounds.sent();
     if (isLast) {
       navigate(-1);
@@ -30,16 +30,16 @@ const TransferPage = () => {
   const payToAll = (amount: number, reason: PaymentReason) => {
     const otherPlayers = game.players.filter(p => p.token !== player.token);
 
-    otherPlayers.forEach((to, index) => {
+    otherPlayers.forEach((currentTo, index) => {
       const isLast = index + 1 === otherPlayers.length;
 
       setTimeout(() => {
         actions.paymentP2P({
           from: player,
-          to,
+          to: currentTo,
           amount,
           reason,
-        }, () => onSuccess(to, isLast));
+        }, () => onSuccess(currentTo, isLast));
       }, index * 1000);
     });
   };
