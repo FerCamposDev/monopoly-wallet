@@ -21,19 +21,21 @@ const UserScreen: FC = () => {
             $ {player?.balance.toLocaleString()}
           </Typography>
         </Card>
-        
+
         <Grid container justifyContent="space-evenly">
-          <IconButtonText text="Collect" onClick={() => navigate(Routes.GameCollect)}>
-            <LocalAtmOutlined />
+          <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
+            <AddBusinessOutlined />
           </IconButtonText>
 
           <IconButtonText text="Transfer" onClick={() => navigate(Routes.GameTransfer)}>
             <SwapHorizOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Pay to Bank" onClick={() => navigate(Routes.GameToBank)}>
-            <AddBusinessOutlined />
-          </IconButtonText>
+          {game.players.length >= 3 && (
+            <IconButtonText text="Collect" onClick={() => navigate(Routes.GameCollect)}>
+              <LocalAtmOutlined />
+            </IconButtonText>
+          )}
 
           <IconButtonText text="Bank Payment" color="secondary" onClick={() => navigate(Routes.GameFromBank)}>
             <AccountBalanceOutlined />

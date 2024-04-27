@@ -9,6 +9,7 @@ import RoomLayout from '../../components/shared/RoomLayout';
 import QRScanButton from '../../components/shared/QRScanButton';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTabPath } from '../../commons/helpers/routes';
+import { useGame } from '../../context/game/useGame';
 
 export enum GameTab {
   User = 'user',
@@ -18,6 +19,8 @@ export enum GameTab {
 export function GamePage() {
   const { tab = GameTab.User } = useParams<{ tab: GameTab }>();
   const navigate = useNavigate();
+  
+  const { game } = useGame();
 
   const screenMap = {
     [GameTab.User]: <UserScreen />,
@@ -43,7 +46,7 @@ export function GamePage() {
           <BottomNavigationAction value={GameTab.Bank} label="Bank" icon={<AccountBalanceOutlined />} />
         </BottomNavigation>
       </Stack>
-      <QRScanButton />
+      {game.players.length >= 3 && <QRScanButton />}
     </RoomLayout>
   );
 }
