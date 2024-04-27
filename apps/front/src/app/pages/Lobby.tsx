@@ -1,16 +1,16 @@
-import { INewPlayer } from "@monopoly-wallet/shared-types";
-import { Avatar, Button, Container, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Radio, Stack, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useGame } from "../context/game/useGame";
-import { useGameSockets } from "../context/sockets/useGameSockets";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "../commons/enums/routes.enum";
-import { getTokenImagePath } from "../commons/helpers/images";
-import withAuth from "../hocs/withAuth";
-import { TokenOption } from "../commons/interfaces";
-import { ArrowBackOutlined } from "@mui/icons-material";
-import { useThemeActions } from "../theme/ThemeContext";
-import { colorByToken } from "../commons/mappers/tokens";
+import { INewPlayer } from '@monopoly-wallet/shared-types';
+import { Avatar, Button, Container, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Radio, Stack, TextField, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useGame } from '../context/game/useGame';
+import { useGameSockets } from '../context/sockets/useGameSockets';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../commons/enums/routes.enum';
+import { getTokenImagePath } from '../commons/helpers/images';
+import withAuth from '../hocs/withAuth';
+import { TokenOption } from '../commons/interfaces';
+import { ArrowBackOutlined } from '@mui/icons-material';
+import { useThemeActions } from '../theme/ThemeContext';
+import { colorByToken } from '../commons/mappers/tokens';
 
 const LobbyPage = () => {
   const navigate = useNavigate();
@@ -35,16 +35,16 @@ const LobbyPage = () => {
       const player: INewPlayer = {
         name: username,
         token: selectedToken.value,
-      }
+      };
 
       if (selectedToken.usedBy) {
         actions.joinGameToToken(player);
         return;
       }
 
-      actions.joinGame(player)
+      actions.joinGame(player);
     }
-  }
+  };
 
   const playerSockets = game?.players.map(p => p.socketId).toString();
 
@@ -113,7 +113,7 @@ const LobbyPage = () => {
         </Stack>
       </form>
     </Container>
-  )
-}
+  );
+};
 
 export default withAuth(LobbyPage);

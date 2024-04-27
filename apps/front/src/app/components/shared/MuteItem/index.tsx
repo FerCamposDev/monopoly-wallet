@@ -1,13 +1,13 @@
-import { useState } from "react"
-import { MuteStatus, isMute as isMuteFn, setMute } from "../../../commons/helpers/sounds";
-import { Grid, ListItem } from "@mui/material";
-import { VolumeOffOutlined, VolumeUpOutlined } from "@mui/icons-material";
+import { useState } from 'react';
+import { MuteStatus, isMute as isMuteFn, setMute } from '../../../commons/helpers/sounds';
+import { Grid, ListItem } from '@mui/material';
+import { VolumeOffOutlined, VolumeUpOutlined } from '@mui/icons-material';
 
 const MuteItem = () => {
   const [isMute, setIsMute] = useState(isMuteFn());
   
   const handleMute = () => {
-    isMute ? setMute(MuteStatus.false) : setMute(MuteStatus.true);
+    setMute(isMute ? MuteStatus.false : MuteStatus.true);
     setIsMute(prev => !prev);
   };
 
@@ -18,7 +18,7 @@ const MuteItem = () => {
         {isMute ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
       </Grid>
     </ListItem>
-  )
-}
+  );
+};
 
-export default MuteItem
+export default MuteItem;

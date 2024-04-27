@@ -1,9 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, ListItemText } from "@mui/material";
-import toast from "react-hot-toast";
-import { useGame } from "../../../context/game/useGame";
-import { LocalStorageKey } from "../../../commons/enums/storage.enum";
-import { useToggle } from "../../../hooks";
-import { IGameToRecoverData } from "../../../commons/interfaces";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItem, ListItemText } from '@mui/material';
+import toast from 'react-hot-toast';
+import { useGame } from '../../../context/game/useGame';
+import { LocalStorageKey } from '../../../commons/enums/storage.enum';
+import { useToggle } from '../../../hooks';
+import { IGameToRecoverData } from '../../../commons/interfaces';
 
 const SaveGameItem = () => {
   const { game, player, logs } = useGame();
@@ -14,7 +14,7 @@ const SaveGameItem = () => {
     localStorage.setItem(LocalStorageKey.Game, JSON.stringify(gameData));
     toast.success('Game saved!');
     handleClose();
-  }
+  };
 
   const handleSaveOrOpen = () => {
     if (localStorage.getItem(LocalStorageKey.Game)) {
@@ -48,7 +48,7 @@ const SaveGameItem = () => {
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default SaveGameItem
+export default SaveGameItem;

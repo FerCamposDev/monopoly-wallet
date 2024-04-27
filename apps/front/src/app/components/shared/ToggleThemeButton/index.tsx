@@ -1,6 +1,6 @@
-import { Grid, ListItem, useTheme } from "@mui/material";
-import { useThemeActions } from "../../../theme/ThemeContext";
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import { Grid, ListItem, useTheme } from '@mui/material';
+import { useThemeActions } from '../../../theme/ThemeContext';
+import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material';
 
 const ToggleThemeButton = () => {
   const { toggleThemeMode } = useThemeActions();
@@ -15,7 +15,7 @@ const ToggleThemeButton = () => {
         {isDark ? <DarkModeOutlined /> : <LightModeOutlined />}
       </Grid>
     </ListItem>
-  )
-}
+  );
+};
 
-export default ToggleThemeButton
+export default ToggleThemeButton;

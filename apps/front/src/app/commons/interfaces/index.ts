@@ -1,5 +1,5 @@
-import { IGameProps, IPlayer, Token } from "@monopoly-wallet/shared-types";
-import { Log } from "../../context/game/Logs";
+import { IGameProps, IPlayer, Token } from '@monopoly-wallet/shared-types';
+import { Log } from '../../context/game/Logs';
 
 export interface Option<T> {
   label: string;

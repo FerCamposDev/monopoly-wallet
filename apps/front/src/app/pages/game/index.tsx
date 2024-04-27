@@ -1,14 +1,14 @@
 
-import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from "@mui/icons-material";
-import { BottomNavigation, BottomNavigationAction, Stack } from "@mui/material";
-import React from "react";
-import UserScreen from "../../components/game-screens/User";
-import BankScreen from "../../components/game-screens/Bank";
-import withAuth from "../../hocs/withAuth";
-import RoomLayout from "../../components/shared/RoomLayout";
-import QRScanButton from "../../components/shared/QRScanButton";
-import { useNavigate, useParams } from "react-router-dom";
-import { getTabPath } from "../../commons/helpers/routes";
+import { AccountBalanceOutlined, AccountBalanceWalletOutlined } from '@mui/icons-material';
+import { BottomNavigation, BottomNavigationAction, Stack } from '@mui/material';
+import React from 'react';
+import UserScreen from '../../components/game-screens/User';
+import BankScreen from '../../components/game-screens/Bank';
+import withAuth from '../../hocs/withAuth';
+import RoomLayout from '../../components/shared/RoomLayout';
+import QRScanButton from '../../components/shared/QRScanButton';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getTabPath } from '../../commons/helpers/routes';
 
 export enum GameTab {
   User = 'user',
@@ -16,7 +16,7 @@ export enum GameTab {
 }
 
 export function GamePage() {
-  const { tab = GameTab.User } = useParams<{ tab: GameTab}>();
+  const { tab = GameTab.User } = useParams<{ tab: GameTab }>();
   const navigate = useNavigate();
 
   const screenMap = {
@@ -27,7 +27,7 @@ export function GamePage() {
 
   const handleChangeTab = (_e: React.SyntheticEvent, newValue: GameTab) => {
     navigate(getTabPath(newValue));
-  }
+  };
 
   return (
     <RoomLayout isBankTab={tab === GameTab.Bank}>

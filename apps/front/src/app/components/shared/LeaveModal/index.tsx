@@ -46,7 +46,7 @@ const LeaveModal: FC = () => {
         </DialogActions>
       </Dialog>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default LeaveModal
+export default LeaveModal;

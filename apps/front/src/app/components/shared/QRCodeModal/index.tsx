@@ -2,7 +2,7 @@ import { IPaymentFromBank } from '@monopoly-wallet/shared-types';
 import { Close } from '@mui/icons-material';
 import { AppBar, Button, Dialog, IconButton, Slide, Stack, Toolbar, Typography } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { FC, forwardRef, } from 'react';
+import { FC, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PaymentDetail from '../PaymentDetail';
 import { useDevices } from '../../../hooks';
@@ -20,7 +20,7 @@ type Props = {
   qrUrl?: string;
   paymentData?: IPaymentFromBank;
   onClose: () => void;
-}
+};
 
 const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
   const { isMobile } = useDevices();
@@ -29,7 +29,7 @@ const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
 
   const handleFinish = () => {
     navigate(-1);
-  }
+  };
 
   return (
     <Dialog
@@ -61,7 +61,7 @@ const QRCodeModal: FC<Props> = ({ qrUrl, paymentData, onClose }) => {
         </Button>
       </Stack>
     </Dialog>
-  )
-}
+  );
+};
 
-export default QRCodeModal
+export default QRCodeModal;

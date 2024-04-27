@@ -1,11 +1,11 @@
-import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types";
-import { GameContextTypes } from "./types";
-import GameContext, { initialGameState } from "./GameContext";
-import { TOKEN_OPTIONS } from "../../commons/constants";
-import { IGameToRecoverData, TokenOption } from "../../commons/interfaces";
-import { Log } from "./Logs";
-import { LocalStorageKey } from "../../commons/enums/storage.enum";
+import { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { IGameProps, IPlayer } from '@monopoly-wallet/shared-types';
+import { GameContextTypes } from './types';
+import GameContext, { initialGameState } from './GameContext';
+import { TOKEN_OPTIONS } from '../../commons/constants';
+import { IGameToRecoverData, TokenOption } from '../../commons/interfaces';
+import { Log } from './Logs';
+import { LocalStorageKey } from '../../commons/enums/storage.enum';
 
 type Props = PropsWithChildren;
 
@@ -22,7 +22,7 @@ const GameProvider: FC<Props> = ({ children }) => {
     setPlayer(initialGameState.player);
     setAvailableTokens(TOKEN_OPTIONS);
     setLogs([]);
-  }
+  };
 
   useEffect(() => {
     const tokens: TokenOption[] = [];
@@ -67,7 +67,7 @@ const GameProvider: FC<Props> = ({ children }) => {
         date: new Date(),
       };
   
-      localStorage.setItem(LocalStorageKey.VolatileGame, JSON.stringify(volatileData))
+      localStorage.setItem(LocalStorageKey.VolatileGame, JSON.stringify(volatileData));
     }
   }, [game, player, logs]);
 
@@ -75,7 +75,7 @@ const GameProvider: FC<Props> = ({ children }) => {
     <GameContext.Provider value={value}>
       {children}
     </GameContext.Provider>
-  )
+  );
 };
 
 export default GameProvider;

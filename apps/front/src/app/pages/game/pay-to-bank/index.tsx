@@ -1,14 +1,14 @@
-import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material"
-import withAuth from "../../../hocs/withAuth";
-import { PaymentReason } from "@monopoly-wallet/shared-types";
-import { useGameSockets } from "../../../context/sockets/useGameSockets";
-import { useGame } from "../../../context/game/useGame";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import PageLayout from "../../../components/shared/PageLayout";
-import { TO_BANK_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
-import { sounds } from "../../../commons/helpers/sounds";
-import AmountInput from "../../../components/shared/AmountInput";
+import { Button, FormControlLabel, Radio, RadioGroup, Stack } from '@mui/material';
+import withAuth from '../../../hocs/withAuth';
+import { PaymentReason } from '@monopoly-wallet/shared-types';
+import { useGameSockets } from '../../../context/sockets/useGameSockets';
+import { useGame } from '../../../context/game/useGame';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import PageLayout from '../../../components/shared/PageLayout';
+import { TO_BANK_PAYMENT_REASONS_OPTIONS } from '../../../commons/constants';
+import { sounds } from '../../../commons/helpers/sounds';
+import AmountInput from '../../../components/shared/AmountInput';
 
 const PayToBankPage = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const PayToBankPage = () => {
     toast.success('Successful payment!');
     sounds.sent();
     navigate(-1);
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,7 +34,7 @@ const PayToBankPage = () => {
       from: player,
       reason,
     }, onSuccess);
-  }
+  };
 
   return (
     <PageLayout title="Pay to Bank">
@@ -65,7 +65,7 @@ const PayToBankPage = () => {
         </Button>
       </form>
     </PageLayout>
-  )
-}
+  );
+};
 
 export default withAuth(PayToBankPage);

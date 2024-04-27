@@ -1,4 +1,4 @@
-import { LocalStorageKey } from "../enums/storage.enum";
+import { LocalStorageKey } from '../enums/storage.enum';
 
 const sentAudio = new Audio('/assets/sounds/confirm-jingle.wav');
 const bankSentAudio = new Audio('/assets/sounds/notification-1.wav');
@@ -14,41 +14,41 @@ export enum MuteStatus {
 
 export const setMute = (status: MuteStatus) => {
   localStorage.setItem(LocalStorageKey.Mute, status);
-}
+};
 
 export const isMute = () => {
   return localStorage.getItem(LocalStorageKey.Mute) === MuteStatus.true;
-}
+};
 
 const sent = () => {
   if (isMute()) return;
   sentAudio.play();
-}
+};
 
 const bankSent = () => {
   if (isMute()) return;
   bankSentAudio.play();
-}
+};
 
 const received = () => {
   if (isMute()) return;
   receivedAudio.play();
-}
+};
 
 const transactionError = () => {
   if (isMute()) return;
   errorAudio1.play();
-}
+};
 
 const userEnter = () => {
   if (isMute()) return;
   userEnterAudio.play();
-}
+};
 
 const userLeave = () => {
   if (isMute()) return;
   userLeaveAudio.play();
-}
+};
 
 export const sounds = {
   sent,
@@ -57,4 +57,4 @@ export const sounds = {
   transactionError,
   userEnter,
   userLeave,
-}
+};

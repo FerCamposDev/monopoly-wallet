@@ -1,15 +1,22 @@
-import { ILog, IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
+import { ILog, IPlayer, PaymentReason } from '@monopoly-wallet/shared-types';
 
 export class Log implements ILog {
   private token: string;
 
   date: Date;
+
   message: string;
+
   detail: string;
+
   amount: number;
+
   reason: PaymentReason;
+
   from?: IPlayer | undefined;
+
   to?: IPlayer | undefined;
+
   fail?: boolean | undefined;
 
   constructor(log: ILog, token: string) {
@@ -25,16 +32,16 @@ export class Log implements ILog {
     this.fail = log.fail;
   }
 
-  get isIn(){
-    return this.to?.token === this.token
+  get isIn() {
+    return this.to?.token === this.token;
   }
 
-  get isOut(){
+  get isOut() {
     return this.from?.token === this.token;
   } 
 
-  get isRelatedToPlayer(){
-    return this.isIn || this.isOut
+  get isRelatedToPlayer() {
+    return this.isIn || this.isOut;
   }
 
   get isToBank() {

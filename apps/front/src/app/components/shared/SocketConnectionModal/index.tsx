@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useGameSockets } from '../../../context/sockets/useGameSockets'
+import { useEffect } from 'react';
+import { useGameSockets } from '../../../context/sockets/useGameSockets';
 import LoadingModal from '../LoadingModal';
 import { useGame } from '../../../context/game/useGame';
 import useNavigatorOnLine from '../../../hooks/useNavigatorOnLine';
@@ -36,11 +36,11 @@ const SocketConnectionModal = () => {
           game,
           logs: recoveredLogs,
           player,
-        }
+        };
       }
     }
     return null;
-  }
+  };
 
   useEffect(() => {
     if (isOnline && isConnected && socket.id) {
@@ -69,7 +69,7 @@ const SocketConnectionModal = () => {
 
   return (
     <LoadingModal open={!isConnected} message="Waiting for socket connection." />
-  )
-}
+  );
+};
 
-export default SocketConnectionModal
+export default SocketConnectionModal;

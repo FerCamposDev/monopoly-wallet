@@ -1,12 +1,12 @@
-import { PaymentReason, Token } from "@monopoly-wallet/shared-types";
-import { Option, TokenOption } from "../interfaces";
+import { PaymentReason, Token } from '@monopoly-wallet/shared-types';
+import { Option, TokenOption } from '../interfaces';
 
 const tokens = Object.entries(Token);
 
 export const TOKEN_OPTIONS: TokenOption[] = tokens.map(([key, value]): TokenOption => ({
   label: value,
-  value: key as Token
-}))
+  value: key as Token,
+}));
 
 export const COLLECT_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
@@ -17,7 +17,7 @@ export const COLLECT_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     label: PaymentReason.ARK_CARD,
     value: PaymentReason.ARK_CARD,
   },
-]
+];
 
 export const P2P_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
@@ -71,7 +71,7 @@ export const TO_BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     label: PaymentReason.TAXES,
     value: PaymentReason.TAXES,
   },
-]
+];
 
 export const BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
@@ -94,4 +94,4 @@ export const BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     label: PaymentReason.START,
     value: PaymentReason.START,
   },
-]
+];

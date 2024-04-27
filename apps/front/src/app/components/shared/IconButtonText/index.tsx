@@ -1,5 +1,5 @@
-import { IconButton, IconButtonProps, Stack, Typography } from "@mui/material"
-import { FC } from "react";
+import { IconButton, IconButtonProps, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 
 interface Props extends IconButtonProps {
   text: string;
@@ -15,7 +15,7 @@ const IconButtonText: FC<Props> = ({ text, children, ...iconButtonProps }) => {
         </Typography>
       </Stack>
     </IconButton>
-  )
-}
+  );
+};
 
-export default IconButtonText
+export default IconButtonText;

@@ -1,11 +1,11 @@
-import { AccountBalanceOutlined, AddBusinessOutlined, LocalAtmOutlined, SwapHorizOutlined } from "@mui/icons-material";
-import { Card, Grid, Stack, Typography } from "@mui/material";
-import { FC } from "react";
-import IconButtonText from "../shared/IconButtonText";
-import { useGame } from "../../context/game/useGame";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "../../commons/enums/routes.enum";
-import LogsList from "../shared/LogsList";
+import { AccountBalanceOutlined, AddBusinessOutlined, LocalAtmOutlined, SwapHorizOutlined } from '@mui/icons-material';
+import { Card, Grid, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
+import IconButtonText from '../shared/IconButtonText';
+import { useGame } from '../../context/game/useGame';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../commons/enums/routes.enum';
+import LogsList from '../shared/LogsList';
 
 const UserScreen: FC = () => {
   const { game, player } = useGame();
@@ -43,7 +43,7 @@ const UserScreen: FC = () => {
         <LogsList isUserLog />
       </Stack >
     </Grid >
-  )
-}
+  );
+};
 
-export default UserScreen
+export default UserScreen;

@@ -1,12 +1,12 @@
-import { CircularProgress, Dialog, DialogContent, DialogTitle, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { CircularProgress, Dialog, DialogContent, DialogTitle, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 
 type Props = {
   open: boolean;
   title?: string;
   message?: string;
   detail?: string;
-}
+};
 
 const LoadingModal: FC<Props> = ({ title = 'Loading', message, open, detail }) => {
   return (
@@ -30,7 +30,7 @@ const LoadingModal: FC<Props> = ({ title = 'Loading', message, open, detail }) =
         </Stack>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default LoadingModal
+export default LoadingModal;

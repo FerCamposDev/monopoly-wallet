@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import ImageButton from './ImageButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import { useToggle } from '../../hooks';
@@ -6,14 +6,14 @@ import { useToggle } from '../../hooks';
 type GameType = 'Join' | 'Host';
 
 const imageUrlByType: Record<GameType, string> = {
-  'Join': "/assets/images/buttons/neon-1.jpg",
-  'Host': "/assets/images/buttons/neon-2.jpg",
-}
+  'Join': '/assets/images/buttons/neon-1.jpg',
+  'Host': '/assets/images/buttons/neon-2.jpg',
+};
 
 type Props = {
   type: GameType;
   action: (room: string) => void;
-}
+};
 
 const GameModal: FC<Props> = ({ type, action }) => {
   const { open, handleClose, handleOpen } = useToggle();
@@ -60,7 +60,7 @@ const GameModal: FC<Props> = ({ type, action }) => {
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default GameModal
+export default GameModal;

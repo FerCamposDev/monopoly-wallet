@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
 const useNavigatorOnLine = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -17,6 +17,6 @@ const useNavigatorOnLine = () => {
   }, []);
 
   return isOnline;
-}
+};
 
 export default useNavigatorOnLine;

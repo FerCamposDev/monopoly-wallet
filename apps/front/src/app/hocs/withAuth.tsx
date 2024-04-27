@@ -1,9 +1,9 @@
-import { FC, useEffect } from "react"
-import { JSX } from "react/jsx-runtime";
-import { useGame } from "../context/game/useGame";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "../commons/enums/routes.enum";
-import { getRoomPath } from "../commons/helpers/routes";
+import { FC, useEffect } from 'react';
+import { JSX } from 'react/jsx-runtime';
+import { useGame } from '../context/game/useGame';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../commons/enums/routes.enum';
+import { getRoomPath } from '../commons/helpers/routes';
 
 const withAuth = (Component: FC) => {
   const WithAuth = (props: JSX.IntrinsicAttributes) => {
@@ -20,11 +20,11 @@ const withAuth = (Component: FC) => {
     }, [player, game?.room]);
 
     return <Component {...props} />;
-  }
+  };
 
   // WithAuth.displayName = `withAuth(${Component.displayName || Component.name})`;
   return WithAuth;
-}
+};
 
 export default withAuth;
 

@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react"
-import { LocalStorageKey } from "../../../commons/enums/storage.enum";
-import { Button, Collapse, Grid, Paper, Stack, styled, Typography } from "@mui/material";
-import { gt } from "semver";
+import { FC, useEffect, useState } from 'react';
+import { LocalStorageKey } from '../../../commons/enums/storage.enum';
+import { Button, Collapse, Grid, Paper, Stack, styled, Typography } from '@mui/material';
+import { gt } from 'semver';
 
 const StyledCollapse = styled(Collapse)({
   position: 'absolute',
@@ -33,17 +33,17 @@ const AppVersionDetector: FC = () => {
   };
 
   const update = async () => {
-    const newUrl =  window.location.href + "?no-cache=" + new Date().getTime();
+    const newUrl =  window.location.href + '?no-cache=' + new Date().getTime();
     await fetch(newUrl, {
       headers: {
-          Pragma: 'no-cache',
-          Expires: '-1',
-          'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '-1',
+        'Cache-Control': 'no-cache',
       },
-  });
+    });
     localStorage.setItem(LocalStorageKey.Version, lastVersion);
     window.location.href = newUrl;
-  }
+  };
 
   useEffect(() => {
     checkLastVersion();
@@ -69,7 +69,7 @@ const AppVersionDetector: FC = () => {
         </Grid>
       </Paper>
     </StyledCollapse>
-  )
-}
+  );
+};
 
-export default AppVersionDetector
+export default AppVersionDetector;

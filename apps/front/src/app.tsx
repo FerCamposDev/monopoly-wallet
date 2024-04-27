@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: Routes.Home,
     element: <HomePage />,
-    errorElement: <NotFoundPage />
+    errorElement: <NotFoundPage />,
   },
   {
     path: Routes.RoomByName,
@@ -38,25 +38,25 @@ const router = createBrowserRouter([
   },
   {
     path: Routes.GameCollect,
-    element: <CollectPage />
+    element: <CollectPage />,
   },
   {
     path: Routes.GameTransfer,
-    element: <TransferPage />
+    element: <TransferPage />,
   },
   {
     path: Routes.GameToBank,
-    element: <PayToBankPage />
+    element: <PayToBankPage />,
   },
   {
     path: Routes.GameFromBank,
-    element: <PayFromBankPage />
+    element: <PayFromBankPage />,
   },
   {
     path: Routes.GamePayCollect,
-    element: <PayCollectPage />
-  }
-])
+    element: <PayCollectPage />,
+  },
+]);
 
 const App = () => {
   const socket = io(import.meta.env.VITE_SOCKETS_URL);
@@ -75,7 +75,7 @@ const App = () => {
         </SocketProvider>
       </GameProvider>
     </CustomThemeProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

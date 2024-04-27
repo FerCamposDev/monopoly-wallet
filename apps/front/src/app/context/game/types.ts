@@ -1,7 +1,7 @@
-import { IGameProps, IPlayer } from "@monopoly-wallet/shared-types"
-import { TokenOption } from "../../commons/interfaces";
-import { SetStateAction } from "react"
-import { Log } from "./Logs";
+import { IGameProps, IPlayer } from '@monopoly-wallet/shared-types';
+import { TokenOption } from '../../commons/interfaces';
+import { SetStateAction } from 'react';
+import { Log } from './Logs';
 
 export type GameContextTypes = {
   game: IGameProps;
@@ -12,4 +12,4 @@ export type GameContextTypes = {
   reset: VoidFunction;
   logs: Log[];
   setLogs: React.Dispatch<SetStateAction<Log[]>>;
-}
+};

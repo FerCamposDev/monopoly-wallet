@@ -1,9 +1,9 @@
-import { GavelOutlined, SwapHorizOutlined } from "@mui/icons-material"
-import { Grid, Stack, Typography } from "@mui/material"
-import IconButtonText from "../shared/IconButtonText"
-import LogsList from "../shared/LogsList"
-import { useNavigate } from "react-router-dom"
-import { Routes } from "../../commons/enums/routes.enum"
+import { GavelOutlined, SwapHorizOutlined } from '@mui/icons-material';
+import { Grid, Stack, Typography } from '@mui/material';
+import IconButtonText from '../shared/IconButtonText';
+import LogsList from '../shared/LogsList';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../commons/enums/routes.enum';
 
 const BankScreen = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const BankScreen = () => {
         <LogsList />
       </Stack >
     </Grid >
-  )
-}
+  );
+};
 
-export default BankScreen
+export default BankScreen;

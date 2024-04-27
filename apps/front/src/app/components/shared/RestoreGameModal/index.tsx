@@ -1,12 +1,12 @@
-import { FC, useEffect } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from "@mui/material";
-import { useToggle } from "../../../hooks";
-import { useGameSockets } from "../../../context/sockets/useGameSockets";
-import { LocalStorageKey } from "../../../commons/enums/storage.enum";
-import { IGameToRecoverData } from "../../../commons/interfaces";
-import RemoveGame from "./RemoveGame";
-import { Log } from "../../../context/game/Logs";
-import { useGame } from "../../../context/game/useGame";
+import { FC, useEffect } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from '@mui/material';
+import { useToggle } from '../../../hooks';
+import { useGameSockets } from '../../../context/sockets/useGameSockets';
+import { LocalStorageKey } from '../../../commons/enums/storage.enum';
+import { IGameToRecoverData } from '../../../commons/interfaces';
+import RemoveGame from './RemoveGame';
+import { Log } from '../../../context/game/Logs';
+import { useGame } from '../../../context/game/useGame';
 
 const RestoreGameModal: FC = () => {
   const { open, handleClose, handleOpen } = useToggle();
@@ -31,12 +31,12 @@ const RestoreGameModal: FC = () => {
       actions.restoreGame(game.room, game);
       actions.joinGameToToken(player);
     }
-  }
+  };
 
   const removeGame = () => {
     localStorage.removeItem(LocalStorageKey.Game);
     handleClose();
-  }
+  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -63,7 +63,7 @@ const RestoreGameModal: FC = () => {
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
 export default RestoreGameModal;

@@ -1,8 +1,8 @@
-import { QrCodeScannerOutlined } from "@mui/icons-material";
-import { Fab, styled } from "@mui/material";
-import { FC } from "react";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "../../../commons/enums/routes.enum";
+import { QrCodeScannerOutlined } from '@mui/icons-material';
+import { Fab, styled } from '@mui/material';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../../commons/enums/routes.enum';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -18,13 +18,13 @@ const QRScanButton: FC = () => {
 
   const handleGoToScan = () => {
     navigate(Routes.GamePayCollect);
-  }
+  };
 
   return (
     <StyledFab color="primary" onClick={handleGoToScan}>
       <QrCodeScannerOutlined fontSize="large" />
     </StyledFab>
-  )
-}
+  );
+};
 
-export default QRScanButton
+export default QRScanButton;

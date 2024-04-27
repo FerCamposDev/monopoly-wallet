@@ -1,14 +1,14 @@
-import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material"
-import withAuth from "../../../hocs/withAuth";
-import { IPaymentFromBank, PaymentReason } from "@monopoly-wallet/shared-types";
-import { useGame } from "../../../context/game/useGame";
-import PageLayout from "../../../components/shared/PageLayout";
-import { COLLECT_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
-import AmountInput from "../../../components/shared/AmountInput";
+import { Button, FormControlLabel, Radio, RadioGroup, Stack } from '@mui/material';
+import withAuth from '../../../hocs/withAuth';
+import { IPaymentFromBank, PaymentReason } from '@monopoly-wallet/shared-types';
+import { useGame } from '../../../context/game/useGame';
+import PageLayout from '../../../components/shared/PageLayout';
+import { COLLECT_PAYMENT_REASONS_OPTIONS } from '../../../commons/constants';
+import AmountInput from '../../../components/shared/AmountInput';
 import QRCode from 'qrcode';
-import toast from "react-hot-toast";
-import { useState } from "react";
-import QRCodeModal from "../../../components/shared/QRCodeModal";
+import toast from 'react-hot-toast';
+import { useState } from 'react';
+import QRCodeModal from '../../../components/shared/QRCodeModal';
 
 
 const CollectPage = () => {
@@ -25,7 +25,7 @@ const CollectPage = () => {
       amount: Number(formData.get('amount')),
       reason: formData.get('reason') as PaymentReason,
       to: player,
-    }
+    };
 
     try {
       const qr = await QRCode.toDataURL(JSON.stringify(data));
@@ -35,12 +35,12 @@ const CollectPage = () => {
       console.log('QR code error :>> ', error);
       toast.error('Failed to create qr code.');
     }
-  }
+  };
 
   const reset = () => {
     setQrCode('');
     setPaymentData(undefined);
-  }
+  };
 
   return (
     <PageLayout title="Create Collect">
@@ -72,7 +72,7 @@ const CollectPage = () => {
         </Button>
       </form>
     </PageLayout>
-  )
-}
+  );
+};
 
 export default withAuth(CollectPage);

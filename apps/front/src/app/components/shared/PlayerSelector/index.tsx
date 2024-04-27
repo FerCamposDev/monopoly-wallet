@@ -1,13 +1,13 @@
-import { Avatar, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material"
-import { FC } from "react"
-import { useGame } from "../../../context/game/useGame"
-import { IPlayer } from "@monopoly-wallet/shared-types"
-import { getTokenImagePath } from "../../../commons/helpers/images"
+import { Avatar, FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { FC } from 'react';
+import { useGame } from '../../../context/game/useGame';
+import { IPlayer } from '@monopoly-wallet/shared-types';
+import { getTokenImagePath } from '../../../commons/helpers/images';
 
 type Props = {
   onSelect: (player: IPlayer) => void;
   disabled?: boolean;
-}
+};
 
 const PlayerSelector: FC<Props> = ({ onSelect, disabled }) => {
   const { game, player } = useGame();
@@ -41,7 +41,7 @@ const PlayerSelector: FC<Props> = ({ onSelect, disabled }) => {
         ))}
       </Select>
     </FormControl>
-  )
-}
+  );
+};
 
-export default PlayerSelector
+export default PlayerSelector;
