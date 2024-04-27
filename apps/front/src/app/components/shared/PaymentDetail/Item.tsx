@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@mui/material';
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react';
 
 type Props = {
   label: string;
   value: ReactNode
-}
+};
 
 const Item: FC<Props> = ({ label, value }) => {
   return (
@@ -16,7 +16,7 @@ const Item: FC<Props> = ({ label, value }) => {
         {value}
       </Typography>
     </Grid>
-  )
-}
+  );
+};
 
-export default Item
+export default Item;

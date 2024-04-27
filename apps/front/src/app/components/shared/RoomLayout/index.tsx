@@ -1,6 +1,6 @@
-import { AppBar, Avatar, Container, Grid, Stack, Toolbar, Typography } from '@mui/material'
-import { FC, PropsWithChildren } from 'react'
-import { useGame } from '../../../context/game/useGame'
+import { AppBar, Avatar, Container, Grid, Stack, Toolbar, Typography } from '@mui/material';
+import { FC, PropsWithChildren } from 'react';
+import { useGame } from '../../../context/game/useGame';
 import { getTokenImagePath } from '../../../commons/helpers/images';
 import MenuButton from '../MenuButton';
 import MuteItem from '../MuteItem';
@@ -20,7 +20,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
       <AppBar position="fixed" color={isBankTab ? 'secondary' : 'primary'}>
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item display={isBankTab ? "none" : "flex"} alignItems="center" gap={2}>
+            <Grid item display={isBankTab ? 'none' : 'flex'} alignItems="center" gap={2}>
               <Avatar
                 src={getTokenImagePath(player?.token)}
                 alt="token"
@@ -54,7 +54,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
         </Container>
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default RoomLayout
+export default RoomLayout;

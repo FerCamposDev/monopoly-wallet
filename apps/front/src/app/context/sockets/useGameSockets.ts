@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import SocketContext from "./SocketsContext"
+import { useContext } from 'react';
+import SocketContext from './SocketsContext';
 
 export const useGameSockets = () => {
   const context = useContext(SocketContext);
@@ -9,4 +9,4 @@ export const useGameSockets = () => {
   }
 
   return context;
-}
+};

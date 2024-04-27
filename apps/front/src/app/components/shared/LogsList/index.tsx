@@ -1,12 +1,12 @@
-import { Card, Divider, Grid, List, ListItem, ListItemText, Stack, Typography } from "@mui/material"
-import { FC, useEffect, useRef } from "react"
-import { useGame } from "../../../context/game/useGame"
-import { Close, TrendingFlatOutlined } from "@mui/icons-material"
-import { Log } from "../../../context/game/Logs"
+import { Card, Divider, Grid, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
+import { FC, useEffect, useRef } from 'react';
+import { useGame } from '../../../context/game/useGame';
+import { Close, TrendingFlatOutlined } from '@mui/icons-material';
+import { Log } from '../../../context/game/Logs';
 
 type Props = {
   isUserLog?: boolean
-}
+};
 
 const LogsList: FC<Props> = ({ isUserLog }) => {
   const listRef = useRef<HTMLUListElement>(null);
@@ -20,12 +20,12 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
       listRef.current.scrollTo({
         top: listRef.current.scrollHeight,
         behavior: 'smooth',
-      })
+      });
     }
   }, [logs.length]);
 
   const renderIcon = (log: Log) => {
-    if (log.fail) return <Close color="error" />
+    if (log.fail) return <Close color="error" />;
 
     if (!isUserLog || !log.isRelatedToPlayer) return null;
 
@@ -33,7 +33,7 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
       return <TrendingFlatOutlined color="success" sx={{ transform: 'scaleX(-1)' }} />;
     }
     return <TrendingFlatOutlined color="error" />;
-  }
+  };
 
   return (
     <Card sx={{ py: 2, px: 1 }}>
@@ -59,7 +59,7 @@ const LogsList: FC<Props> = ({ isUserLog }) => {
         ))}
       </List>
     </Card>
-  )
-}
+  );
+};
 
-export default LogsList
+export default LogsList;

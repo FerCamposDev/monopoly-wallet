@@ -1,15 +1,15 @@
-import { Button, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material"
-import PlayerSelector from "../../../components/shared/PlayerSelector"
-import withAuth from "../../../hocs/withAuth";
-import { useState } from "react";
-import { IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
-import { useGameSockets } from "../../../context/sockets/useGameSockets";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import PageLayout from "../../../components/shared/PageLayout";
-import { BANK_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
-import { sounds } from "../../../commons/helpers/sounds";
-import AmountInput from "../../../components/shared/AmountInput";
+import { Button, FormControlLabel, Radio, RadioGroup, Stack } from '@mui/material';
+import PlayerSelector from '../../../components/shared/PlayerSelector';
+import withAuth from '../../../hocs/withAuth';
+import { useState } from 'react';
+import { IPlayer, PaymentReason } from '@monopoly-wallet/shared-types';
+import { useGameSockets } from '../../../context/sockets/useGameSockets';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import PageLayout from '../../../components/shared/PageLayout';
+import { BANK_PAYMENT_REASONS_OPTIONS } from '../../../commons/constants';
+import { sounds } from '../../../commons/helpers/sounds';
+import AmountInput from '../../../components/shared/AmountInput';
 
 const PayFromBankPage = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const PayFromBankPage = () => {
     toast.success('Successful transfer!');
     sounds.bankSent();
     navigate(-1);
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,7 +36,7 @@ const PayFromBankPage = () => {
       to,
       reason,
     }, onSuccess);
-  }
+  };
 
   return (
     <PageLayout title="Pay From Bank">
@@ -68,7 +68,7 @@ const PayFromBankPage = () => {
         </Button>
       </form>
     </PageLayout>
-  )
-}
+  );
+};
 
 export default withAuth(PayFromBankPage);

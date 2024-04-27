@@ -1,11 +1,11 @@
-import { Stack } from "@mui/material"
-import GameModal from "../components/GameModal";
-import { useGameSockets } from "../context/sockets/useGameSockets";
-import { useGame } from "../context/game/useGame";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { getRoomPath } from "../commons/helpers/routes";
-import RestoreGameModal from "../components/shared/RestoreGameModal";
+import { Stack } from '@mui/material';
+import GameModal from '../components/GameModal';
+import { useGameSockets } from '../context/sockets/useGameSockets';
+import { useGame } from '../context/game/useGame';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getRoomPath } from '../commons/helpers/routes';
+import RestoreGameModal from '../components/shared/RestoreGameModal';
 
 const HomePage = () => {
   const { actions } = useGameSockets();
@@ -25,7 +25,7 @@ const HomePage = () => {
       <GameModal type="Host" action={actions.createGame} />
       <RestoreGameModal />
     </Stack>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

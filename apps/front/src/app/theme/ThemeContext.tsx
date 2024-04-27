@@ -1,12 +1,12 @@
-import { Color, ThemeProvider, createTheme } from "@mui/material";
-import { blue, green } from "@mui/material/colors";
-import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from "react";
+import { Color, ThemeProvider, createTheme } from '@mui/material';
+import { blue, green } from '@mui/material/colors';
+import { Dispatch, FC, PropsWithChildren, SetStateAction, createContext, useContext, useMemo, useState } from 'react';
 
 type ThemeActions = {
   toggleThemeMode: () => void;
   setPrimaryColor: Dispatch<SetStateAction<Color>>;
   resetPrimaryColor: () => void;
-}
+};
 
 export const CustomThemeContext = createContext<ThemeActions>({
   toggleThemeMode: () => { },
@@ -20,7 +20,7 @@ const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const resetPrimaryColor = () => {
     setPrimaryColor(blue);
-  }
+  };
 
   const theme = useMemo(() =>
     createTheme({
@@ -48,7 +48,7 @@ const CustomThemeProvider: FC<PropsWithChildren> = ({ children }) => {
         {children}
       </ThemeProvider>
     </CustomThemeContext.Provider>
-  )
+  );
 };
 
 export const useThemeActions = () => {
@@ -58,6 +58,6 @@ export const useThemeActions = () => {
   }
 
   return context;
-}
+};
 
 export default CustomThemeProvider;

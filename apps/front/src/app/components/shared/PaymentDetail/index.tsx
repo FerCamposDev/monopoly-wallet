@@ -1,6 +1,6 @@
-import { IP2PPayment, IPaymentFromBank } from '@monopoly-wallet/shared-types'
+import { IP2PPayment, IPaymentFromBank } from '@monopoly-wallet/shared-types';
 import { Avatar, Grid, Stack, Typography } from '@mui/material';
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import { getTokenImagePath } from '../../../commons/helpers/images';
 import Item from './Item';
 
@@ -10,7 +10,7 @@ function isP2PPayment(payment: IP2PPayment | IPaymentFromBank): payment is IP2PP
 
 type Props = {
   payment?: IP2PPayment | IPaymentFromBank;
-}
+};
 
 const PaymentDetail: FC<Props> = ({ payment }) => {
   if (!payment) return null;
@@ -43,7 +43,7 @@ const PaymentDetail: FC<Props> = ({ payment }) => {
         </Typography>
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default PaymentDetail
+export default PaymentDetail;

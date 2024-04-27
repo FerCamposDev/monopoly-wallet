@@ -1,16 +1,16 @@
-import { Socket } from "socket.io-client";
-import SocketContext from "./SocketsContext";
-import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { CustomError, GameErrors, IGameProps, ILog, IPlayer, SocketEvent } from "@monopoly-wallet/shared-types";
-import { SocketContextTypes } from "./types";
-import { SocketActions } from "./SocketActions";
-import toast from "react-hot-toast";
-import { Log } from "../game/Logs";
-import { useGame } from "../game/useGame";
-import { sounds } from "../../commons/helpers/sounds";
-import { colorByToken } from "../../commons/mappers/tokens";
-import { useThemeActions } from "../../theme/ThemeContext";
-import { AccountBalanceOutlined, Info } from "@mui/icons-material";
+import { Socket } from 'socket.io-client';
+import SocketContext from './SocketsContext';
+import { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { CustomError, GameErrors, IGameProps, ILog, IPlayer, SocketEvent } from '@monopoly-wallet/shared-types';
+import { SocketContextTypes } from './types';
+import { SocketActions } from './SocketActions';
+import toast from 'react-hot-toast';
+import { Log } from '../game/Logs';
+import { useGame } from '../game/useGame';
+import { sounds } from '../../commons/helpers/sounds';
+import { colorByToken } from '../../commons/mappers/tokens';
+import { useThemeActions } from '../../theme/ThemeContext';
+import { AccountBalanceOutlined, Info } from '@mui/icons-material';
 
 type Props = PropsWithChildren<{
   socket: Socket;
@@ -32,9 +32,9 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       socket.on('error', (data) => {
         console.error('Error data :>> ', data);
         toast.error(data.message);
-      })
+      });
   
-      socket.on("connect_error", (err) => {
+      socket.on('connect_error', (err) => {
         console.error(err.message);
       });
 
@@ -42,10 +42,10 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         setIsConnected(false);
       });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, []);
 
   useEffect(()=>{
     // custom socket listeners
@@ -57,12 +57,12 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
       socket.on(SocketEvent.PLAYER_JOINED, (currentPlayer: IPlayer) => {
         if (currentPlayer.socketId === socket.id) {
           setPlayer(currentPlayer);
-          setPrimaryColor(colorByToken[currentPlayer.token])
+          setPrimaryColor(colorByToken[currentPlayer.token]);
         } else {
           toast(`${currentPlayer.token} joined as ${currentPlayer.name}`, {
             icon: <Info color="info" />,
             position: 'bottom-left',
-          })
+          });
           sounds.userEnter();
         }
       });
@@ -71,7 +71,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         toast(`${oldPlayer.token}, ${oldPlayer.name} leave the game.`, {
           icon: <Info color="info" />,
           position: 'bottom-left',
-        })
+        });
         sounds.userLeave();
       });
 
@@ -81,16 +81,16 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
 
       socket.on(SocketEvent.CUSTOM_ERROR, (data: CustomError) => {
         console.log('Error data :>> ', data);
-        if(data.code === GameErrors.InsufficientFounds) {
+        if (data.code === GameErrors.InsufficientFounds) {
           sounds.transactionError();
         }
         toast.error(data.code);
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, []);
 
   useEffect(()=>{
     // custom socket listeners with state
@@ -103,18 +103,18 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
         toast(`${newLog.message} $ ${newLog.amount.toLocaleString()}`, {
           icon: newLog.isToBank ? <AccountBalanceOutlined /> : undefined,
           position: 'bottom-left',
-        })
+        });
       }
       setLogs(prev => [...prev, newLog]);
-    }
+    };
 
-    socket.on(SocketEvent.LOG, handleLog)
+    socket.on(SocketEvent.LOG, handleLog);
 
     return () => {
-      socket.off(SocketEvent.LOG, handleLog)
-    }
+      socket.off(SocketEvent.LOG, handleLog);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[player.token])
+  }, [player.token]);
 
 
   const value = useMemo((): SocketContextTypes => ({
@@ -128,7 +128,7 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
     <SocketContext.Provider value={value}>
       {children}
     </SocketContext.Provider>
-  )
+  );
 };
 
 export default SocketProvider;

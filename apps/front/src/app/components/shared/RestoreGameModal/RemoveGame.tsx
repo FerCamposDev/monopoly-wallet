@@ -1,9 +1,9 @@
-import { Alert, Button, Checkbox, FormControlLabel, Grid, Stack } from '@mui/material'
-import { FC, useState } from 'react'
+import { Alert, Button, Checkbox, FormControlLabel, Grid, Stack } from '@mui/material';
+import { FC, useState } from 'react';
 
 type Props = {
   onRemove: () => void;
-}
+};
 
 const RemoveGame: FC<Props> = ({ onRemove }) => {
   const [enableRemove, setEnableRemove] = useState(false);
@@ -28,7 +28,7 @@ const RemoveGame: FC<Props> = ({ onRemove }) => {
         </Button>
       </Grid>
     </Stack>
-  )
-}
+  );
+};
 
-export default RemoveGame
+export default RemoveGame;

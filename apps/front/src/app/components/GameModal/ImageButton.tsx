@@ -71,7 +71,7 @@ type Props = {
   url: string;
   children: string;
   onClick: () => void;
-}
+};
 
 export const ImageButton: FC<Props> = ({ url, children, onClick }) => {
   return (
@@ -100,6 +100,6 @@ export const ImageButton: FC<Props> = ({ url, children, onClick }) => {
       </Image>
     </Button>
   );
-}
+};
 
 export default ImageButton;

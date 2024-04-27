@@ -1,5 +1,5 @@
-import { Token } from "@monopoly-wallet/shared-types";
-import { Color } from "@mui/material";
+import { Token } from '@monopoly-wallet/shared-types';
+import { Color } from '@mui/material';
 import {
   red,
   brown,
@@ -13,7 +13,7 @@ import {
   deepPurple,
   cyan,
   orange,
-  lime
+  lime,
 } from '@mui/material/colors';
 
 export const colorByToken: Record<Token, Color> = {
@@ -30,4 +30,4 @@ export const colorByToken: Record<Token, Color> = {
   [Token.Thimble]: deepPurple,
   [Token.TopHat]:  lightBlue,
   [Token.Wheelbarrow]: orange,
-}
+};

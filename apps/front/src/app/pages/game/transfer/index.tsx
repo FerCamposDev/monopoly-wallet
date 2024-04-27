@@ -1,16 +1,16 @@
-import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack, Switch } from "@mui/material"
-import PlayerSelector from "../../../components/shared/PlayerSelector"
-import withAuth from "../../../hocs/withAuth";
-import { ChangeEvent, useState } from "react";
-import { IPlayer, PaymentReason } from "@monopoly-wallet/shared-types";
-import { useGameSockets } from "../../../context/sockets/useGameSockets";
-import { useGame } from "../../../context/game/useGame";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import PageLayout from "../../../components/shared/PageLayout";
-import { P2P_PAYMENT_REASONS_OPTIONS } from "../../../commons/constants";
-import { sounds } from "../../../commons/helpers/sounds";
-import AmountInput from "../../../components/shared/AmountInput";
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack, Switch } from '@mui/material';
+import PlayerSelector from '../../../components/shared/PlayerSelector';
+import withAuth from '../../../hocs/withAuth';
+import { ChangeEvent, useState } from 'react';
+import { IPlayer, PaymentReason } from '@monopoly-wallet/shared-types';
+import { useGameSockets } from '../../../context/sockets/useGameSockets';
+import { useGame } from '../../../context/game/useGame';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import PageLayout from '../../../components/shared/PageLayout';
+import { P2P_PAYMENT_REASONS_OPTIONS } from '../../../commons/constants';
+import { sounds } from '../../../commons/helpers/sounds';
+import AmountInput from '../../../components/shared/AmountInput';
 
 const TransferPage = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const TransferPage = () => {
     if (isLast) {
       navigate(-1);
     }
-  }
+  };
 
   const payToAll = (amount: number, reason: PaymentReason) => {
     const otherPlayers = game.players.filter(p => p.token !== player.token);
@@ -42,7 +42,7 @@ const TransferPage = () => {
         }, () => onSuccess(to, isLast));
       }, index * 1000);
     });
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,11 +64,11 @@ const TransferPage = () => {
       to,
       reason,
     }, () => onSuccess(to));
-  }
+  };
 
   const handleCheckToAll = (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setPaymentToAll(checked);
-  }
+  };
 
   const renderPaymentToAll = () => (
     <FormControlLabel
@@ -78,7 +78,7 @@ const TransferPage = () => {
         <Switch checked={paymentToAll} onChange={handleCheckToAll} />
       }
     />
-  )
+  );
 
   return (
     <PageLayout title="Transfer">
@@ -115,7 +115,7 @@ const TransferPage = () => {
         </Button>
       </form>
     </PageLayout>
-  )
-}
+  );
+};
 
 export default withAuth(TransferPage);

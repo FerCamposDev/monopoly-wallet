@@ -1,10 +1,10 @@
 import { MoreVertOutlined } from '@mui/icons-material';
-import { IconButton, Menu, MenuItem, MenuItemProps } from '@mui/material'
-import React, { FC } from 'react'
+import { IconButton, Menu, MenuItem, MenuItemProps } from '@mui/material';
+import React, { FC } from 'react';
 
 type Props = {
   options: MenuItemProps[];
-}
+};
 
 const MenuButton: FC<Props> = ({ options }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -28,7 +28,7 @@ const MenuButton: FC<Props> = ({ options }) => {
         ))}
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default MenuButton
+export default MenuButton;
