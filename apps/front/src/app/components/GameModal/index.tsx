@@ -43,6 +43,9 @@ const GameModal: FC<Props> = ({ type, action }) => {
           <DialogContentText>
             {type === 'Join' ? 'To Join to game, please enter the room name here.' : 'To Host a game, please enter a room name here.'}
           </DialogContentText>
+          <DialogContentText>
+            (Up to 14 Characters)
+          </DialogContentText>
           <TextField
             autoFocus
             required
@@ -52,6 +55,10 @@ const GameModal: FC<Props> = ({ type, action }) => {
             label="Room name"
             fullWidth
             variant="standard"
+            inputProps={{
+              maxLength: 14,
+            }}
+            helperText="We detect differences between lower and uppercase."
           />
         </DialogContent>
         <DialogActions>

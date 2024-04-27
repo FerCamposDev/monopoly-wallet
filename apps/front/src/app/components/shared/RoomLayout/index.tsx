@@ -20,7 +20,7 @@ const RoomLayout: FC<Props> = ({ children, isBankTab }) => {
       <AppBar position="fixed" color={isBankTab ? 'secondary' : 'primary'}>
         <Toolbar>
           <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item display={isBankTab ? 'none' : 'flex'} alignItems="center" gap={2}>
+            <Grid item display={isBankTab ? 'none' : 'flex'} alignItems="center" gap={1}>
               <Avatar
                 src={getTokenImagePath(player?.token)}
                 alt="token"

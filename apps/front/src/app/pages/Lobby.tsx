@@ -75,6 +75,10 @@ const LobbyPage = () => {
             name="username"
             value={username}
             onChange={e => setUsername(e.target.value)}
+            inputProps={{
+              maxLength: 11,
+            }}
+            helperText="Up to 11 Characters."
           />
           <List dense sx={{ width: '100%', bgcolor: 'background.paper', overflowY: 'scroll' }}>
             {availableTokens.map((opt) => {
