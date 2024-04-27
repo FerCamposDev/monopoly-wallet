@@ -22,8 +22,8 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
   const { setPrimaryColor } = useThemeActions();
   const [isConnected, setIsConnected] = useState(false);
 
+  // Common socket listeners
   useEffect(()=>{
-    // Common socket listeners
     try {
       socket.on('connect', () => {
         setIsConnected(true);
@@ -47,8 +47,8 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // custom socket listeners
   useEffect(()=>{
-    // custom socket listeners
     try {
       socket.on(SocketEvent.GAME_UPDATED, (data: IGameProps) => {
         setGame(data);
@@ -92,12 +92,18 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // custom socket listeners with state
   useEffect(()=>{
-    // custom socket listeners with state
     const handleLog = (log: ILog) => {
       const newLog = new Log(log, player.token);
+      setLogs(prev => [...prev, newLog]);
+
       if (newLog.isIn) {
-        sounds.received();
+        if (newLog.fail) {
+          sounds.transactionError();
+        } else {
+          sounds.received();
+        }
       }
       if (!newLog.fail) {
         toast(`${newLog.message} $ ${newLog.amount.toLocaleString()}`, {
@@ -105,7 +111,6 @@ const SocketProvider: FC<Props> = ({ children, socket }) => {
           position: 'bottom-left',
         });
       }
-      setLogs(prev => [...prev, newLog]);
     };
 
     socket.on(SocketEvent.LOG, handleLog);
