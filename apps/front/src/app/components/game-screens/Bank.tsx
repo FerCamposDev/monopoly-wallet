@@ -1,9 +1,10 @@
-import { GavelOutlined, SwapHorizOutlined } from '@mui/icons-material';
+import { SwapHorizOutlined } from '@mui/icons-material';
 import { Grid, Stack, Typography } from '@mui/material';
 import IconButtonText from '../shared/IconButtonText';
 import LogsList from '../shared/LogsList';
 import { useNavigate } from 'react-router-dom';
 import { Routes } from '../../commons/enums/routes.enum';
+import PlayersModal from '../shared/PlayersModal';
 
 const BankScreen = () => {
   const navigate = useNavigate();
@@ -22,9 +23,7 @@ const BankScreen = () => {
             <SwapHorizOutlined />
           </IconButtonText>
 
-          <IconButtonText text="Hypothecate" color="secondary" disabled>
-            <GavelOutlined />
-          </IconButtonText>
+          <PlayersModal />
         </Grid>
 
         <LogsList />
