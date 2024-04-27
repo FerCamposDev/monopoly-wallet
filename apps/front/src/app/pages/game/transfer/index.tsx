@@ -92,7 +92,7 @@ const TransferPage = () => {
         onSubmit={handleSubmit}
       >
         <Stack gap={4}>
-          <RadioGroup name="reason">
+          <RadioGroup name="reason" defaultValue={PaymentReason.RENT}>
             {P2P_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}

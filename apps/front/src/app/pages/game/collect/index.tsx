@@ -55,7 +55,7 @@ const CollectPage = () => {
         onSubmit={handleSubmit}
       >
         <Stack gap={4}>
-          <RadioGroup name="reason">
+          <RadioGroup name="reason" defaultValue={PaymentReason.LUCK_CARD}>
             {COLLECT_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}

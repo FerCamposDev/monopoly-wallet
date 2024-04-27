@@ -21,16 +21,8 @@ export const COLLECT_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
 
 export const P2P_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
-    label: PaymentReason.BUY_PROPERTY,
-    value: PaymentReason.BUY_PROPERTY,
-  },
-  {
     label: PaymentReason.RENT,
     value: PaymentReason.RENT,
-  },
-  {
-    label: PaymentReason.TRADE,
-    value: PaymentReason.TRADE,
   },
   {
     label: PaymentReason.LUCK_CARD,
@@ -40,20 +32,20 @@ export const P2P_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     label: PaymentReason.ARK_CARD,
     value: PaymentReason.ARK_CARD,
   },
+  {
+    label: PaymentReason.BUY_PROPERTY,
+    value: PaymentReason.BUY_PROPERTY,
+  },
+  {
+    label: PaymentReason.TRADE,
+    value: PaymentReason.TRADE,
+  },
 ];
 
 export const TO_BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
     label: PaymentReason.BUY_PROPERTY,
     value: PaymentReason.BUY_PROPERTY,
-  },
-  {
-    label: PaymentReason.BUILD,
-    value: PaymentReason.BUILD,
-  },
-  {
-    label: PaymentReason.UN_MORTGAGE,
-    value: PaymentReason.UN_MORTGAGE,
   },
   {
     label: PaymentReason.LUCK_CARD,
@@ -71,16 +63,20 @@ export const TO_BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     label: PaymentReason.TAXES,
     value: PaymentReason.TAXES,
   },
-];
-
-export const BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
   {
     label: PaymentReason.BUILD,
     value: PaymentReason.BUILD,
   },
   {
-    label: PaymentReason.MORTGAGE,
-    value: PaymentReason.MORTGAGE,
+    label: PaymentReason.UN_MORTGAGE,
+    value: PaymentReason.UN_MORTGAGE,
+  },
+];
+
+export const BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
+  {
+    label: PaymentReason.START,
+    value: PaymentReason.START,
   },
   {
     label: PaymentReason.LUCK_CARD,
@@ -91,7 +87,11 @@ export const BANK_PAYMENT_REASONS_OPTIONS: Option<PaymentReason>[] = [
     value: PaymentReason.ARK_CARD,
   },
   {
-    label: PaymentReason.START,
-    value: PaymentReason.START,
+    label: PaymentReason.MORTGAGE,
+    value: PaymentReason.MORTGAGE,
+  },
+  {
+    label: PaymentReason.BUILD,
+    value: PaymentReason.BUILD,
   },
 ];

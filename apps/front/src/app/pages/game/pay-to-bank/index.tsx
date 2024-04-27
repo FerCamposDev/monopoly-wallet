@@ -48,7 +48,7 @@ const PayToBankPage = () => {
         onSubmit={handleSubmit}
       >
         <Stack gap={4}>
-          <RadioGroup name="reason">
+          <RadioGroup name="reason" defaultValue={PaymentReason.BUY_PROPERTY}>
             {TO_BANK_PAYMENT_REASONS_OPTIONS.map((reason) => (
               <FormControlLabel
                 key={reason.value}
