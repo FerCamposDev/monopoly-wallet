@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, Grid, Radio, RadioGroup, Stack, Switch } from '@mui/material';
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Stack, Switch } from '@mui/material';
 import PlayerSelector from '../../../components/shared/PlayerSelector';
 import withAuth from '../../../hocs/withAuth';
 import { ChangeEvent, useState } from 'react';
@@ -70,15 +70,6 @@ const TransferPage = () => {
     setPaymentToAll(checked);
   };
 
-  const renderPaymentToAll = () => (
-    <FormControlLabel
-      label="To All"
-      labelPlacement="top"
-      control={
-        <Switch checked={paymentToAll} onChange={handleCheckToAll} />
-      }
-    />
-  );
 
   return (
     <PageLayout title="Transfer">
@@ -102,12 +93,18 @@ const TransferPage = () => {
               />
             ))}
           </RadioGroup>
-          <Grid container justifyContent="space-between">
-            <Grid item xs={8.9}>
-              <PlayerSelector onSelect={setTo} disabled={paymentToAll} />
-            </Grid>
-            {renderPaymentToAll()}
-          </Grid>
+          <Box display="flex" justifyContent="space-between">
+            <PlayerSelector onSelect={setTo} disabled={paymentToAll} />
+            {game.players.length > 2 && (
+              <FormControlLabel
+                label="To All"
+                labelPlacement="top"
+                control={
+                  <Switch checked={paymentToAll} onChange={handleCheckToAll} />
+                }
+              />
+            )}
+          </Box>
           <AmountInput />
         </Stack>
         <Button variant="contained" type="submit" sx={{ mt: 'auto' }}>
