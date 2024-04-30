@@ -7,6 +7,7 @@ const COMMON_VALUES = ['10', '20', '25', '30', '40', '50', '75', '100', '150', '
 const AmountInput: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [amount, setAmount] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputValue = (value: string) => {
     if (inputRef?.current) {
@@ -27,7 +28,20 @@ const AmountInput: FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
+    const value = e.target.value;
+
+    if (value.length > 6) {
+      setErrorMessage('Max value: 999999');
+      if (inputRef?.current) {
+        const shorted = value.substring(0, 6);
+        inputRef.current.value = shorted;
+        setAmount(shorted);
+      }
+      return;
+    }
+
+    setErrorMessage('');
+    setAmount(value);
   };
 
   return (
@@ -40,10 +54,10 @@ const AmountInput: FC = () => {
         onChange={handleChange}
         inputProps={{
           min: 1,
-          max: 999999, // FIXME: not working
-          maxLength: 6, // FIXME: not working
           ref: inputRef,
         }}
+        error={!!errorMessage}
+        helperText={errorMessage}
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}

@@ -10,13 +10,13 @@ type Props = {
 const UnitHandler: FC<Props> = ({ unit, onChange }) => {
 
   const increment = () => {
-    if (unit === '9') return;
+    if (unit === '9') return onChange('0');
     const newUnit = Number(unit) + 1;
     onChange(newUnit.toString());
   };
 
   const decrement = () => {
-    if (unit === '0') return;
+    if (unit === '0') return onChange('9');
     const newUnit = Number(unit) - 1;
     onChange(newUnit.toString());
   };
