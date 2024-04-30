@@ -1,6 +1,7 @@
 import { Chip, Grid, InputAdornment, Stack, TextField } from '@mui/material';
 import React, { FC, useRef, useState } from 'react';
 import UnitHandler from './UnitHandler';
+import ModalCalculator from './ModalCalculator';
 
 const COMMON_VALUES = ['10', '20', '25', '30', '40', '50', '75', '100', '150', '200', '250', '400', '450'];
 
@@ -60,6 +61,11 @@ const AmountInput: FC = () => {
         helperText={errorMessage}
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          endAdornment: (
+            <InputAdornment position="end">
+              <ModalCalculator onFinish={handleInputValue} />
+            </InputAdornment>
+          ),
         }}
       />
 
