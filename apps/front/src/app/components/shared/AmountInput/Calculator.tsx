@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Grid, Paper, Stack, Typography } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Parser } from 'expr-eval';
-import { AddCircleOutlined, BackspaceOutlined, RemoveCircleOutlined } from '@mui/icons-material';
+import { AddCircleOutlined, BackspaceOutlined, Cancel, RemoveCircleOutlined } from '@mui/icons-material';
 
 const parser = new Parser();
 
@@ -12,7 +12,6 @@ type Props = {
 
 const Calculator: React.FC<Props> = ({ onResultValid }) => {
   const [displayValue, setDisplayValue] = useState<string>('0');
-  const [previewValue, setPreviewValue] = useState<string>('-');
 
   const evalPreview = (expression: string) => {
     try {
@@ -28,7 +27,7 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
   const handleNumberClick = (number: string) => {
     setDisplayValue(prevValue => {
       const newValue = prevValue === '0' ? number : prevValue + number;
-      setPreviewValue(evalPreview(newValue));
+      evalPreview(newValue);
       return newValue;
     });
   };
@@ -40,7 +39,7 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
         return prevValue.slice(0, -1) + operator;
       } else {
         const newValue = prevValue + operator;
-        setPreviewValue(evalPreview(newValue));
+        evalPreview(newValue);
         return newValue;
       }
     });
@@ -48,7 +47,6 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
 
   const handleReset = () => {
     setDisplayValue('0');
-    setPreviewValue('0');
   };
 
   const handleDelete = () => {
@@ -57,7 +55,7 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
         return '0';
       } else {
         const newValue = prevValue.slice(0, -1);
-        setPreviewValue(evalPreview(newValue));
+        evalPreview(newValue);
         return newValue;
       }
     });
@@ -70,7 +68,7 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
           {displayValue}
         </Typography>
         <Typography variant="h6" color="text.disabled">
-          {previewValue}
+          {evalPreview(displayValue)}
         </Typography>
       </Paper>
 
@@ -89,6 +87,7 @@ const Calculator: React.FC<Props> = ({ onResultValid }) => {
           <Stack gap={1}>
             <Button variant="contained" onClick={() => handleOperatorClick('+')}><AddCircleOutlined /></Button>
             <Button variant="contained" onClick={() => handleOperatorClick('-')}><RemoveCircleOutlined /></Button>
+            <Button variant="contained" onClick={() => handleOperatorClick('*')}><Cancel /></Button>
           </Stack>
         </Grid>
       </Grid>
